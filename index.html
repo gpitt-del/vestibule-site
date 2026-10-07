@@ -176,7 +176,8 @@
   .cols li:hover .col-plot i { filter: brightness(1.15); }
   .col-l { min-height: 2.5em; padding-inline: 0.15rem; font-size: 0.74rem; line-height: 1.2; text-align: center; color: var(--night-soft); overflow-wrap: normal; }
   .col-l small { display: block; font-size: 0.92em; opacity: 0.85; }
-  .kpi-act { justify-self: start; margin-top: 0.1rem; font-style: normal; font-size: 0.8rem; font-weight: 800; background: var(--night-tan); color: #222D40; border-radius: 999px; padding: 0.14rem 0.7rem; }
+  .kpi-go { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.55rem; margin-top: 0.1rem; }
+  .kpi-act { justify-self: start; font-style: normal; font-size: 0.8rem; font-weight: 800; background: var(--night-tan); color: #222D40; border-radius: 999px; padding: 0.14rem 0.7rem; }
 
   /* The six highlights under the opening */
   .ticks { list-style: none; margin: 2.25rem 0 0; padding: 1.4rem 0 0; border-top: 1px solid var(--night-rule); display: grid; gap: 0.85rem 2rem; }
@@ -1035,7 +1036,7 @@
           <li><span class="kpi-l">Diagnostic revenue MTD</span><b>$4,536</b><small>tests and evaluations</small></li>
           <li><span class="kpi-l">Auto-booked appointments MTD</span><b>46</b><small>no one at the desk</small></li>
           <li><span class="kpi-l">New referrals MTD</span><b>19</b><small>16 booked by themselves</small></li>
-          <li><span class="kpi-l">Referrals needing a person</span><b>3</b><em class="kpi-act">Call now</em></li>
+          <li><span class="kpi-l">Referrals needing a person</span><b>3</b><span class="kpi-go"><em class="kpi-act">Call now</em><small>sent to your phone</small></span></li>
           <li><span class="kpi-l">Show rate MTD</span><b>96%</b><small>54 completed · 2 no-shows</small></li>
           <li><span class="kpi-l">Reports due</span><b>0</b><small>all signed and sent</small></li>
         </ul>
@@ -1181,9 +1182,9 @@
         </div>
       </div>
       <div class="story">
-        <h2>Built in our own practice. Used there every day.</h2>
+        <h2>Built by a Doctor of Audiology.</h2>
         <div>
-          <p>Vestibule runs Hearing-Doctors, an audiology practice with offices in Thomson, Swainsboro and Hazlehurst, Georgia. Its owner, Gabe Pitt, Au.D., built it there for his own patients and his own front desk.</p>
+          <p>In practice for 20 years. The third generation of a family that has been in audiology and hearing care since the 1950s.</p>
           <p>Every screen exists because a real day in the clinic needed it.</p>
         </div>
       </div>
