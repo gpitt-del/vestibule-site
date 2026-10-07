@@ -1,0 +1,1832 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vestibule: the Head-Quarters for your Audiology and Hearing Aid Practice</title>
+<meta name="description" content="Vestibule is practice-management software for audiology and hearing aid practices. It automates the whole visit in one place, from the referral fax to the paid claim. Certified by HIMSA for Noah ES. Built from over 60 years of audiology and hearing aid experience.">
+<link rel="canonical" href="https://vestibulehq.com/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vestibulehq.com/">
+<meta property="og:site_name" content="Vestibule">
+<meta property="og:title" content="Vestibule: the Head-Quarters for your Audiology and Hearing Aid Practice">
+<meta property="og:description" content="Practice-management software for audiology and hearing aid practices. It automates the whole visit in one place. Certified by HIMSA for Noah ES. Built from over 60 years of experience, since 1959.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232B3950'/%3E%3Cpath d='M15 17h10l7 21 7-21h10L38 48H26z' fill='%23FBFAF8'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Schibsted+Grotesk:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  /* Layout: a dark navy opening with the name, the certification and the pitch
+     on the left and the app itself, playing, in a device on the right; the
+     month's sample numbers under it. Light bands follow in the order a practice
+     owner asks: what it does, how a visit runs, what else is in it, who built
+     it, how to try it. */
+  :root {
+    --bg: #FBFAF8;          /* page ground, warm white */
+    --band: #F3ECE7;        /* alternate band */
+    --card: #FFFFFF;        /* cards on a band */
+    --ink: #2B3950;         /* navy ink */
+    --ink-soft: #55627A;
+    --navy: #35455F;        /* the app's own header navy */
+    --tan: #B3978C;         /* the accent */
+    --accent-text: #7D6359; /* the accent, dark enough for words on light */
+    --rule: #E2D5CD;
+    --night: #222D40;       /* the opening and closing bands */
+    --night-2: #2C3A52;
+    --night-ink: #FBFAF8;
+    --night-soft: #C5CEDB;
+    --night-rule: rgba(251, 250, 248, 0.16);
+    --night-tan: #CDB4A9;
+    --btn-bg: #2B3950;
+    --btn-ink: #FBFAF8;
+    --font-display: "Schibsted Grotesk", "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+    --font-body: "Schibsted Grotesk", "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+    --font-data: ui-monospace, "SF Mono", "Cascadia Mono", Consolas, "Liberation Mono", monospace;
+    --fs-h1: clamp(1.9rem, 1rem + 2.3vw, 2.9rem);
+    --fs-h2: clamp(1.8rem, 1.25rem + 2.4vw, 2.7rem);
+    --fs-h3: clamp(1.3rem, 1.12rem + 0.9vw, 1.7rem);
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1A2231;
+      --band: #212B3D;
+      --card: #27334A;
+      --ink: #F3EEEA;
+      --ink-soft: #BFC8D6;
+      --navy: #3B4D6B;
+      --accent-text: #D3BBB0;
+      --rule: #36445C;
+      --night: #121925;
+      --night-2: #1C2636;
+      --btn-bg: #FBFAF8;
+      --btn-ink: #2B3950;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1A2231;
+    --band: #212B3D;
+    --card: #27334A;
+    --ink: #F3EEEA;
+    --ink-soft: #BFC8D6;
+    --navy: #3B4D6B;
+    --accent-text: #D3BBB0;
+    --rule: #36445C;
+    --night: #121925;
+    --night-2: #1C2636;
+    --btn-bg: #FBFAF8;
+    --btn-ink: #2B3950;
+    color-scheme: dark;
+  }
+
+  *, *::before, *::after { box-sizing: inherit; }
+  [hidden] { display: none !important; }
+  html { scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 4.5rem); -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    line-height: 1.55;
+  }
+  img, svg { max-width: 100%; }
+  a { color: inherit; }
+  h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; }
+  :focus-visible { outline: 3px solid var(--tan); outline-offset: 3px; border-radius: 6px; }
+
+  .wrap { max-width: 72rem; margin: 0 auto; padding-inline: 1.25rem; }
+  .btn {
+    display: inline-block;
+    background: var(--btn-bg);
+    color: var(--btn-ink);
+    font: inherit;
+    font-weight: 700;
+    text-decoration: none;
+    padding: 0.9rem 1.5rem;
+    border: 0;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+  .btn:hover { filter: brightness(1.1); }
+
+  /* ── Top bar ── */
+  .top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30; background: var(--night); color: var(--night-ink); border-bottom: 1px solid var(--night-rule); }
+  .top-in { display: flex; align-items: center; gap: 1.5rem; padding-block: 0.8rem; }
+  .brand { font-weight: 800; font-size: 1.35rem; letter-spacing: -0.02em; text-decoration: none; margin-right: auto; }
+  .top-nav { display: none; gap: 1.6rem; }
+  .top-nav a { text-decoration: none; font-weight: 500; color: var(--night-soft); }
+  .top-nav a:hover { color: var(--night-ink); }
+  .top .btn { background: var(--night-tan); color: #222D40; padding: 0.55rem 1.1rem; font-size: 0.98rem; white-space: nowrap; }
+
+  /* ── The opening ── */
+  .hero {
+    background: var(--night);
+    background-image: radial-gradient(52rem 30rem at 88% 12%, rgba(179, 151, 140, 0.2), transparent 62%);
+    color: var(--night-ink);
+    padding-block: 2.5rem 3rem;
+  }
+  .hero-grid { display: grid; gap: 2.75rem; align-items: center; }
+  .hero-copy { min-width: 0; }
+  .hero h1 { margin: 0 0 0.9rem; font-weight: 800; font-size: var(--fs-h1); line-height: 1.03; letter-spacing: -0.035em; }
+  .promise { margin: 0 0 1.1rem; font-weight: 800; font-size: clamp(1.5rem, 1.1rem + 1.9vw, 2.2rem); line-height: 1.1; letter-spacing: -0.03em; color: var(--night-tan); }
+  .lede { margin: 0 0 1.7rem; font-size: 1.2rem; line-height: 1.5; color: var(--night-soft); max-width: 33rem; }
+  .lede b { color: var(--night-ink); font-weight: 800; }
+  .lede .since { color: var(--night-tan); white-space: nowrap; }
+  .cta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.8rem 1.1rem; }
+  .hero .btn { background: var(--night-tan); color: #222D40; font-size: 1.0625rem; }
+  .cta-note { color: var(--night-soft); font-size: 0.98rem; max-width: 16rem; line-height: 1.35; }
+  /* The certification, first thing on the page */
+  .cert { display: flex; align-items: center; gap: 1.1rem; margin: 0 0 1.6rem; max-width: 33rem; }
+  .cert-seal { flex: none; display: block; width: 6.75rem; height: 6.75rem; border-radius: 50%; background: #fff; box-shadow: 0 0.4rem 1.2rem rgba(0, 0, 0, 0.3); }
+  .cert p { margin: 0; min-width: 0; display: grid; gap: 0.1rem; }
+  .cert b { font-weight: 800; font-size: 1.3rem; line-height: 1.2; letter-spacing: -0.01em; }
+  .cert sup { font-size: 0.6em; }
+  .cert span { color: var(--night-soft); font-size: 0.93rem; line-height: 1.38; }
+  .cert a { color: var(--night-ink); font-weight: 700; text-underline-offset: 0.2em; white-space: nowrap; }
+  .tagline { margin: 0; color: var(--night-tan); font-weight: 800; font-size: clamp(1.35rem, 1.05rem + 1.2vw, 1.9rem); line-height: 1.15; letter-spacing: -0.025em; }
+  .bigname { margin: 0 0 1.1rem; font-weight: 800; font-size: clamp(3rem, 1.6rem + 5vw, 5.4rem); line-height: 0.95; letter-spacing: -0.045em; color: var(--night-ink); }
+  .bigname span, .brand span { color: var(--night-tan); }
+  /* The numbers that greet you: sample month-to-date cards under the tagline */
+  .night-band { background: var(--night); color: var(--night-ink); padding-block: 3rem 3.25rem; }
+  .kpi { margin: 0; }
+  .kpi-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.35rem 1.5rem; margin-bottom: 1.1rem; }
+  .kpi-when { margin: 0; color: var(--night-soft); font-size: 0.95rem; }
+  .kpi-when b { color: var(--night-ink); font-weight: 700; }
+  .kpi-cards { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.7rem; }
+  .kpi-cards li { min-width: 0; display: grid; align-content: start; gap: 0.2rem; background: var(--night-2); border: 1px solid var(--night-rule); border-radius: 0.9rem; padding: 0.85rem 0.95rem 0.95rem; }
+  .kpi-l { min-height: 2.6em; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; line-height: 1.3; color: var(--night-tan); }
+  .kpi-cards b { font-weight: 800; font-size: clamp(2rem, 1.5rem + 1.6vw, 2.8rem); line-height: 1.05; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
+  .kpi-cards small { font-size: 0.86rem; line-height: 1.3; color: var(--night-soft); }
+  .kpi-body { display: grid; gap: 0.7rem; }
+  /* Appointments by source: one series, so one color (validated on both dark surfaces) and no legend */
+  .kpi-chart { --bar: #C87F52; min-width: 0; margin: 0; display: grid; align-content: start; gap: 0.9rem; background: var(--night-2); border: 1px solid var(--night-rule); border-radius: 0.9rem; padding: 0.85rem 0.95rem 1rem; }
+  .kpi-chart figcaption { display: grid; gap: 0.15rem; }
+  .kpi-chart figcaption b { font-size: 0.74rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; line-height: 1.3; color: var(--night-tan); }
+  .kpi-chart figcaption span { font-size: 0.86rem; color: var(--night-soft); }
+  .bars { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.5rem; }
+  .bars li { display: grid; grid-template-columns: 8.4em minmax(0, 1fr); align-items: center; gap: 0.6rem; }
+  .bar-l { font-size: 0.9rem; line-height: 1.2; color: var(--night-soft); }
+  .bar-t { display: flex; align-items: center; gap: 0.5rem; min-width: 0; }
+  .bar-t i { flex: 0 0 calc(var(--v) * (100% - 5rem)); height: 1.05rem; border-radius: 0 4px 4px 0; background: var(--bar); }
+  .bar-t b { font-weight: 800; font-size: 0.98rem; color: var(--night-ink); font-variant-numeric: tabular-nums; }
+  .bar-t small { font-size: 0.82rem; color: var(--night-soft); font-variant-numeric: tabular-nums; }
+  .bars li:hover .bar-t i { filter: brightness(1.15); }
+  .kpi-act { justify-self: start; margin-top: 0.1rem; font-style: normal; font-size: 0.8rem; font-weight: 800; background: var(--night-tan); color: #222D40; border-radius: 999px; padding: 0.14rem 0.7rem; }
+
+  /* The six highlights under the opening */
+  .ticks { list-style: none; margin: 2.25rem 0 0; padding: 1.4rem 0 0; border-top: 1px solid var(--night-rule); display: grid; gap: 0.85rem 2rem; }
+  .ticks li { position: relative; padding-left: 1.9rem; font-weight: 700; font-size: 1.08rem; line-height: 1.3; letter-spacing: -0.01em; }
+  .ticks li::before {
+    content: ""; position: absolute; left: 0.35rem; top: 0.12rem;
+    width: 0.44rem; height: 0.85rem;
+    border-right: 3px solid var(--night-tan); border-bottom: 3px solid var(--night-tan);
+    transform: rotate(40deg);
+  }
+
+  /* ── The demo beside the headline ── */
+  .hero-demo { min-width: 0; display: grid; gap: 0.9rem; justify-items: center; }
+  .demo-side { min-width: 0; width: 100%; display: grid; gap: 0.9rem; justify-items: center; }
+  .scene-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.45rem; }
+  .scene-chips button {
+    font: inherit; font-size: 0.92rem; font-weight: 700;
+    color: var(--night-ink); background: transparent;
+    border: 1.5px solid var(--night-rule); border-radius: 999px;
+    padding: 0.35rem 0.85rem; cursor: pointer;
+  }
+  .scene-chips button:hover { border-color: var(--night-tan); }
+  .scene-chips button[aria-pressed="true"] { background: var(--night-tan); border-color: var(--night-tan); color: #222D40; }
+  .demo-guide {
+    width: min(21rem, 100%);
+    min-height: 5.6rem;
+    display: grid; gap: 0.5rem; align-content: center;
+    background: var(--night-2);
+    border: 1px solid var(--night-rule);
+    border-radius: 0.9rem;
+    padding: 0.75rem 0.95rem;
+  }
+  .demo-guide.nudge { border-color: var(--night-tan); }
+  .demo-hint { margin: 0; font-size: 0.98rem; line-height: 1.4; }
+  .demo-hint b { color: var(--night-tan); }
+  .demo-steps { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.3rem; font-size: 0.8rem; line-height: 1.3; color: var(--night-soft); }
+  .demo-steps li { padding: 0.1rem 0.5rem; border: 1px solid var(--night-rule); border-radius: 999px; }
+  .demo-steps li.done { color: var(--night-ink); border-color: rgba(205, 180, 169, 0.55); }
+  .demo-steps li.on { background: var(--night-tan); border-color: var(--night-tan); color: #222D40; font-weight: 700; }
+  .demo-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.9rem; }
+  .demo-actions .go {
+    font: inherit; font-size: 0.92rem; font-weight: 700;
+    background: var(--night-tan); color: #222D40;
+    border: 0; border-radius: 999px; padding: 0.35rem 0.9rem; cursor: pointer;
+  }
+  .demo-actions .again {
+    font: inherit; font-size: 0.88rem; color: var(--night-soft);
+    background: none; border: 0; padding: 0.2rem 0; cursor: pointer;
+    text-decoration: underline; text-underline-offset: 0.2em;
+  }
+  .demo-foot { margin: 0; color: var(--night-soft); font-size: 0.88rem; text-align: center; max-width: 21rem; }
+  .device-cap { margin: 0 0 -0.2rem; font-size: 0.78rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--night-tan); text-align: center; }
+
+  /* ── The phone. Its colors are the app's own and do not follow the page theme. ── */
+  .phone {
+    width: 100%;
+    background: #0E141D;
+    border-radius: 2.5rem;
+    padding: 0.55rem;
+    box-shadow: 0 1.6rem 3.2rem rgba(0, 0, 0, 0.38), inset 0 0 0 1px rgba(255, 255, 255, 0.09);
+  }
+  .screen {
+    position: relative;
+    aspect-ratio: 294 / 612;
+    max-width: 100%;
+    border-radius: 2rem;
+    overflow: hidden;
+    background: #F8FAFC;
+    container-type: inline-size;
+  }
+  .app {
+    position: absolute; inset: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    font-size: 12.4px;
+    font-size: 4.225cqw;
+    line-height: 1.38;
+    color: #111827;
+    text-align: left;
+  }
+  .app button { font: inherit; cursor: pointer; }
+  .scr { position: absolute; inset: 0; display: flex; flex-direction: column; background: #F8FAFC; }
+  .a-top { display: flex; align-items: center; gap: 0.55em; padding: 0.95em 0.9em 0.75em; background: #34425C; color: #fff; }
+  .a-logo { width: 1.9em; height: 1.9em; flex: none; border-radius: 0.5em; background: #46587A; display: grid; place-items: center; }
+  .a-logo svg { width: 1.15em; height: 1.15em; }
+  .a-top b { font-size: 1.06em; letter-spacing: -0.01em; white-space: nowrap; margin-right: auto; }
+  .a-pill { border: 1px solid #CDB4A9; border-radius: 99em; padding: 0.22em 0.7em; font-weight: 700; font-size: 0.82em; white-space: nowrap; }
+  .a-burger { position: relative; width: 1.35em; height: 1em; flex: none; border-top: 0.16em solid #fff; border-bottom: 0.16em solid #fff; }
+  .a-burger::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; margin-top: -0.08em; border-top: 0.16em solid #fff; }
+  .a-burger i { position: absolute; top: -0.95em; right: -0.75em; background: #F59E0B; color: #111827; font-style: normal; font-weight: 700; font-size: 0.62em; border-radius: 99em; padding: 0 0.42em; line-height: 1.5; }
+  .a-me { width: 2.2em; height: 2.2em; flex: none; border-radius: 50%; background: #B3978C; color: #2B3950; font-weight: 700; font-size: 0.82em; display: grid; place-items: center; }
+  .a-crumb { margin: 0; padding: 0.7em 0.95em 0.65em; font-size: 0.92em; line-height: 1.45; color: #4B5563; background: #fff; border-bottom: 1px solid #E5E7EB; }
+  .a-crumb b { color: #111827; }
+  .a-crumb i { font-style: normal; color: #1D4ED8; }
+  .a-tabs { display: flex; flex-wrap: wrap; gap: 0.4em; padding: 0.75em 0.95em 0.1em; }
+  .a-tabs button { font-size: 0.94em; border: 1px solid #E5E7EB; background: #fff; color: #374151; border-radius: 99em; padding: 0.3em 0.8em; }
+  .a-tabs button::before { content: "\2713\00a0"; color: #16A34A; }
+  .a-tabs button.on { background: #1D4ED8; border-color: #1D4ED8; color: #fff; }
+  .a-tabs button.on::before { color: #86EFAC; }
+  .a-chair { margin: 0.65em 0.95em 0; padding: 0.5em 0.75em; background: #fff; border-radius: 0.6em; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.1); font-size: 0.86em; color: #6B7280; }
+  .a-chair b { font-weight: 500; font-size: 1.1em; color: #4B5563; }
+  .a-box { flex: 1; min-height: 0; margin: 0.6em 0.95em 0.7em; padding: 0.8em 0.9em; background: #fff; border-radius: 0.6em; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.1); overflow: hidden; line-height: 1.5; }
+  .a-box p { margin: 0 0 0.6em; }
+  .a-box p:last-child { margin-bottom: 0; }
+  .a-dock { background: #fff; border-top: 1px solid #E5E7EB; padding: 0.7em 0.95em 0.85em; }
+  .a-dock p { margin: 0 0 0.4em; display: flex; flex-wrap: wrap; align-items: center; gap: 0.35em; font-size: 0.9em; color: #4B5563; }
+  .a-dock p > span { width: 5.3em; }
+  .a-code { font-family: var(--font-data); font-size: 0.92em; font-style: normal; background: #EEF2FF; border: 1px solid #C7D2FE; color: #3730A3; border-radius: 99em; padding: 0.08em 0.5em; }
+  .a-code.dx { background: #ECFDF5; border-color: #A7F3D0; color: #065F46; }
+  .a-state { color: #111827 !important; font-size: 1em !important; margin: 0.5em 0 0.6em !important; }
+  .a-sign { display: block; width: 100%; border: 0; border-radius: 0.6em; padding: 0.85em; background: #15803D; color: #fff; font-weight: 700; }
+  .a-nav { display: flex; background: #fff; border-top: 1px solid #E5E7EB; padding: 0.5em 0 0.7em; }
+  .a-nav span { flex: 1; display: grid; justify-items: center; gap: 0.15em; font-size: 0.7em; color: #4B5563; }
+  .a-nav svg { width: 1.9em; height: 1.9em; }
+  .a-nav .here { color: #1D4ED8; }
+  .a-modal { position: absolute; inset: 0; z-index: 5; background: rgba(0, 0, 0, 0.6); display: flex; align-items: center; justify-content: center; padding: 0.8em; }
+  .a-modal-in { width: 100%; max-height: 100%; display: flex; flex-direction: column; background: #fff; border-radius: 0.7em; overflow: hidden; box-shadow: 0 1em 3em rgba(0, 0, 0, 0.4); }
+  .a-pdf { background: #E5E7EB; padding: 0.8em; min-height: 0; overflow: hidden; }
+  .a-bar { display: flex; align-items: center; gap: 0.5em; padding: 0.65em 0.75em; border-top: 1px solid #E5E7EB; }
+  .a-bar .note { margin-right: auto; font-size: 0.85em; color: #4B5563; text-decoration: underline; }
+  .a-bar .back { border: 1px solid #D1D5DB; background: #fff; color: #374151; border-radius: 0.4em; padding: 0.55em 0.7em; font-weight: 500; font-size: 0.92em; white-space: nowrap; }
+  .a-bar .commit { border: 0; background: #15803D; color: #fff; border-radius: 0.6em; padding: 0.6em 0.9em; font-weight: 700; font-size: 0.95em; white-space: nowrap; }
+  .a-h1 { margin: 0; padding: 0.9em 0.95em 0.2em; font-size: 1.5em; font-weight: 700; letter-spacing: -0.01em; }
+  .a-sub { margin: 0; padding: 0 0.95em 0.5em; font-size: 0.86em; color: #6B7280; }
+  .a-seg { display: flex; gap: 0.4em; padding: 0.5em 0.95em 0.7em; border-bottom: 1px solid #E5E7EB; }
+  .a-seg span { border: 1px solid #E5E7EB; background: #fff; border-radius: 99em; padding: 0.3em 0.85em; font-size: 0.94em; color: #374151; }
+  .a-seg span.on { background: #1D4ED8; border-color: #1D4ED8; color: #fff; }
+  .a-seg span small { font-size: 0.85em; opacity: 0.8; margin-left: 0.3em; }
+  .a-list { margin: 0.8em 0.95em; background: #fff; border-radius: 0.6em; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.1); }
+  .a-row { padding: 0.75em 0.85em; border-top: 1px solid #F1F5F9; font-size: 0.92em; color: #374151; }
+  .a-row:first-child { border-top: 0; }
+  .a-row b { display: block; font-size: 1.08em; font-weight: 500; color: #111827; }
+  .a-row .last { display: flex; align-items: center; gap: 0.5em; }
+  .a-row .last span { flex: 1; min-width: 0; }
+  .a-chip { border: 1px solid #C7D2FE; color: #312E81; background: #fff; border-radius: 0.4em; padding: 0.15em 0.55em; font-size: 0.85em; font-weight: 700; white-space: nowrap; }
+  .a-fill { flex: 1; }
+  .ok { color: #15803D; font-weight: 700; }
+
+  /* Report room: the panes, the callout, the results charts, the pointer */
+  .a-panes { flex: 1; min-height: 0; position: relative; display: flex; flex-direction: column; }
+  .a-box.has-scroll { padding: 0; display: flex; }
+  .a-box.has-scroll[hidden] { display: none; }
+  .a-scroll { position: relative; flex: 1; min-width: 0; overflow-y: auto; padding: 0.7em 0.5em 4.6em 0.9em; scrollbar-width: none; -ms-overflow-style: none; overscroll-behavior: contain; }
+  .a-scroll::-webkit-scrollbar { display: none; }
+  .a-scroll:focus-visible { outline: 2px solid #1D4ED8; outline-offset: -2px; }
+  .a-rail { flex: none; width: 0.55em; margin: 0.45em 0.3em 0.45em 0; border-radius: 99em; background: #E5E7EB; position: relative; }
+  .a-rail i { position: absolute; left: 0; right: 0; top: 0; height: 30%; border-radius: 99em; background: #6B7280; }
+  .res-h { margin: 0 0 0.35em !important; display: flex; align-items: center; gap: 0.5em; font-weight: 700; font-size: 0.95em; color: #111827; }
+  .res-h em { font-style: normal; font-size: 0.78em; font-weight: 700; color: #1D4ED8; background: #EFF6FF; border-radius: 0.3em; padding: 0.05em 0.4em; }
+  .res-audio { display: block; width: 100%; height: auto; }
+  .res-line { margin: 0.35em 0 0.95em !important; padding-bottom: 0.8em; border-bottom: 1px solid #F1F5F9; font-size: 0.92em; line-height: 1.42; color: #374151; }
+  .res-line.last { border-bottom: 0; margin-bottom: 0 !important; padding-bottom: 0; }
+  .res-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5em; }
+  .res-pair figure { margin: 0; min-width: 0; }
+  .res-pair svg { display: block; width: 100%; height: auto; }
+  .res-pair figcaption { font-size: 0.78em; font-weight: 700; margin-top: 0.1em; }
+  .res-pair .r { color: #C81E1E; }
+  .res-pair .l { color: #1D4ED8; }
+  .a-tip {
+    position: absolute; left: 1.5em; right: 1.5em; bottom: 1.15em; z-index: 3;
+    margin: 0; padding: 0.6em 0.8em 0.65em;
+    background: #1F2A3D; color: #fff;
+    border-radius: 0.85em; border-top-left-radius: 0.2em;
+    font-size: 0.95em; line-height: 1.35; font-weight: 500;
+    box-shadow: 0 0.5em 1.4em rgba(15, 23, 42, 0.35);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .a-tip:empty { display: none; }
+  .a-tip.off { opacity: 0; transform: translateY(0.4em); }
+  .a-tip b { color: #E9C9BC; font-weight: 700; }
+  .a-tip.flow { position: static; margin: 0 0.95em; }
+  .a-cursor { position: absolute; left: 0; top: 0; z-index: 9; width: 2.1em; height: 2.1em; pointer-events: none; transform: translate(16em, 30em); transition: transform 0.75s cubic-bezier(0.45, 0.05, 0.2, 1), opacity 0.25s ease; }
+  .a-cursor b { position: absolute; inset: 0; border-radius: 50%; background: rgba(255, 255, 255, 0.6); border: 0.16em solid rgba(17, 24, 39, 0.62); box-shadow: 0 0.2em 0.6em rgba(0, 0, 0, 0.35); }
+  .a-cursor i { position: absolute; inset: -0.45em; border-radius: 50%; border: 0.2em solid #F59E0B; opacity: 0; }
+  .a-cursor.click b { animation: press 0.4s ease-out; }
+  .a-cursor.click i { animation: tap 0.5s ease-out; }
+  @keyframes press { 0% { transform: scale(1); } 35% { transform: scale(0.72); } 100% { transform: scale(1); } }
+  @keyframes tap { 0% { opacity: 0.95; transform: scale(0.35); } 100% { opacity: 0; transform: scale(1.25); } }
+
+  /* The device: a phone, or the lobby kiosk on its stand */
+  .stage { width: min(19.5rem, 100%); container-type: inline-size; display: flex; flex-direction: column; align-items: center; }
+  .kstand { display: none; width: 100%; flex-direction: column; align-items: center; height: calc((100cqw - 1.1rem) * 0.7483); }
+  .kstand i { flex: 1; width: 1.15rem; background: linear-gradient(90deg, #2B3852, #56698C 45%, #2B3852); }
+  .kstand b { width: 64%; height: 1rem; border-radius: 0.55rem 0.55rem 0.2rem 0.2rem; background: linear-gradient(#56698C, #2B3852); box-shadow: 0 0.6rem 1.1rem rgba(0, 0, 0, 0.4); }
+  .stage.kiosk .phone { border-radius: 1.5rem; }
+  .stage.kiosk .screen { aspect-ratio: 3 / 4; border-radius: 1rem; }
+  .stage.kiosk .app { font-size: 11px; font-size: 3.75cqw; }
+  .stage.kiosk .kstand { display: flex; }
+
+  /* Kiosk */
+  .k { background: #FAF8F5; color: #34425C; }
+  .k-top { display: flex; align-items: center; gap: 0.6em; justify-content: center; padding: 1.3em 1em 0.6em; font-weight: 700; font-size: 1.15em; }
+  .k-top .a-logo { background: #34425C; width: 2.1em; height: 2.1em; }
+  .k h3 { margin: 0.5em 1em 0.9em; font: inherit; font-size: 1.7em; font-weight: 800; line-height: 1.12; text-align: center; letter-spacing: -0.02em; text-wrap: balance; }
+  .k-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8em; padding: 0 1.1em; }
+  .k-tile { border: 1.5px solid #E2D5CD; background: #fff; border-radius: 1em; padding: 0.7em 0.5em 0.75em; text-align: center; color: #34425C; }
+  .k-tile b { display: block; font-size: 2.3em; font-weight: 800; line-height: 1.1; }
+  .k-tile span { display: block; font-size: 0.95em; }
+  .k-tile.in { background: transparent; color: #C4B3AA; }
+  .k-tile.in small { display: block; font-size: 0.8em; }
+  .k-mid { text-align: center; padding: 0 1.2em; }
+  .k-mid p { margin: 0.25em 0; }
+  .k-mid .big { font-size: 1.15em; font-weight: 700; }
+  .k-dob { display: flex; justify-content: center; gap: 0.5em; margin: 0.7em 0 0.8em; }
+  .k-dob span { display: grid; gap: 0.15em; font-size: 0.75em; color: #6B7280; text-align: center; }
+  .k-dob b { display: block; min-width: 3em; border: 1.5px solid #34425C; border-radius: 0.5em; padding: 0.3em 0.5em; font-size: 1.6em; color: #34425C; background: #fff; }
+  .k-pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.45em; padding: 0 2.6em; }
+  .k-pad span { border: 1px solid #E2D5CD; background: #fff; border-radius: 0.6em; padding: 0.42em 0; text-align: center; font-size: 1.25em; font-weight: 700; }
+  .k-pad .zero { grid-column: 2; }
+  .k-btns { display: flex; gap: 0.6em; padding: 0.9em 1.1em 1.2em; margin-top: auto; }
+  .k-btns button { flex: 1; border-radius: 0.7em; padding: 0.8em 0.5em; font-weight: 700; font-size: 1.02em; }
+  .k-btns .sec { flex: 0 0 auto; border: 1.5px solid #D6C9C1; background: #fff; color: #34425C; padding-inline: 1.1em; }
+  .k-btns .pri { border: 0; background: #15803D; color: #fff; }
+  .k-consents { margin: 0 1.1em; padding: 0; list-style: none; display: grid; gap: 0.55em; }
+  .k-consents li { background: #fff; border: 1px solid #E2D5CD; border-radius: 0.7em; padding: 0.6em 0.8em; font-size: 0.9em; color: #4B5563; }
+  .k-consents b { display: block; color: #34425C; font-size: 1.08em; }
+  .k-sig { margin: 0 1.1em; border: 1.5px dashed #B3978C; border-radius: 0.8em; background: #fff; position: relative; }
+  .k-sig canvas { display: block; width: 100%; height: 11em; touch-action: none; border-radius: 0.8em; cursor: crosshair; }
+  .k-sig span { position: absolute; left: 0; right: 0; bottom: 0.5em; text-align: center; font-size: 0.8em; color: #9CA3AF; pointer-events: none; }
+  .k-clear { align-self: center; margin-top: 0.6em; border: 0; background: none; color: #6B7280; text-decoration: underline; font-size: 0.9em; }
+  .k-done { flex: 1; display: grid; align-content: center; justify-items: center; text-align: center; padding: 0 1.4em; gap: 0.5em; }
+  .k-done i { width: 3.4em; height: 3.4em; border-radius: 50%; background: #15803D; position: relative; }
+  .k-done i::after { content: ""; position: absolute; left: 1.22em; top: 0.72em; width: 0.8em; height: 1.55em; border-right: 0.3em solid #fff; border-bottom: 0.3em solid #fff; transform: rotate(40deg); }
+  .k-done b { font-size: 1.7em; font-weight: 800; line-height: 1.15; }
+  .k-done p { margin: 0; font-size: 1.1em; color: #55627A; }
+
+  /* Referral timeline */
+  .f-stages { display: flex; gap: 0.3em; padding: 0.2em 0.95em 0.7em; border-bottom: 1px solid #E5E7EB; }
+  .f-stages span { flex: 1; text-align: center; font-size: 0.72em; color: #9CA3AF; border-top: 0.25em solid #E5E7EB; padding-top: 0.3em; }
+  .f-stages span.on { color: #1D4ED8; border-color: #1D4ED8; font-weight: 700; }
+  .f-card { margin: 0.8em 0.95em; background: #fff; border-radius: 0.6em; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.1); padding: 0.3em 0.85em; }
+  .f-line { display: grid; grid-template-columns: 4.7em 1fr; gap: 0.5em; padding: 0.5em 0; border-top: 1px solid #F1F5F9; font-size: 0.92em; }
+  .f-line:first-child { border-top: 0; }
+  .f-line time { display: grid; align-content: start; color: #111827; font-size: 0.92em; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .f-line time small { font-size: 0.86em; font-weight: 500; color: #6B7280; }
+  .f-total { margin: 0 0.95em; padding: 0.55em 0.8em 0.6em; background: #ECFDF5; border: 1px solid #A7F3D0; border-radius: 0.6em; font-size: 0.9em; line-height: 1.35; color: #065F46; }
+  .f-total b { display: block; }
+  .f-line b { display: block; font-weight: 500; color: #111827; }
+  .f-line span { color: #6B7280; font-size: 0.93em; }
+  .f-line b.ok { color: #15803D; font-weight: 700; }
+
+  /* The next thing to tap */
+  .pulse { position: relative; }
+  .pulse::after { content: ""; position: absolute; inset: -0.32em; border-radius: inherit; border: 2px solid #F59E0B; pointer-events: none; animation: pulse 1.7s ease-out infinite; }
+  @keyframes pulse { 0% { opacity: 1; transform: scale(0.97); } 70% { opacity: 0; transform: scale(1.06); } 100% { opacity: 0; transform: scale(1.06); } }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .pulse::after { animation: none; opacity: 1; }
+  }
+
+  /* ── The sample report page. A document, so its colors are fixed. ── */
+  .sheet { container-type: inline-size; aspect-ratio: 8.5 / 11; max-width: 100%; background: #fff; color: #1F2937; overflow: hidden; text-align: left; }
+  .sh { height: 100%; font-family: Helvetica, Arial, "Liberation Sans", sans-serif; font-size: 7.5px; font-size: 1.5cqw; line-height: 1.32; padding: 3.2em 4.8em 2.2em; display: flex; flex-direction: column; }
+  .sh-head { display: flex; align-items: baseline; gap: 1.2em; padding-bottom: 0.7em; border-bottom: 0.3em solid #34425C; }
+  .sh-brand { font-family: "Oswald", "Arial Narrow", Arial, sans-serif; font-weight: 600; font-size: 1.6em; letter-spacing: 0.18em; text-transform: uppercase; color: #34425C; white-space: nowrap; }
+  .sh-tag { font-family: "Oswald", "Arial Narrow", Arial, sans-serif; font-weight: 500; font-size: 0.92em; letter-spacing: 0.1em; color: #B3978C; white-space: nowrap; overflow: hidden; text-overflow: clip; }
+  .sh-title { margin: 0.9em 0 0.6em; font-weight: 700; font-size: 1.32em; letter-spacing: 0.02em; text-transform: uppercase; }
+  .sh-pt { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.7em 1em; padding: 0.75em 1.1em 0.8em; background: #F2EFEB; border-top: 0.28em solid #34425C; font-size: 1.06em; }
+  .sh-pt small { display: block; font-size: 0.68em; letter-spacing: 0.04em; text-transform: uppercase; color: #6B7280; }
+  .sh-sum { margin-top: 0.75em; padding: 0.55em 1.1em 0.65em; background: #EEF1F6; border-left: 0.34em solid #34425C; font-size: 1.08em; }
+  .sh-sum small { display: block; font-size: 0.68em; letter-spacing: 0.08em; text-transform: uppercase; color: #6B7280; margin-bottom: 0.3em; }
+  .sh-sum b { display: block; }
+  .sh-pics { display: grid; grid-template-columns: 31% 1fr; gap: 2em; margin-top: 0.8em; align-items: center; }
+  .sh-pics svg { display: block; width: 100%; height: auto; }
+  .sh-cap { margin: 0.5em 0 0; font-size: 0.95em; color: #4B5563; }
+  .sh-minis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.9em 1em; align-items: start; }
+  .sh-minis p { margin: 0 0 0.25em; font-weight: 700; font-size: 0.86em; white-space: nowrap; }
+  .sh-minis .r { color: #C81E1E; }
+  .sh-minis .l { color: #1D4ED8; }
+  .sh-minis .sh-cap { grid-column: 1 / -1; font-weight: 400; font-size: 0.92em; white-space: normal; }
+  .sh h4 { margin: 0.8em 0 0.3em; font-family: "Oswald", "Arial Narrow", Arial, sans-serif; font-weight: 600; font-size: 1em; letter-spacing: 0.2em; text-transform: uppercase; color: #34425C; }
+  .sh p { margin: 0; font-size: 1.08em; }
+  .sh .sh-gap { margin-top: 0.4em; }
+  .sh-rows { margin: 0; font-size: 1.05em; }
+  .sh-rows div { display: grid; grid-template-columns: 26% 1fr; gap: 1em; padding: 0.24em 0; border-top: 1px solid #E5E7EB; }
+  .sh-rows dt { color: #7D6359; }
+  .sh-rows dd { margin: 0; }
+  .sh-rows .full { display: block; }
+  .sh-int { margin-top: 0.7em; padding: 0.55em 1.1em 0.65em; background: #EEF1F6; border-left: 0.34em solid #34425C; }
+  .sh-int b { color: #34425C; }
+  .sh ol { margin: 0; padding: 0; list-style: none; font-size: 1.08em; }
+  .sh-sig { margin-top: auto; padding-top: 0.8em; display: flex; justify-content: space-between; align-items: flex-end; gap: 2em; font-size: 1.02em; color: #4B5563; }
+  .sh-sig svg { display: block; width: 11em; height: 2.6em; }
+  .sh-sig b { display: block; border-top: 1px solid #9CA3AF; padding-top: 0.3em; color: #1F2937; }
+  .sh-foot { text-align: right; font-size: 0.9em; color: #9CA3AF; }
+
+  /* ── Sections ── */
+  section[id] { scroll-margin-top: 4.5rem; }
+  .sec { padding-block: 3.5rem; }
+  .sec.band { background: var(--band); }
+  .sec h2 { margin: 0 0 0.6rem; font-weight: 800; font-size: var(--fs-h2); line-height: 1.06; letter-spacing: -0.03em; }
+  .sec .intro { margin: 0 0 2.2rem; color: var(--ink-soft); font-size: 1.15rem; max-width: 38rem; }
+  .sec h3 { margin: 0 0 0.45rem; font-weight: 800; font-size: var(--fs-h3); line-height: 1.1; letter-spacing: -0.03em; }
+  .sec p { margin: 0; }
+  .soft { color: var(--ink-soft); }
+  .receipt {
+    margin-top: 1rem !important;
+    padding: 0.55rem 0.8rem;
+    border-left: 3px solid var(--tan);
+    background: var(--band);
+    font-family: var(--font-data);
+    font-size: 0.86rem;
+    line-height: 1.5;
+    color: var(--ink);
+    overflow-wrap: anywhere;
+  }
+  .band .receipt { background: var(--card); }
+
+  /* The report feature, right under the opening */
+  .feature { display: grid; gap: 2rem; align-items: center; }
+  .feature-copy { min-width: 0; }
+  .feature-copy p { color: var(--ink-soft); max-width: 34rem; }
+  .feature-copy h3:not(:first-child) { margin-top: 1.9rem; }
+  .feature-copy .feature-close { margin-top: 2.1rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); font-weight: 800; font-size: var(--fs-h3); line-height: 1.12; letter-spacing: -0.03em; color: var(--accent-text); }
+  .feature-art { margin: 0; min-width: 0; justify-self: center; width: min(31rem, 100%); }
+  .feature-art .sheet { border-radius: 3px; box-shadow: 0 0 0 1px var(--rule), 0 1.4rem 2.6rem rgba(34, 45, 64, 0.2); }
+  .feature-art figcaption { margin-top: 0.9rem; color: var(--ink-soft); font-size: 0.95rem; text-align: center; }
+  .trio { display: grid; gap: 2.25rem; }
+  .trio article { min-width: 0; }
+  .trio p { color: var(--ink-soft); }
+
+  /* How a visit runs */
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; counter-reset: step; }
+  .steps li { counter-increment: step; display: grid; grid-template-columns: 2.6rem 1fr; gap: 0.25rem 0.9rem; padding: 1.15rem 0; border-top: 1px solid var(--rule); }
+  .steps li::before { content: counter(step); grid-row: 1 / span 2; font-weight: 800; font-size: 1.9rem; line-height: 1; letter-spacing: -0.03em; color: var(--tan); font-variant-numeric: tabular-nums; }
+  .steps b { font-weight: 800; font-size: 1.15rem; letter-spacing: -0.01em; }
+  .steps span { grid-column: 2; color: var(--ink-soft); }
+  .after-steps { margin-top: 2rem !important; padding-top: 1.6rem; border-top: 1px solid var(--rule); font-weight: 800; font-size: var(--fs-h3); letter-spacing: -0.03em; line-height: 1.1; }
+
+  /* Everything else */
+  .features { margin: 0; display: grid; gap: 0; }
+  .features > div { padding: 1.1rem 0; border-top: 1px solid var(--rule); }
+  .features dt { font-weight: 800; font-size: 1.15rem; letter-spacing: -0.01em; margin-bottom: 0.2rem; }
+  .features dd { margin: 0; color: var(--ink-soft); max-width: 36rem; }
+  .stand { margin-top: 3rem; padding-top: 2.4rem; border-top: 1px solid var(--rule); }
+  .stand p { padding: 0.35rem 0; font-weight: 800; font-size: clamp(1.7rem, 1.1rem + 2.9vw, 3rem); line-height: 1.08; letter-spacing: -0.035em; text-wrap: balance; }
+  .stand p:nth-child(2) { color: var(--accent-text); }
+
+  /* Fits + story */
+  .pair { display: grid; gap: 2.25rem; }
+  .pair p { color: var(--ink-soft); max-width: 32rem; }
+  .story { display: grid; gap: 1.25rem 3.5rem; margin-top: 3rem; padding-top: 2.6rem; border-top: 1px solid var(--rule); align-items: start; }
+  .story h2 { margin: 0; }
+  .story p { color: var(--ink-soft); font-size: 1.12rem; max-width: 34rem; }
+  .story p + p { margin-top: 0.9rem; }
+
+  /* Get your own demo */
+  .demo { background: var(--night); color: var(--night-ink); padding-block: 3.5rem; }
+  .demo h2 { margin: 0 0 0.7rem; font-weight: 800; font-size: var(--fs-h2); line-height: 1.06; letter-spacing: -0.03em; }
+  .demo .intro { margin: 0; color: var(--night-soft); font-size: 1.15rem; max-width: 34rem; }
+  .demo-grid { display: grid; gap: 2.25rem; margin-top: 2.25rem; }
+  .demo h3 { margin: 0 0 0.2rem; font-weight: 800; font-size: var(--fs-h3); line-height: 1.1; letter-spacing: -0.03em; }
+  .choices { display: grid; gap: 0.9rem; margin-top: 1.6rem; }
+  .choice { position: relative; display: grid; align-content: start; gap: 0.3rem; text-align: left; font: inherit; color: var(--night-ink); background: var(--night-2); border: 2px solid var(--night-rule); border-radius: 1rem; padding: 1.1rem 1.2rem 1.15rem 3.6rem; cursor: pointer; }
+  .choice:hover { border-color: rgba(205, 180, 169, 0.6); }
+  .choice[aria-checked="true"] { border-color: var(--night-tan); background: rgba(205, 180, 169, 0.12); }
+  .choice b { font-weight: 800; font-size: 1.2rem; line-height: 1.2; letter-spacing: -0.02em; }
+  .choice > span:last-child { color: var(--night-soft); font-size: 0.98rem; line-height: 1.4; }
+  .choice-n { position: absolute; left: 1.1rem; top: 1.05rem; width: 1.8rem; height: 1.8rem; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 0.98rem; border: 2px solid var(--night-soft); color: var(--night-soft); }
+  .choice[aria-checked="true"] .choice-n { background: var(--night-tan); border-color: var(--night-tan); color: #222D40; }
+  .own-steps { list-style: none; margin: 1.1rem 0 0; padding: 0; display: grid; gap: 0.9rem; counter-reset: own; }
+  .own-steps li { counter-increment: own; display: grid; grid-template-columns: 1.9rem 1fr; column-gap: 0.7rem; }
+  .own-steps li::before { content: counter(own); grid-row: 1 / span 2; font-weight: 800; font-size: 1.5rem; line-height: 1.1; color: var(--night-tan); font-variant-numeric: tabular-nums; }
+  .own-steps b { font-weight: 700; }
+  .own-steps span { grid-column: 2; color: var(--night-soft); font-size: 0.98rem; }
+  .points { list-style: none; margin: 1.3rem 0 0; padding: 0; display: grid; gap: 0.45rem; font-weight: 500; }
+  .points li::before { content: ""; display: inline-block; width: 0.55rem; height: 0.55rem; border-radius: 50%; background: var(--night-tan); margin-right: 0.6rem; vertical-align: 0.08em; }
+  .or-here { margin-top: 1.4rem !important; color: var(--night-soft); }
+  .or-here a { color: var(--night-ink); font-weight: 700; text-underline-offset: 0.2em; }
+  .ask { display: grid; gap: 1rem; max-width: 26rem; }
+  .ask label { display: grid; gap: 0.35rem; font-weight: 700; }
+  .ask input {
+    font: inherit; font-size: 1.0625rem; font-weight: 400;
+    color: #2B3950; background: #FBFAF8;
+    border: 2px solid transparent; border-radius: 10px;
+    padding: 0.8rem 0.9rem; width: 100%;
+  }
+  .ask input:focus-visible { outline: 3px solid var(--night-tan); outline-offset: 2px; }
+  .ask .btn { justify-self: start; background: var(--night-tan); color: #222D40; }
+  .ask .btn[disabled] { opacity: 0.6; cursor: default; }
+  .ask .trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .ask .note { margin: 0; color: var(--night-soft); font-size: 0.98rem; }
+  .ask .done { margin: 0; font-weight: 700; color: var(--night-tan); }
+  .mail { margin-top: 2.5rem !important; padding-top: 1.4rem; border-top: 1px solid var(--night-rule); color: var(--night-soft); }
+  .mail a { color: var(--night-ink); font-weight: 700; }
+
+  footer { padding-block: 1.4rem 2rem; color: var(--ink-soft); font-size: 0.95rem; display: flex; flex-wrap: wrap; gap: 0.4rem 1.5rem; }
+  footer a { text-decoration: underline; text-underline-offset: 0.2em; text-decoration-color: var(--tan); }
+  footer .marks { flex-basis: 100%; margin: 0; }
+
+  @media (min-width: 40rem) {
+    .ticks { grid-template-columns: 1fr 1fr; }
+    .kpi-cards { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.8rem; }
+    .kpi-body { gap: 0.8rem; }
+    .trio { grid-template-columns: 1fr 1fr; }
+  }
+  @media (min-width: 56rem) {
+    .wrap { padding-inline: 2rem; }
+    .top-nav { display: flex; }
+    .hero { padding-block: 3.5rem 3.25rem; }
+    .night-band { padding-block: 4rem 4.25rem; }
+    .hero-grid { grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr); gap: 3rem; }
+    .ticks { grid-template-columns: repeat(3, 1fr); }
+    .sec { padding-block: 5rem; }
+    .feature { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 3.5rem; }
+    .trio { grid-template-columns: repeat(3, 1fr); gap: 3rem; }
+    .steps { grid-template-columns: 1fr 1fr; column-gap: 3.5rem; }
+    .features { grid-template-columns: 1fr 1fr; column-gap: 3.5rem; }
+    .pair { grid-template-columns: 1fr 1fr; gap: 3.5rem; }
+    .story { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); }
+    .demo { padding-block: 5rem; }
+    .demo-grid { grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: start; }
+    .choices { grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+  }
+  @media (min-width: 70rem) {
+    .kpi-body { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
+    .kpi-cards b { font-size: 2.3rem; }
+    .kpi-chart { align-content: center; gap: 1.1rem; }
+  }
+  @media (min-width: 80rem) {
+    .wrap { max-width: 78rem; }
+    .hero { padding-block: 2.75rem 3.25rem; }
+    .hero-grid { grid-template-columns: minmax(0, 1fr) auto; }
+    .hero-demo { grid-template-columns: 14.5rem 19.5rem; grid-template-areas: "side cap" "side phone" "side foot"; column-gap: 1.5rem; align-items: center; }
+    .device-cap { grid-area: cap; }
+    .demo-side { grid-area: side; justify-items: stretch; align-content: center; }
+    .stage { grid-area: phone; }
+    .demo-foot { grid-area: foot; }
+    .scene-chips { flex-direction: column; align-items: stretch; gap: 0.4rem; }
+    .scene-chips button { text-align: left; border-radius: 0.7rem; padding: 0.55rem 0.9rem; }
+    .demo-guide { width: auto; min-height: 8.5rem; align-content: start; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="#top">Vestibule<span>HQ</span></a>
+    <nav class="top-nav" aria-label="On this page">
+      <a href="#get">What it does</a>
+      <a href="#visit">How a visit runs</a>
+      <a href="#story">Our story</a>
+    </nav>
+    <a class="btn" href="#demo">Get your own demo</a>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero" id="top">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="bigname">Vestibule<span>HQ</span></p>
+        <div class="cert">
+          <img class="cert-seal" src="data:image/webp;base64,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" width="96" height="96" alt="Tested and Certified, Noah ES: the HIMSA certification seal">
+          <p><b>Noah<sup>®</sup> ES Certified by HIMSA</b><span>Vestibule passed the HIMSA certification test on October 6, 2026. <a href="https://www.himsa.com/products/noah-compatible-products/noah-compatible-management-systems/noah-certified-management-systems/">See HIMSA's list</a></span></p>
+        </div>
+        <h1>The Head-Quarters for your Audiology and Hearing Aid Practice</h1>
+        <p class="promise">Save Time, Increase Revenue.</p>
+        <p class="lede">Vestibule <b>automates</b> the whole visit in one place, from the referral fax to the paid claim. Built from over 60 years of audiology and hearing aid experience. <b class="since">Since 1959!</b></p>
+        <div class="cta-row">
+          <a class="btn" href="#demo">Get your own demo</a>
+          <span class="cta-note">Two ways to try it: with sample patients, or your own patients' records.</span>
+        </div>
+      </div>
+
+      <div class="hero-demo" id="try" aria-label="A guided preview of Vestibule">
+        <div class="demo-side">
+        <div class="scene-chips" role="group" aria-label="Pick something to watch">
+          <button type="button" data-scene="report" aria-pressed="true">Sign a report</button>
+          <button type="button" data-scene="checkin" aria-pressed="false">Lobby kiosk check-in</button>
+          <button type="button" data-scene="referral" aria-pressed="false">Automate referrals</button>
+        </div>
+        <div class="demo-guide" id="demo-guide">
+          <p class="demo-hint" id="demo-hint" aria-live="polite">Watch a report get signed and faxed from a phone. Vestibule wrote it from the visit.</p>
+          <ol class="demo-steps" id="demo-steps" aria-hidden="true">
+            <li data-step="hx">History</li>
+            <li data-step="results">Results</li>
+            <li data-step="interp">Interpretation</li>
+            <li data-step="recs">Recommendations</li>
+            <li data-step="summary">Summary</li>
+            <li data-step="sign">Sign</li>
+            <li data-step="send">Send</li>
+          </ol>
+          <div class="demo-actions">
+            <button type="button" class="go" id="demo-next" hidden></button>
+            <button type="button" class="again" id="demo-again" hidden>Watch again</button>
+          </div>
+        </div>
+        </div>
+
+        <p class="device-cap" id="device-cap">On your phone</p>
+        <div class="stage" id="stage">
+        <div class="phone" id="phone">
+          <div class="screen">
+            <div class="app">
+              <span class="a-cursor" id="cursor" aria-hidden="true" hidden><b></b><i></i></span>
+
+              <!-- Report: the room -->
+              <div class="scr" data-screen="r-room">
+                <div class="a-top">
+                  <span class="a-logo"><svg viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 12c2.5-4 5.5-4 8 0"/><path d="M2 8.5c4-6 10-6 14 0"/><circle cx="8" cy="15" r="1" fill="#fff"/></svg></span>
+                  <b>Coastal Hearing</b>
+                  <span class="a-pill">Quick-Book</span>
+                  <span class="a-burger"><i>2</i></span>
+                  <span class="a-me">JA</span>
+                </div>
+                <p class="a-crumb"><b>Roy Calloway</b> · <i>Chart</i> › <i><span data-d="0">10/7/2026</span> visit</i> › Report · 3/14/1952 · Audiological Assessment · Seabrook · → Dr. Whitfield (fax)</p>
+                <div class="a-tabs">
+                  <button type="button" data-tab="hx" class="on">Hx</button>
+                  <button type="button" data-tab="results">Results</button>
+                  <button type="button" data-tab="interp">Interpretation</button>
+                  <button type="button" data-tab="recs">Recommendations</button>
+                  <button type="button" data-tab="summary">Summary</button>
+                </div>
+                <div class="a-chair"><b>Chairside</b> · Sent to report 10:42 AM</div>
+                <div class="a-panes">
+                  <div class="a-box" data-pane="hx">
+                    <p>Onset was gradual. The patient reports a family history of hearing loss. The patient has never worn hearing aids.</p>
+                    <p>The patient reports constant ringing tinnitus in both ears, 2 years. The tinnitus is bothersome, rated 6 of 10, and affects sleep.</p>
+                  </div>
+                  <div class="a-box has-scroll" data-pane="results" hidden>
+                    <div class="a-scroll" id="res-scroll" tabindex="0" aria-label="Test results">
+                      <p class="res-h">Audiogram <em>NOAH</em></p>
+                      <svg class="res-audio" viewBox="0 0 220 196" role="img" aria-label="Audiogram: mild to moderate sloping hearing loss in both ears">
+                        <rect x="34" y="16" width="170" height="162.5" fill="#fff" stroke="#9CA3AF" stroke-width="0.8"/>
+                        <g stroke="#E5E7EB" stroke-width="0.6">
+                          <path d="M68 16v162.5M102 16v162.5M136 16v162.5M170 16v162.5"/>
+                          <path d="M34 28.5h170M34 53.5h170M34 78.5h170M34 103.5h170M34 128.5h170M34 153.5h170"/>
+                        </g>
+                        <g font-family="Helvetica, Arial, sans-serif" font-size="6.2" fill="#6B7280" text-anchor="middle">
+                          <text x="34" y="11">250</text><text x="68" y="11">500</text><text x="102" y="11">1k</text><text x="136" y="11">2k</text><text x="170" y="11">4k</text><text x="204" y="11">8k</text>
+                        </g>
+                        <g font-family="Helvetica, Arial, sans-serif" font-size="6.2" fill="#6B7280" text-anchor="end">
+                          <text x="29" y="30.7">0</text><text x="29" y="55.7">20</text><text x="29" y="80.7">40</text><text x="29" y="105.7">60</text><text x="29" y="130.7">80</text><text x="29" y="155.7">100</text><text x="29" y="180.7">120</text>
+                        </g>
+                        <text x="9" y="100" font-family="Helvetica, Arial, sans-serif" font-size="6.2" fill="#6B7280" text-anchor="middle" transform="rotate(-90 9 100)">dB HL</text>
+                        <polyline points="34,53.5 68,66 102,72.25 136,84.75 155.9,91 170,97.25 189.9,103.5 204,103.5" fill="none" stroke="#C81E1E" stroke-width="1.1"/>
+                        <polyline points="34,59.75 68,66 102,78.5 136,84.75 155.9,97.25 170,97.25 189.9,97.25 204,109.75" fill="none" stroke="#1D4ED8" stroke-width="1.1"/>
+                        <g fill="#fff" stroke="#C81E1E" stroke-width="1.2">
+                          <circle cx="34" cy="53.5" r="3.2"/><circle cx="68" cy="66" r="3.2"/><circle cx="102" cy="72.25" r="3.2"/><circle cx="136" cy="84.75" r="3.2"/><circle cx="155.9" cy="91" r="3.2"/><circle cx="170" cy="97.25" r="3.2"/><circle cx="189.9" cy="103.5" r="3.2"/><circle cx="204" cy="103.5" r="3.2"/>
+                        </g>
+                        <g stroke="#1D4ED8" stroke-width="1.3" stroke-linecap="round">
+                          <path d="M31 56.75l6 6M37 56.75l-6 6"/><path d="M65 63l6 6M71 63l-6 6"/><path d="M99 75.5l6 6M105 75.5l-6 6"/><path d="M133 81.75l6 6M139 81.75l-6 6"/><path d="M152.9 94.25l6 6M158.9 94.25l-6 6"/><path d="M167 94.25l6 6M173 94.25l-6 6"/><path d="M186.9 94.25l6 6M192.9 94.25l-6 6"/><path d="M201 106.75l6 6M207 106.75l-6 6"/>
+                        </g>
+                        <g fill="none" stroke="#C81E1E" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M61 62.5l-4 3.5 4 3.5"/><path d="M95 68.75l-4 3.5 4 3.5"/><path d="M129 81.25l-4 3.5 4 3.5"/><path d="M163 93.75l-4 3.5 4 3.5"/>
+                        </g>
+                        <g font-family="Helvetica, Arial, sans-serif" font-size="6.2" fill="#4B5563">
+                          <text x="34" y="192"><tspan fill="#C81E1E">O</tspan> right</text><text x="68" y="192"><tspan fill="#1D4ED8">X</tspan> left</text><text x="100" y="192"><tspan fill="#C81E1E">&lt;</tspan> bone</text>
+                        </g>
+                      </svg>
+                      <p class="res-line">Mild to moderate sloping sensorineural hearing loss bilaterally. SRT 35 and 40 dB HL. Word recognition 88% and 92%.</p>
+
+                      <p class="res-h">Tympanometry <em>NOAH</em></p>
+                      <div class="res-pair">
+                        <figure>
+                          <svg viewBox="0 0 100 62" role="img" aria-label="Right tympanogram, type A">
+                            <rect x="8" y="6" width="84" height="48" fill="#fff" stroke="#9CA3AF" stroke-width="0.7"/>
+                            <rect x="33.2" y="18" width="33.6" height="28.8" fill="#DCFCE7" stroke="#86EFAC" stroke-width="0.5"/>
+                            <path d="M58.4 6v48" stroke="#D1D5DB" stroke-width="0.6"/>
+                            <path d="M8 53.5C38 53.5 46 53 50 47c2.5-3.8 4.2-6.6 5.9-6.6s3.4 2.8 5.9 6.6c4 6 12 6.5 30.2 6.5" fill="none" stroke="#C81E1E" stroke-width="1.2"/>
+                          </svg>
+                          <figcaption class="r">Right · type A</figcaption>
+                        </figure>
+                        <figure>
+                          <svg viewBox="0 0 100 62" role="img" aria-label="Left tympanogram, type A">
+                            <rect x="8" y="6" width="84" height="48" fill="#fff" stroke="#9CA3AF" stroke-width="0.7"/>
+                            <rect x="33.2" y="18" width="33.6" height="28.8" fill="#DCFCE7" stroke="#86EFAC" stroke-width="0.5"/>
+                            <path d="M58.4 6v48" stroke="#D1D5DB" stroke-width="0.6"/>
+                            <path d="M8 53.5C37 53.5 45 53 49 46.5c2.6-4.4 4.3-8.2 6-8.2s3.4 3.8 6 8.2c4 6.5 12 7 31 7" fill="none" stroke="#1D4ED8" stroke-width="1.2"/>
+                          </svg>
+                          <figcaption class="l">Left · type A</figcaption>
+                        </figure>
+                      </div>
+                      <p class="res-line">Normal type 'A' tympanograms bilaterally with 1.1 and 1.2 mL ECV.</p>
+
+                      <p class="res-h">DPOAE · 12 frequencies <em>NOAH</em></p>
+                      <div class="res-pair">
+                        <figure>
+                          <svg viewBox="0 0 120 84" role="img" aria-label="Right ear DP-gram: emissions present at 500 and 1000 hertz only">
+                            <rect x="16" y="8" width="98" height="58" fill="#fff" stroke="#9CA3AF" stroke-width="0.7"/>
+                            <path d="M16 37h98" stroke="#9CA3AF" stroke-width="0.5"/>
+                            <path d="M16 22.5h98M16 51.5h98" stroke="#E5E7EB" stroke-width="0.5"/>
+                            <path d="M16 39.9L38.7 42.8 51.9 43.5 61.4 45 74.6 47.15 84 47.9 91.3 49.3 97.3 49.3 102.3 49.3 106.7 50.05 110.6 50.8 114 50.8V66H16z" fill="#9CA3AF" opacity="0.22"/>
+                            <polyline points="16,39.9 38.7,42.8 51.9,43.5 61.4,45 74.6,47.15 84,47.9 91.3,49.3 97.3,49.3 102.3,49.3 106.7,50.05 110.6,50.8 114,50.8" fill="none" stroke="#9CA3AF" stroke-width="0.7"/>
+                            <polyline points="16,32.65 38.7,31.2 51.9,39.9 61.4,43.5 74.6,46.4 84,47.9 91.3,48.6 97.3,49.3 102.3,48.6 106.7,50.05 110.6,50.8 114,51.5" fill="none" stroke="#C81E1E" stroke-width="1"/>
+                            <g fill="#fff" stroke="#C81E1E" stroke-width="0.9">
+                              <circle cx="16" cy="32.65" r="1.9"/><circle cx="38.7" cy="31.2" r="1.9"/><circle cx="51.9" cy="39.9" r="1.9"/><circle cx="61.4" cy="43.5" r="1.9"/><circle cx="74.6" cy="46.4" r="1.9"/><circle cx="84" cy="47.9" r="1.9"/><circle cx="91.3" cy="48.6" r="1.9"/><circle cx="97.3" cy="49.3" r="1.9"/><circle cx="102.3" cy="48.6" r="1.9"/><circle cx="106.7" cy="50.05" r="1.9"/><circle cx="110.6" cy="50.8" r="1.9"/><circle cx="114" cy="51.5" r="1.9"/>
+                            </g>
+                            <g fill="none" stroke="#15803D" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
+                              <path d="M14 25.5l1.6 1.8 3-3.6"/><path d="M36.7 24l1.6 1.8 3-3.6"/>
+                            </g>
+                            <g font-family="Helvetica, Arial, sans-serif" font-size="5" fill="#6B7280" text-anchor="middle">
+                              <text x="16" y="73">0.5k</text><text x="38.700" y="73">1k</text><text x="61.400" y="73">2k</text><text x="84" y="73">4k</text><text x="111" y="73">10k</text>
+                            </g>
+                            <g font-family="Helvetica, Arial, sans-serif" font-size="5" fill="#6B7280" text-anchor="end">
+                              <text x="13.500" y="10">40</text><text x="13.500" y="38.800">0</text><text x="13.500" y="67.500">-40</text>
+                            </g>
+                          </svg>
+                          <figcaption class="r">Right · dB SPL</figcaption>
+                        </figure>
+                        <figure>
+                          <svg viewBox="0 0 120 84" role="img" aria-label="Left ear DP-gram: emissions present at 500 and 1000 hertz only">
+                            <rect x="16" y="8" width="98" height="58" fill="#fff" stroke="#9CA3AF" stroke-width="0.7"/>
+                            <path d="M16 37h98" stroke="#9CA3AF" stroke-width="0.5"/>
+                            <path d="M16 22.5h98M16 51.5h98" stroke="#E5E7EB" stroke-width="0.5"/>
+                            <path d="M16 40.6L38.7 42.8 51.9 43.5 61.4 45.7 74.6 47.15 84 48.6 91.3 49.3 97.3 50.05 102.3 49.3 106.7 50.8 110.6 50.8 114 51.5V66H16z" fill="#9CA3AF" opacity="0.22"/>
+                            <polyline points="16,40.6 38.7,42.8 51.9,43.5 61.4,45.7 74.6,47.15 84,48.6 91.3,49.3 97.3,50.05 102.3,49.3 106.7,50.8 110.6,50.8 114,51.5" fill="none" stroke="#9CA3AF" stroke-width="0.7"/>
+                            <polyline points="16,33.4 38.7,32.65 51.9,41.35 61.4,44.25 74.6,47.15 84,48.6 91.3,49.3 97.3,50.05 102.3,50.05 106.7,50.8 110.6,50.8 114,51.5" fill="none" stroke="#1D4ED8" stroke-width="1"/>
+                            <g stroke="#1D4ED8" stroke-width="1" stroke-linecap="round">
+                              <path d="M14.300 31.700l3.400 3.400M17.700 31.700l-3.400 3.400"/><path d="M37 30.950l3.400 3.400M40.400 30.950l-3.400 3.400"/><path d="M50.200 39.650l3.400 3.400M53.600 39.650l-3.400 3.400"/><path d="M59.700 42.550l3.400 3.400M63.100 42.550l-3.400 3.400"/><path d="M72.900 45.450l3.400 3.400M76.300 45.450l-3.400 3.400"/><path d="M82.300 46.900l3.400 3.400M85.700 46.900l-3.400 3.400"/><path d="M89.600 47.600l3.400 3.400M93 47.600l-3.400 3.400"/><path d="M95.600 48.350l3.400 3.400M99 48.350l-3.400 3.400"/><path d="M100.600 48.350l3.400 3.400M104 48.350l-3.400 3.400"/><path d="M105 49.100l3.400 3.400M108.400 49.100l-3.400 3.400"/><path d="M108.900 49.100l3.400 3.400M112.300 49.100l-3.400 3.400"/><path d="M112.300 49.800l3.400 3.400M115.700 49.800l-3.400 3.400"/>
+                            </g>
+                            <g fill="none" stroke="#15803D" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
+                              <path d="M14 26.200l1.600 1.800 3-3.600"/><path d="M36.700 25.500l1.600 1.800 3-3.600"/>
+                            </g>
+                            <g font-family="Helvetica, Arial, sans-serif" font-size="5" fill="#6B7280" text-anchor="middle">
+                              <text x="16" y="73">0.5k</text><text x="38.700" y="73">1k</text><text x="61.400" y="73">2k</text><text x="84" y="73">4k</text><text x="111" y="73">10k</text>
+                            </g>
+                            <g font-family="Helvetica, Arial, sans-serif" font-size="5" fill="#6B7280" text-anchor="end">
+                              <text x="13.500" y="10">40</text><text x="13.500" y="38.800">0</text><text x="13.500" y="67.500">-40</text>
+                            </g>
+                          </svg>
+                          <figcaption class="l">Left · dB SPL</figcaption>
+                        </figure>
+                      </div>
+                      <p class="res-line">Right ear: present in the low frequencies, absent in the mid and high frequency bands. Left ear: present in the low frequencies, absent in the mid and high frequency bands.</p>
+
+                      <p class="res-h">Tinnitus</p>
+                      <p class="res-line">Tinnitus matched to a 6 kHz tone at 8 dB SL. Tinnitus was maskable at 12 dB SL and positive for partial residual inhibition.</p>
+
+                      <p class="res-h">Otoscopy</p>
+                      <p class="res-line last">Unremarkable bilaterally.</p>
+                    </div>
+                    <span class="a-rail" aria-hidden="true"><i id="res-thumb"></i></span>
+                  </div>
+                  <div class="a-box" data-pane="interp" hidden>
+                    <p>Results revealed a symmetrical sensorineural hearing loss, mild to moderate in the right ear and mild to moderate in the left ear. Tinnitus is likely related to the hearing loss. Test reliability was good.</p>
+                  </div>
+                  <div class="a-box" data-pane="recs" hidden>
+                    <p>1. Trial with amplification to improve speech understanding, reduce listening effort and cognitive load, reduce tinnitus perception, and possibly reduce the risk of cognitive decline.</p>
+                    <p>2. Tinnitus maskers and coping strategies discussed.</p>
+                    <p>3. Re-evaluation in 12 months.</p>
+                  </div>
+                  <div class="a-box" data-pane="summary" hidden>
+                    <p><b>The patient presents with a 2-year history of hearing difficulty, particularly in noise, and tinnitus.</b></p>
+                    <p><b>Results revealed a mild to moderate sensorineural hearing loss bilaterally; tinnitus is likely related to the hearing loss.</b></p>
+                  </div>
+                  <p class="a-tip" id="tip" role="status"></p>
+                </div>
+                <div class="a-dock">
+                  <p><span>Procedures</span><i class="a-code">92557</i><i class="a-code">92567</i><i class="a-code">92588</i><i class="a-code">92625</i></p>
+                  <p class="a-state">Draft</p>
+                  <button type="button" class="a-sign" data-go="report-preview">Sign</button>
+                </div>
+                <div class="a-nav" aria-hidden="true">
+                  <span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M3 9l7-6 7 6v8h-5v-5H8v5H3z"/></svg>Today</span>
+                  <span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="3" y="4.5" width="14" height="12.5" rx="2"/><path d="M3 8.5h14M7 2.5v4M13 2.5v4"/></svg>Calendar</span>
+                  <span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="7.5" cy="7" r="3"/><path d="M2 17c0-3 2.5-5 5.5-5s5.5 2 5.5 5M13.5 4.5a3 3 0 010 5.5M15 12.5c1.8.6 3 2.2 3 4.5"/></svg>Patients</span>
+                  <span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="10" cy="10" r="7.5"/><path d="M12.5 7.5c-.5-1-1.5-1.3-2.5-1.3-1.4 0-2.5.7-2.5 1.9 0 2.6 5 1.2 5 3.9 0 1.2-1.1 1.9-2.5 1.9-1.2 0-2.2-.4-2.7-1.4M10 4.8v10.4"/></svg>Billing</span>
+                  <span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 16V9M8.5 16V4M13 16v-5M17 16v-8"/></svg>Insights</span>
+                </div>
+
+                <!-- Report: the composed page, before signing -->
+                <div class="a-modal" data-overlay="r-preview" hidden>
+                  <div class="a-modal-in">
+                    <div class="a-pdf" id="pdf-slot"></div>
+                    <div class="a-bar">
+                      <span class="note">add note</span>
+                      <button type="button" class="back" data-go="report">← Back to edit</button>
+                      <button type="button" class="commit" data-go="report-sent" id="commit">Sign &amp; send</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Report: signed and sent -->
+              <div class="scr" data-screen="r-done" hidden>
+                <div class="a-top">
+                  <span class="a-logo"><svg viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 12c2.5-4 5.5-4 8 0"/><path d="M2 8.5c4-6 10-6 14 0"/><circle cx="8" cy="15" r="1" fill="#fff"/></svg></span>
+                  <b>Coastal Hearing</b>
+                  <span class="a-pill">Quick-Book</span>
+                  <span class="a-burger"><i>1</i></span>
+                  <span class="a-me">JA</span>
+                </div>
+                <p class="a-h1">Reports</p>
+                <div class="a-seg"><span>Owed <small>2</small></span><span class="on">Done <small>2</small></span></div>
+                <div class="a-list">
+                  <div class="a-row">
+                    <b>Roy Calloway</b>
+                    <span data-d="0">10/7/2026</span> · Audiological Assessment
+                    <div class="last"><span>→ Dr. Whitfield · signed <span data-md="0">10/7</span> · <span id="deliv">sending</span></span><i class="a-chip">Send to…</i></div>
+                  </div>
+                  <div class="a-row">
+                    <b>Marcus Webb</b>
+                    <span data-d="-21">9/16/2026</span> · Audiological Assessment
+                    <div class="last"><span>in-house · signed <span data-md="-21">9/16</span> · delivered</span><i class="a-chip">Send to…</i></div>
+                  </div>
+                </div>
+                <p class="a-tip flow" id="tip-done" role="status" hidden>Faxed to Dr. Whitfield, the referring physician. Fax confirmed, 2 pages.</p>
+                <div class="a-fill"></div>
+                <div class="a-nav" aria-hidden="true">
+                  <span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M3 9l7-6 7 6v8h-5v-5H8v5H3z"/></svg>Today</span>
+                  <span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="3" y="4.5" width="14" height="12.5" rx="2"/><path d="M3 8.5h14M7 2.5v4M13 2.5v4"/></svg>Calendar</span>
+                  <span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="7.5" cy="7" r="3"/><path d="M2 17c0-3 2.5-5 5.5-5s5.5 2 5.5 5M13.5 4.5a3 3 0 010 5.5M15 12.5c1.8.6 3 2.2 3 4.5"/></svg>Patients</span>
+                  <span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="10" cy="10" r="7.5"/><path d="M12.5 7.5c-.5-1-1.5-1.3-2.5-1.3-1.4 0-2.5.7-2.5 1.9 0 2.6 5 1.2 5 3.9 0 1.2-1.1 1.9-2.5 1.9-1.2 0-2.2-.4-2.7-1.4M10 4.8v10.4"/></svg>Billing</span>
+                  <span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 16V9M8.5 16V4M13 16v-5M17 16v-8"/></svg>Insights</span>
+                </div>
+              </div>
+
+              <!-- Check-in: the lobby tablet -->
+              <div class="scr k" data-screen="k-grid" hidden>
+                <div class="k-top"><span class="a-logo"><svg viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 12c2.5-4 5.5-4 8 0"/><path d="M2 8.5c4-6 10-6 14 0"/><circle cx="8" cy="15" r="1" fill="#fff"/></svg></span>Coastal Hearing</div>
+                <h3>Welcome! Tap your initials to check in.</h3>
+                <div class="k-tiles">
+                  <div class="k-tile in"><b>HJ</b><span>8:30 AM</span><small>✓ Checked in</small></div>
+                  <div class="k-tile in"><b>EB</b><span>10:30 AM</span><small>✓ Checked in</small></div>
+                  <button type="button" class="k-tile" data-go="checkin-dob"><b>DF</b><span>11:30 AM</span></button>
+                  <div class="k-tile"><b>LP</b><span>2:30 PM</span></div>
+                  <div class="k-tile"><b>TV</b><span>3:30 PM</span></div>
+                </div>
+              </div>
+              <div class="scr k" data-screen="k-dob" hidden>
+                <div class="k-top"><span class="a-logo"><svg viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 12c2.5-4 5.5-4 8 0"/><path d="M2 8.5c4-6 10-6 14 0"/><circle cx="8" cy="15" r="1" fill="#fff"/></svg></span>Coastal Hearing</div>
+                <div class="k-mid">
+                  <p class="big">Your 11:30 AM appointment</p>
+                  <p>Please enter your date of birth.</p>
+                  <div class="k-dob"><span><b>04</b>Month</span><span><b>12</b>Day</span><span><b>1958</b>Year</span></div>
+                </div>
+                <div class="k-pad" aria-hidden="true"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span class="zero">0</span><span>⌫</span></div>
+                <div class="k-btns">
+                  <button type="button" class="sec" data-go="checkin">Back</button>
+                  <button type="button" class="pri" data-go="checkin-consent">Check in</button>
+                </div>
+              </div>
+              <div class="scr k" data-screen="k-consent" hidden>
+                <div class="k-top"><span class="a-logo"><svg viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 12c2.5-4 5.5-4 8 0"/><path d="M2 8.5c4-6 10-6 14 0"/><circle cx="8" cy="15" r="1" fill="#fff"/></svg></span>Coastal Hearing</div>
+                <h3>Please read and agree.</h3>
+                <ul class="k-consents">
+                  <li><b>Notice of Privacy Practices</b>How we use and protect your health information.</li>
+                  <li><b>Consent to evaluation and care</b>Permission for today's hearing tests and care.</li>
+                  <li><b>Financial policy</b>How insurance and payment are handled.</li>
+                </ul>
+                <div class="k-btns">
+                  <button type="button" class="sec" data-go="checkin-dob">Back</button>
+                  <button type="button" class="pri" data-go="checkin-sign">I agree</button>
+                </div>
+              </div>
+              <div class="scr k" data-screen="k-sign" hidden>
+                <div class="k-top"><span class="a-logo"><svg viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 12c2.5-4 5.5-4 8 0"/><path d="M2 8.5c4-6 10-6 14 0"/><circle cx="8" cy="15" r="1" fill="#fff"/></svg></span>Coastal Hearing</div>
+                <h3>Sign below.</h3>
+                <div class="k-sig"><canvas id="sig" width="560" height="260" aria-label="Signature pad"></canvas><span id="sig-tip">Sign with your finger</span></div>
+                <button type="button" class="k-clear" id="sig-clear" data-live>Clear and try again</button>
+                <div class="k-btns">
+                  <button type="button" class="sec" data-go="checkin-consent">Back</button>
+                  <button type="button" class="pri" data-go="checkin-done">Complete check-in</button>
+                </div>
+              </div>
+              <div class="scr k" data-screen="k-done" hidden>
+                <div class="k-top"><span class="a-logo"><svg viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 12c2.5-4 5.5-4 8 0"/><path d="M2 8.5c4-6 10-6 14 0"/><circle cx="8" cy="15" r="1" fill="#fff"/></svg></span>Coastal Hearing</div>
+                <div class="k-done">
+                  <i></i>
+                  <b>You're all set, Dana!</b>
+                  <p>Thank you. You're checked in. Please have a seat.</p>
+                </div>
+              </div>
+
+              <!-- Referral -->
+              <div class="scr" data-screen="f-ref" hidden>
+                <div class="a-top">
+                  <span class="a-logo"><svg viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 12c2.5-4 5.5-4 8 0"/><path d="M2 8.5c4-6 10-6 14 0"/><circle cx="8" cy="15" r="1" fill="#fff"/></svg></span>
+                  <b>Coastal Hearing</b>
+                  <span class="a-pill">Quick-Book</span>
+                  <span class="a-burger"><i>1</i></span>
+                  <span class="a-me">JA</span>
+                </div>
+                <p class="a-h1">Referrals</p>
+                <p class="a-sub">Fax → outreach → visit → report back. Nothing falls through.</p>
+                <div class="f-stages" id="f-stages"><span>Received</span><span>Outreach</span><span>Scheduled</span><span>Confirmed</span></div>
+                <div class="f-card" id="f-card">
+                  <div class="f-line" data-stage="0"><time><small>Mon</small>7:02 AM</time><div><b>Fax received</b><span>From Dr. Whitfield · 2 pages</span></div></div>
+                  <div class="f-line" data-stage="0"><time>7:02 AM</time><div><b>Read as a referral, chart made</b><span>Priya Raman · DOB 6/2/1961</span></div></div>
+                  <div class="f-line" data-stage="1"><time>8:00 AM</time><div><b>Text sent to the patient</b><span>With a link to book</span></div></div>
+                  <div class="f-line" data-stage="2"><time>8:14 AM</time><div><b>Booked by the patient</b><span>Next Tuesday, 9:30 AM · Marshview</span></div></div>
+                  <div class="f-line" data-stage="2"><time>8:15 AM</time><div><b>Acknowledgment faxed to Dr. Whitfield</b><span>With the appointment date and time</span></div></div>
+                  <div class="f-line" data-stage="2"><time><small>Thu</small>8:00 AM</time><div><b>Confirmation text sent</b><span>Three business days before the visit</span></div></div>
+                  <div class="f-line" data-stage="3"><time>8:06 AM</time><div><b class="ok">Confirmed</b><span>The patient confirmed from the text</span></div></div>
+                </div>
+                <p class="f-total" id="f-total" hidden><b>Fax to booked visit: 1 hour 12 minutes.</b> No one at the desk touched it.</p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="kstand" aria-hidden="true"><i></i><b></b></div>
+        </div>
+
+        <p class="demo-foot" id="demo-foot">A guided preview with sample patients. Your own demo is the whole app.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="get">
+    <div class="wrap">
+      <div class="feature">
+        <div class="feature-copy">
+          <h3>Reports in 30 seconds, from your phone.</h3>
+          <p>All you do is see the patient. By the time you are out of Noah, the report is written and waiting. Two clicks to approve and sign, and it goes back to the referring physician.</p>
+          <p class="receipt">signed <span data-md="0">10/7</span> · fax confirmed 2 pg · → Dr. Whitfield</p>
+          <h3>Clinic phone calls and texts, from your phone.</h3>
+          <p>Take a clinic call or answer a text wherever you may be, even when you are not in the office.</p>
+          <h3>A report at the click of a button, along with your signature.</h3>
+          <p>Your signature goes on the report as you sign it. No printing, no scanning.</p>
+          <p class="feature-close">Save time, save money, at your convenience.</p>
+        </div>
+        <figure class="feature-art">
+          <div class="sheet" id="sheet" role="img" aria-label="A sample report, page one: letterhead, patient details, a two-line summary, an audiogram and two tympanograms, history, test results including otoacoustic emissions and a tinnitus match, interpretation, recommendations and a signature.">
+            <div class="sh">
+              <div class="sh-head"><span class="sh-brand">Coastal Hearing Associates</span><span class="sh-tag">Seabrook · Marshview · Cedar Point</span></div>
+              <div class="sh-title">Audiological Assessment</div>
+              <div class="sh-pt">
+                <div><small>Patient</small><b>Roy Calloway</b></div>
+                <div><small>DOB</small>3/14/1952</div>
+                <div><small>Date of service</small><span data-d="0">10/7/2026</span></div>
+                <div><small>Location</small>Coastal Hearing Seabrook</div>
+                <div><small>Referral</small>Dr. Whitfield</div>
+                <div><small>Provider</small>Jordan Avery, Au.D.</div>
+              </div>
+              <div class="sh-sum">
+                <small>Summary</small>
+                <b>The patient presents with a 2-year history of hearing difficulty, particularly in noise, and tinnitus.</b>
+                <b>Results revealed a mild to moderate sensorineural hearing loss bilaterally; tinnitus is likely related to the hearing loss.</b>
+              </div>
+              <div class="sh-pics">
+                <div>
+                  <svg viewBox="0 0 220 196" aria-hidden="true">
+                    <rect x="34" y="16" width="170" height="162.5" fill="#fff" stroke="#9CA3AF" stroke-width="0.8"/>
+                    <g stroke="#E5E7EB" stroke-width="0.6">
+                      <path d="M68 16v162.5M102 16v162.5M136 16v162.5M170 16v162.5"/>
+                      <path d="M34 28.5h170M34 53.5h170M34 78.5h170M34 103.5h170M34 128.5h170M34 153.500h170"/>
+                    </g>
+                    <g font-family="Helvetica, Arial, sans-serif" font-size="6.2" fill="#6B7280" text-anchor="middle">
+                      <text x="34" y="11">250</text><text x="68" y="11">500</text><text x="102" y="11">1k</text><text x="136" y="11">2k</text><text x="170" y="11">4k</text><text x="204" y="11">8k</text>
+                    </g>
+                    <g font-family="Helvetica, Arial, sans-serif" font-size="6.2" fill="#6B7280" text-anchor="end">
+                      <text x="29" y="30.700">0</text><text x="29" y="55.700">20</text><text x="29" y="80.700">40</text><text x="29" y="105.700">60</text><text x="29" y="130.700">80</text><text x="29" y="155.700">100</text><text x="29" y="180.700">120</text>
+                    </g>
+                    <text x="9" y="100" font-family="Helvetica, Arial, sans-serif" font-size="6.2" fill="#6B7280" text-anchor="middle" transform="rotate(-90 9 100)">dB HL</text>
+                    <polyline points="34,53.500 68,66 102,72.250 136,84.750 155.900,91 170,97.250 189.900,103.500 204,103.500" fill="none" stroke="#C81E1E" stroke-width="1.100"/>
+                    <polyline points="34,59.750 68,66 102,78.500 136,84.750 155.900,97.250 170,97.250 189.900,97.250 204,109.750" fill="none" stroke="#1D4ED8" stroke-width="1.100"/>
+                    <g fill="#fff" stroke="#C81E1E" stroke-width="1.200">
+                      <circle cx="34" cy="53.500" r="3.200"/><circle cx="68" cy="66" r="3.200"/><circle cx="102" cy="72.250" r="3.200"/><circle cx="136" cy="84.750" r="3.200"/><circle cx="155.900" cy="91" r="3.200"/><circle cx="170" cy="97.250" r="3.200"/><circle cx="189.900" cy="103.500" r="3.200"/><circle cx="204" cy="103.500" r="3.200"/>
+                    </g>
+                    <g stroke="#1D4ED8" stroke-width="1.300" stroke-linecap="round">
+                      <path d="M31 56.750l6 6M37 56.750l-6 6"/><path d="M65 63l6 6M71 63l-6 6"/><path d="M99 75.500l6 6M105 75.500l-6 6"/><path d="M133 81.750l6 6M139 81.750l-6 6"/><path d="M152.900 94.250l6 6M158.900 94.250l-6 6"/><path d="M167 94.250l6 6M173 94.250l-6 6"/><path d="M186.900 94.250l6 6M192.900 94.250l-6 6"/><path d="M201 106.750l6 6M207 106.750l-6 6"/>
+                    </g>
+                    <g fill="none" stroke="#C81E1E" stroke-width="1.200" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M61 62.500l-4 3.500 4 3.500"/><path d="M95 68.750l-4 3.500 4 3.500"/><path d="M129 81.250l-4 3.500 4 3.500"/><path d="M163 93.750l-4 3.500 4 3.500"/>
+                    </g>
+                    <g font-family="Helvetica, Arial, sans-serif" font-size="6.200" fill="#4B5563">
+                      <text x="34" y="192"><tspan fill="#C81E1E">O</tspan> right</text><text x="68" y="192"><tspan fill="#1D4ED8">X</tspan> left</text><text x="100" y="192"><tspan fill="#C81E1E">&lt;</tspan> bone</text>
+                    </g>
+                  </svg>
+                </div>
+                <div class="sh-minis">
+                  <div>
+                    <p class="r">Tymp right · A</p>
+                    <svg viewBox="0 0 100 62" aria-hidden="true">
+                      <rect x="8" y="6" width="84" height="48" fill="#fff" stroke="#9CA3AF" stroke-width="0.700"/>
+                      <rect x="33.200" y="18" width="33.600" height="28.800" fill="#DCFCE7" stroke="#86EFAC" stroke-width="0.500"/>
+                      <path d="M58.400 6v48" stroke="#D1D5DB" stroke-width="0.600"/>
+                      <path d="M8 53.500C38 53.500 46 53 50 47c2.500-3.800 4.200-6.600 5.900-6.600s3.400 2.800 5.900 6.600c4 6 12 6.500 30.200 6.500" fill="none" stroke="#C81E1E" stroke-width="1.200"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <p class="l">Tymp left · A</p>
+                    <svg viewBox="0 0 100 62" aria-hidden="true">
+                      <rect x="8" y="6" width="84" height="48" fill="#fff" stroke="#9CA3AF" stroke-width="0.700"/>
+                      <rect x="33.200" y="18" width="33.600" height="28.800" fill="#DCFCE7" stroke="#86EFAC" stroke-width="0.500"/>
+                      <path d="M58.400 6v48" stroke="#D1D5DB" stroke-width="0.600"/>
+                      <path d="M8 53.500C37 53.500 45 53 49 46.500c2.600-4.400 4.300-8.200 6-8.200s3.400 3.800 6 8.200c4 6.500 12 7 31 7" fill="none" stroke="#1D4ED8" stroke-width="1.200"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <p class="r">DPOAE right</p>
+                    <svg viewBox="0 0 120 84" aria-hidden="true"><rect x="16" y="8" width="98" height="58" fill="#fff" stroke="#9CA3AF" stroke-width="0.7"/><path d="M16 37h98" stroke="#9CA3AF" stroke-width="0.5"/><path d="M16 22.5h98M16 51.5h98" stroke="#E5E7EB" stroke-width="0.5"/><path d="M16 39.9L38.7 42.8 51.9 43.5 61.4 45 74.6 47.15 84 47.9 91.3 49.3 97.3 49.3 102.3 49.3 106.7 50.05 110.6 50.8 114 50.8V66H16z" fill="#9CA3AF" opacity="0.22"/><polyline points="16,39.9 38.7,42.8 51.9,43.5 61.4,45 74.6,47.15 84,47.9 91.3,49.3 97.3,49.3 102.3,49.3 106.7,50.05 110.6,50.8 114,50.8" fill="none" stroke="#9CA3AF" stroke-width="0.7"/><polyline points="16,32.65 38.7,31.2 51.9,39.9 61.4,43.5 74.6,46.4 84,47.9 91.3,48.6 97.3,49.3 102.3,48.6 106.7,50.05 110.6,50.8 114,51.5" fill="none" stroke="#C81E1E" stroke-width="1"/><g fill="#fff" stroke="#C81E1E" stroke-width="0.9"><circle cx="16" cy="32.65" r="1.9"/><circle cx="38.7" cy="31.2" r="1.9"/><circle cx="51.9" cy="39.9" r="1.9"/><circle cx="61.4" cy="43.5" r="1.9"/><circle cx="74.6" cy="46.4" r="1.9"/><circle cx="84" cy="47.9" r="1.9"/><circle cx="91.3" cy="48.6" r="1.9"/><circle cx="97.3" cy="49.3" r="1.9"/><circle cx="102.3" cy="48.6" r="1.9"/><circle cx="106.7" cy="50.05" r="1.9"/><circle cx="110.6" cy="50.8" r="1.9"/><circle cx="114" cy="51.5" r="1.9"/></g><g fill="none" stroke="#15803D" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M14 25.5l1.6 1.8 3-3.6"/><path d="M36.7 24l1.6 1.8 3-3.6"/></g><g font-family="Helvetica, Arial, sans-serif" font-size="5" fill="#6B7280" text-anchor="middle"><text x="16" y="73">0.5k</text><text x="38.700" y="73">1k</text><text x="61.400" y="73">2k</text><text x="84" y="73">4k</text><text x="111" y="73">10k</text></g><g font-family="Helvetica, Arial, sans-serif" font-size="5" fill="#6B7280" text-anchor="end"><text x="13.500" y="10">40</text><text x="13.500" y="38.800">0</text><text x="13.500" y="67.500">-40</text></g></svg>
+                  </div>
+                  <div>
+                    <p class="l">DPOAE left</p>
+                    <svg viewBox="0 0 120 84" aria-hidden="true"><rect x="16" y="8" width="98" height="58" fill="#fff" stroke="#9CA3AF" stroke-width="0.7"/><path d="M16 37h98" stroke="#9CA3AF" stroke-width="0.5"/><path d="M16 22.5h98M16 51.5h98" stroke="#E5E7EB" stroke-width="0.5"/><path d="M16 40.6L38.7 42.8 51.9 43.5 61.4 45.7 74.6 47.15 84 48.6 91.3 49.3 97.3 50.05 102.3 49.3 106.7 50.8 110.6 50.8 114 51.5V66H16z" fill="#9CA3AF" opacity="0.22"/><polyline points="16,40.6 38.7,42.8 51.9,43.5 61.4,45.7 74.6,47.15 84,48.6 91.3,49.3 97.3,50.05 102.3,49.3 106.7,50.8 110.6,50.8 114,51.5" fill="none" stroke="#9CA3AF" stroke-width="0.7"/><polyline points="16,33.4 38.7,32.65 51.9,41.35 61.4,44.25 74.6,47.15 84,48.6 91.3,49.3 97.3,50.05 102.3,50.05 106.7,50.8 110.6,50.8 114,51.5" fill="none" stroke="#1D4ED8" stroke-width="1"/><g stroke="#1D4ED8" stroke-width="1" stroke-linecap="round"><path d="M14.300 31.700l3.400 3.400M17.700 31.700l-3.400 3.400"/><path d="M37 30.950l3.400 3.400M40.400 30.950l-3.400 3.400"/><path d="M50.200 39.650l3.400 3.400M53.600 39.650l-3.400 3.400"/><path d="M59.700 42.550l3.400 3.400M63.100 42.550l-3.400 3.400"/><path d="M72.900 45.450l3.400 3.400M76.300 45.450l-3.400 3.400"/><path d="M82.300 46.900l3.400 3.400M85.700 46.900l-3.400 3.400"/><path d="M89.600 47.600l3.400 3.400M93 47.600l-3.400 3.400"/><path d="M95.600 48.350l3.400 3.400M99 48.350l-3.400 3.400"/><path d="M100.600 48.350l3.400 3.400M104 48.350l-3.400 3.400"/><path d="M105 49.100l3.400 3.400M108.400 49.100l-3.400 3.400"/><path d="M108.900 49.100l3.400 3.400M112.300 49.100l-3.400 3.400"/><path d="M112.300 49.800l3.400 3.400M115.700 49.800l-3.400 3.400"/></g><g fill="none" stroke="#15803D" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M14 26.200l1.600 1.800 3-3.600"/><path d="M36.700 25.500l1.600 1.800 3-3.600"/></g><g font-family="Helvetica, Arial, sans-serif" font-size="5" fill="#6B7280" text-anchor="middle"><text x="16" y="73">0.5k</text><text x="38.700" y="73">1k</text><text x="61.400" y="73">2k</text><text x="84" y="73">4k</text><text x="111" y="73">10k</text></g><g font-family="Helvetica, Arial, sans-serif" font-size="5" fill="#6B7280" text-anchor="end"><text x="13.500" y="10">40</text><text x="13.500" y="38.800">0</text><text x="13.500" y="67.500">-40</text></g></svg>
+                  </div>
+                  <p class="sh-cap">SRT 35 / 40 dB HL · WRS 88% / 92% · ECV 1.1 / 1.2 mL · Full-size charts on page 2.</p>
+                </div>
+              </div>
+              <h4>History</h4>
+              <p>Onset was gradual. The patient reports a family history of hearing loss. The patient has never worn hearing aids.</p>
+              <p class="sh-gap">The patient reports constant ringing tinnitus in both ears, 2 years. The tinnitus is bothersome, rated 6 of 10, and affects sleep.</p>
+              <h4>Tests performed and results</h4>
+              <dl class="sh-rows">
+                <div><dt>Otoscopy</dt><dd>unremarkable bilaterally.</dd></div>
+                <div><dt>Audiometry</dt><dd>mild to moderate sloping sensorineural hearing loss bilaterally.</dd></div>
+                <div class="full">Speech reception thresholds were 35 and 40 dB HL in the right and left ears. Word recognition was 88% and 92% in the right and left ears at 40 and 40 dB SL.</div>
+                <div class="full">Normal type 'A' tympanograms bilaterally with 1.1 and 1.2 mL ECV.</div>
+                <div class="full">Distortion Product OtoAcoustic Emissions (DPOAE) - Right ear: present in the low frequencies, absent in the mid and high frequency bands. Left ear: present in the low frequencies, absent in the mid and high frequency bands.</div>
+                <div class="full">Tinnitus matched to a 6 kHz tone at 8 dB SL. Tinnitus was maskable at 12 dB SL and positive for partial residual inhibition.</div>
+              </dl>
+              <p class="sh-int"><b>Interpretation:</b> Results revealed a symmetrical sensorineural hearing loss, mild to moderate in the right ear and mild to moderate in the left ear. Tinnitus is likely related to the hearing loss. Test reliability was good.</p>
+              <h4>Recommendations</h4>
+              <ol>
+                <li>1. Trial with amplification to improve speech understanding, reduce listening effort and cognitive load, reduce tinnitus perception, and possibly reduce the risk of cognitive decline.</li>
+                <li>2. Tinnitus maskers and coping strategies discussed.</li>
+                <li>3. Re-evaluation in 12 months.</li>
+              </ol>
+              <div class="sh-sig">
+                <div>
+                  <svg viewBox="0 0 130 32" fill="none" stroke="#2B3950" stroke-width="1.300" stroke-linecap="round" aria-hidden="true"><path d="M4 22c4-14 9-18 10-9 1 9-6 14-8 9s10-16 15-11-3 14 1 13 6-12 10-11 0 9 4 8 5-8 9-7 1 7 5 6 8-10 14-9-4 10 2 9 12-6 20-8 16-3 30-2"/></svg>
+                  <b>Jordan Avery, Au.D.</b>
+                  Doctor of Audiology · Electronically signed <span data-d="0">10/7/2026</span>
+                </div>
+                <div class="sh-foot">912-555-0100 · Page 1 of 2</div>
+              </div>
+            </div>
+          </div>
+          <figcaption>A sample report, page 1, as Vestibule writes it from the visit.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="night-band" id="numbers">
+    <div class="wrap">
+      <div class="kpi">
+        <div class="kpi-head">
+          <p class="tagline">Vestibule: the entrance to your practice.</p>
+          <p class="kpi-when"><b id="kpi-month">October 2026</b> · sample numbers from the preview practice</p>
+        </div>
+        <div class="kpi-body">
+        <ul class="kpi-cards" aria-label="Sample practice numbers for this month">
+          <li><span class="kpi-l">Units sold</span><b>23</b><small>hearing aids this month</small></li>
+          <li><span class="kpi-l">Avg sale price</span><b>$2,122</b><small>per hearing aid</small></li>
+          <li><span class="kpi-l">Diagnostic revenue MTD</span><b>$4,536</b><small>tests and evaluations</small></li>
+          <li><span class="kpi-l">Auto-booked appointments MTD</span><b>46</b><small>no one at the desk</small></li>
+          <li><span class="kpi-l">New referrals MTD</span><b>19</b><small>16 booked by themselves</small></li>
+          <li><span class="kpi-l">Referrals needing a person</span><b>3</b><em class="kpi-act">Call now</em></li>
+          <li><span class="kpi-l">Show rate MTD</span><b>96%</b><small>54 completed · 2 no-shows</small></li>
+          <li><span class="kpi-l">Reports due</span><b>0</b><small>all signed and sent</small></li>
+        </ul>
+        <figure class="kpi-chart" aria-labelledby="kpi-chart-t">
+          <figcaption><b id="kpi-chart-t">Appointments by source</b><span>Month to date · 69 booked · share of the month</span></figcaption>
+          <ol class="bars">
+            <li style="--v: 1"><span class="bar-l">Google</span><span class="bar-t"><i></i><b>21</b><small>30%</small></span></li>
+            <li style="--v: 0.857"><span class="bar-l">Annual retest</span><span class="bar-t"><i></i><b>18</b><small>26%</small></span></li>
+            <li style="--v: 0.762"><span class="bar-l">Physician referral</span><span class="bar-t"><i></i><b>16</b><small>23%</small></span></li>
+            <li style="--v: 0.429"><span class="bar-l">Direct mail</span><span class="bar-t"><i></i><b>9</b><small>13%</small></span></li>
+            <li style="--v: 0.238"><span class="bar-l">Newspaper</span><span class="bar-t"><i></i><b>5</b><small>7%</small></span></li>
+          </ol>
+        </figure>
+        </div>
+      </div>
+      <ul class="ticks">
+        <li>The report is written by the time you close Noah</li>
+        <li>Two clicks to approve and sign</li>
+        <li>Automatic coding and billing, all electronic</li>
+        <li>Automatic referral processing</li>
+        <li>Patient intake and scheduling</li>
+        <li>A certified Noah ES app</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="also">
+    <div class="wrap">
+      <div class="trio">
+        <article>
+          <h3>One-click claims.</h3>
+          <p>Coding and billing are automatic and all electronic. Each claim is drafted from the visit with its codes, one click sends it to the payer, and the payment posts when it comes back.</p>
+          <p class="receipt">837 · accepted 10:52 AM<br>paid $78.40 · patient balance $19.60</p>
+        </article>
+        <article>
+          <h3>Connected to Noah.</h3>
+          <p>Tests saved in Noah ES show up on the patient's chart automatically, within seconds of saving. Vestibule is a certified Noah ES app and works with the Noah ES account you already have.</p>
+          <p class="receipt">Audiogram · NOAH · on the chart<br>Tympanometry · NOAH · on the chart</p>
+        </article>
+        <article>
+          <h3>Referrals handled as they arrive.</h3>
+          <p>Referral processing is automatic. The fax is read, the chart is made, and the patient gets a text to book.</p>
+          <p class="receipt">fax read · chart made · text sent<br>booked Tuesday 9:30 AM · confirmed</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec band" id="visit">
+    <div class="wrap">
+      <h2>Here's how a visit runs.</h2>
+      <p class="intro">One patient, from the fax to the payment.</p>
+      <ol class="steps">
+        <li><b>The referral fax arrives.</b><span>Vestibule reads it, makes the chart and texts the patient a link to book.</span></li>
+        <li><b>The patient books.</b><span>Reminders and confirmations go out by text on their own.</span></li>
+        <li><b>They check in at the lobby kiosk.</b><span>Patients check themselves in and sign their consent forms before you call them back.</span></li>
+        <li><b>You test in Noah.</b><span>The results land on the chart and the report writes itself.</span></li>
+        <li><b>Two clicks.</b><span>The report is signed and on its way to the referring physician.</span></li>
+        <li><b>The claim is already drafted.</b><span>One click sends it, and the payment posts when it comes back.</span></li>
+      </ol>
+      <p class="after-steps">All you do is see the patient.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="more">
+    <div class="wrap">
+      <h2>Everything else, in the same place</h2>
+      <p class="intro">One login for the front desk, the clinic and the books.</p>
+      <dl class="features">
+        <div>
+          <dt>Scheduling</dt>
+          <dd>One calendar for every office, online booking, text reminders and confirmations, and recalls so no one is forgotten.</dd>
+        </div>
+        <div>
+          <dt>Calls, texts, email and fax</dt>
+          <dd>Every conversation with a patient sits in one thread, and a phone assistant answers when you can't.</dd>
+        </div>
+        <div>
+          <dt>Patient intake and check-in</dt>
+          <dd>Patients answer their history questions ahead of the visit, then check themselves in at the lobby kiosk and sign their consent forms there.</dd>
+        </div>
+        <div>
+          <dt>Hearing aids</dt>
+          <dd>Every device is tracked by serial number: orders, repairs, warranties, trials and loss claims.</dd>
+        </div>
+        <div>
+          <dt>Payments and accounting</dt>
+          <dd>Take cards, send invoices and pay links, and see the deposits land in QuickBooks.</dd>
+        </div>
+        <div>
+          <dt>Insights</dt>
+          <dd>See where your patients come from and how each office is doing.</dd>
+        </div>
+        <div>
+          <dt>A patient portal</dt>
+          <dd>Patients book and confirm visits, check in from their phone, answer their history questions ahead of time, see their report and results, and start or check a repair.</dd>
+        </div>
+        <div>
+          <dt>Helix, the built-in helper</dt>
+          <dd>Ask how to do something, who is on the schedule or where a repair stands. Helix answers and walks you to the right screen.</dd>
+        </div>
+      </dl>
+      <div class="stand">
+        <p>Know where every dollar goes.</p>
+        <p>Track everything from A to Z.</p>
+        <p>One simple, easy-to-use format.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec band" id="story">
+    <div class="wrap">
+      <div class="pair">
+        <div>
+          <h3>For one audiologist or a group of clinics.</h3>
+          <p>It makes the day smoother for a solo audiologist and scales to a large practice with many offices. It was built by an audiologist who has run both.</p>
+        </div>
+        <div>
+          <h3>Customizable software for your unique needs.</h3>
+          <p>Your offices, your visit types, your report wording. Turn on only the parts you need.</p>
+        </div>
+      </div>
+      <div class="story">
+        <h2>Built in our own practice. Used there every day.</h2>
+        <div>
+          <p>Vestibule runs Hearing-Doctors, an audiology practice with offices in Thomson, Swainsboro and Hazlehurst, Georgia. Its owner, Gabe Pitt, Au.D., built it there for his own patients and his own front desk.</p>
+          <p>Every screen exists because a real day in the clinic needed it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo" id="demo">
+    <div class="wrap">
+      <h2>Get your own demo.</h2>
+      <p class="intro">Two ways to try Vestibule. Pick one.</p>
+      <div class="choices" role="radiogroup" aria-label="Which demo would you like?">
+        <button type="button" class="choice" role="radio" aria-checked="true" data-choice="sample">
+          <span class="choice-n" aria-hidden="true">1</span>
+          <b>A working copy with sample patients</b>
+          <span>Log in and click through the whole app. It takes less than two minutes.</span>
+        </button>
+        <button type="button" class="choice" role="radio" aria-checked="false" data-choice="own">
+          <span class="choice-n" aria-hidden="true">2</span>
+          <b>A demo with your own patients' records</b>
+          <span>See your own results and your own patients in Vestibule.</span>
+        </button>
+      </div>
+      <div class="demo-grid">
+        <div class="demo-copy">
+          <div data-for="sample">
+            <h3>With sample patients</h3>
+            <ul class="points">
+              <li>A working copy of the app, with sample patients</li>
+              <li>Nothing to install</li>
+              <li>We email your login</li>
+            </ul>
+          </div>
+          <div data-for="own" hidden>
+            <h3>With your own patients' records</h3>
+            <ol class="own-steps">
+              <li><b>Sign the business associate agreement.</b><span>We email it to you. It covers your patients' information.</span></li>
+              <li><b>Send us results for a few patients.</b><span>Once the agreement is signed, print the results to PDF and upload or email the copies to us.</span></li>
+              <li><b>Click through your own patients.</b><span>We load them into your demo and send you the login.</span></li>
+            </ol>
+          </div>
+          <p class="or-here">Not ready to share an email? <a href="#try">Watch the preview first.</a></p>
+        </div>
+        <form class="ask" id="ask" novalidate>
+          <input type="hidden" id="ask-choice" name="choice" value="sample">
+          <label for="ask-name">Your name
+            <input type="text" id="ask-name" name="name" autocomplete="name" required>
+          </label>
+          <label for="ask-practice">Practice name
+            <input type="text" id="ask-practice" name="practice" autocomplete="organization" required>
+          </label>
+          <label for="ask-email">Email
+            <input type="email" id="ask-email" name="email" autocomplete="email" inputmode="email" required>
+          </label>
+          <label class="trap" aria-hidden="true">Leave this empty
+            <input type="checkbox" id="ask-bot" name="botcheck" tabindex="-1" autocomplete="off">
+          </label>
+          <button class="btn" type="submit" id="ask-send">Send me my demo link</button>
+          <p class="note" id="ask-note" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+      <p class="mail">Questions? Write to <a href="mailto:help@vestibulehq.com">help@vestibulehq.com</a>.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <span>© 2026 Vestibule</span>
+  <a href="terms.html#terms">Terms</a>
+  <a href="terms.html#privacy">Privacy</a>
+  <p class="marks">Noah and Noah ES are trademarks of HIMSA. The preview on this page uses invented patients and an invented practice.</p>
+</footer>
+
+<script>
+  // The guided preview in the device. Every screen is plain markup above; this
+  // decides which one shows, plays the report walkthrough with a pointer, and
+  // hands the controls to the viewer the moment they tap.
+  (function () {
+    var stage = document.getElementById("stage");
+    var phone = document.getElementById("phone");
+    if (!stage || !phone) return;
+    function $(id) { return document.getElementById(id); }
+    function all(root, sel) { return Array.prototype.slice.call(root.querySelectorAll(sel)); }
+
+    var app = phone.querySelector(".app");
+    var guide = $("demo-guide"), hint = $("demo-hint"), stepsEl = $("demo-steps");
+    var nextBtn = $("demo-next"), againBtn = $("demo-again"), foot = $("demo-foot");
+    var cursor = $("cursor"), tip = $("tip"), tipDone = $("tip-done"), cap = $("device-cap");
+    var resScroll = $("res-scroll"), thumb = $("res-thumb");
+    var chips = all(document, "[data-scene]");
+    var screens = all(phone, "[data-screen]");
+    var overlays = all(phone, "[data-overlay]");
+    var tabs = all(phone, "[data-tab]");
+    var panes = all(phone, "[data-pane]");
+    var stepItems = all(stepsEl, "li");
+    var still = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+    var timers = [], raf = 0;
+    var current = "report", touring = false, tourPlayed = false;
+
+    function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
+    function stopTimers() {
+      timers.forEach(clearTimeout); timers = [];
+      if (raf) { cancelAnimationFrame(raf); raf = 0; }
+    }
+
+    // Today's date in the sample screens, so the preview never looks stale.
+    (function () {
+      function shift(days) { var d = new Date(); d.setDate(d.getDate() + days); return d; }
+      all(document, "[data-d]").forEach(function (el) {
+        var d = shift(parseInt(el.getAttribute("data-d"), 10) || 0);
+        el.textContent = (d.getMonth() + 1) + "/" + d.getDate() + "/" + d.getFullYear();
+      });
+      all(document, "[data-md]").forEach(function (el) {
+        var d = shift(parseInt(el.getAttribute("data-md"), 10) || 0);
+        el.textContent = (d.getMonth() + 1) + "/" + d.getDate();
+      });
+    })();
+
+    // The month over the number cards is always the current one.
+    (function () {
+      var el = $("kpi-month");
+      if (!el) return;
+      var names = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      var d = new Date();
+      el.textContent = names[d.getMonth()] + " " + d.getFullYear();
+    })();
+
+    // The composed page inside the Sign step is the same sample page shown below.
+    (function () {
+      var sheet = $("sheet"), slot = $("pdf-slot");
+      if (!sheet || !slot) return;
+      var copy = sheet.cloneNode(true);
+      copy.removeAttribute("id");
+      slot.appendChild(copy);
+    })();
+
+    // What each part of the report says about itself.
+    var TIPS = {
+      hx: "Already written, from your <b>recorded or dictated history</b> with the patient.",
+      results: "Results are in the app <b>from Noah, instantly.</b>",
+      interp: "<b>AI interprets automatically.</b> Edit as needed.",
+      recs: "<b>AI generated.</b> Edit as needed.",
+      summary: ""
+    };
+    var FOOT = {
+      report: "A guided preview with sample patients. Your own demo is the whole app.",
+      checkin: "The kiosk is a tablet in your lobby. Patients check themselves in and sign their consent forms on it.",
+      referral: "A guided preview with sample patients. Your own demo is the whole app."
+    };
+    var WATCH = "Watch a report get signed and faxed from a phone. Vestibule wrote it from the visit.";
+    var MANUAL = "You have the controls. Tap the tabs to read the report, then tap <b>Sign</b>.";
+
+    function markStep(key) {
+      var hit = -1;
+      stepItems.forEach(function (li, i) { if (li.getAttribute("data-step") === key) hit = i; });
+      stepItems.forEach(function (li, i) {
+        li.classList.toggle("on", i === hit);
+        li.classList.toggle("done", hit > -1 && i < hit);
+      });
+    }
+    function allStepsDone() {
+      stepItems.forEach(function (li) { li.classList.remove("on"); li.classList.add("done"); });
+    }
+
+    function syncThumb() {
+      if (!resScroll || !thumb || !resScroll.clientHeight) return;
+      var max = resScroll.scrollHeight - resScroll.clientHeight;
+      var h = Math.max(0.14, Math.min(1, resScroll.clientHeight / resScroll.scrollHeight));
+      thumb.style.height = (h * 100) + "%";
+      thumb.style.top = (max > 0 ? (resScroll.scrollTop / max) * (1 - h) * 100 : 0) + "%";
+    }
+    if (resScroll) resScroll.addEventListener("scroll", syncThumb, { passive: true });
+
+    function selectTab(name) {
+      tabs.forEach(function (b) { b.classList.toggle("on", b.getAttribute("data-tab") === name); });
+      panes.forEach(function (p) { p.hidden = p.getAttribute("data-pane") !== name; });
+      tip.innerHTML = TIPS[name] || "";
+      if (name === "results" && resScroll) { resScroll.scrollTop = 0; syncThumb(); }
+      markStep(name);
+    }
+
+    var STATES = {
+      "report": {
+        scene: "report", screen: "r-room",
+        hint: MANUAL,
+        target: "[data-go='report-preview']",
+        enter: function () { selectTab("hx"); $("commit").textContent = "Sign & send"; }
+      },
+      "report-preview": {
+        scene: "report", screen: "r-room", overlay: "r-preview",
+        hint: "This is the page the physician receives. Tap <b>Sign &amp; send</b>.",
+        target: "#commit",
+        enter: function () { $("commit").textContent = "Sign & send"; markStep("sign"); }
+      },
+      "report-sent": {
+        scene: "report", screen: "r-done",
+        hint: "Two taps. Signed, and faxed to the referring physician.",
+        next: ["Next: the lobby kiosk", "checkin"],
+        enter: function () {
+          var d = $("deliv");
+          d.textContent = "sending"; d.className = "";
+          tipDone.hidden = true;
+          allStepsDone();
+          later(function () {
+            d.textContent = "fax confirmed 2 pg"; d.className = "ok";
+            tipDone.hidden = false;
+          }, still ? 0 : 1500);
+        }
+      },
+      "checkin": {
+        scene: "checkin", screen: "k-grid",
+        hint: "<b>The kiosk in your lobby.</b> Patients check themselves in and sign their consent forms here. Tap <b>DF</b>, the 11:30.",
+        target: "[data-go='checkin-dob']"
+      },
+      "checkin-dob": {
+        scene: "checkin", screen: "k-dob",
+        hint: "The patient keys in a birth date. We did that part for you. Tap <b>Check in</b>.",
+        target: "[data-go='checkin-consent']"
+      },
+      "checkin-consent": {
+        scene: "checkin", screen: "k-consent",
+        hint: "Every consent form that is due, on one screen. Tap <b>I agree</b>.",
+        target: "[data-go='checkin-sign']"
+      },
+      "checkin-sign": {
+        scene: "checkin", screen: "k-sign",
+        hint: "The patient signs with a finger. Try it, then tap <b>Complete check-in</b>.",
+        target: "[data-go='checkin-done']",
+        enter: function () { clearSig(); }
+      },
+      "checkin-done": {
+        scene: "checkin", screen: "k-done",
+        hint: "Your schedule now shows the patient checked in, and the signed forms are on the chart.",
+        next: ["Next: referrals", "referral"]
+      },
+      "referral": {
+        scene: "referral", screen: "f-ref",
+        hint: "A referral fax just came in. Watch the times. No one is touching anything.",
+        enter: function () { playReferral(); }
+      }
+    };
+
+    function show(key) {
+      var s = STATES[key];
+      if (!s) return;
+      stopTimers();
+      touring = false;
+      cursor.hidden = true;
+      current = key;
+      stage.classList.toggle("kiosk", s.scene === "checkin");
+      screens.forEach(function (el) { el.hidden = el.getAttribute("data-screen") !== s.screen; });
+      overlays.forEach(function (el) { el.hidden = el.getAttribute("data-overlay") !== s.overlay; });
+      chips.forEach(function (c) { c.setAttribute("aria-pressed", c.getAttribute("data-scene") === s.scene ? "true" : "false"); });
+      all(phone, ".pulse").forEach(function (el) { el.classList.remove("pulse"); });
+      stepsEl.hidden = s.scene !== "report";
+      if (foot) foot.textContent = FOOT[s.scene] || FOOT.report;
+      if (cap) cap.textContent = s.scene === "checkin" ? "The kiosk in your lobby" : "On your phone";
+      if (s.enter) s.enter();
+      hint.innerHTML = s.hint;
+      if (s.target) {
+        var scope = phone.querySelector('[data-screen="' + s.screen + '"]') || phone;
+        var t = scope.querySelector(s.target);
+        if (t) t.classList.add("pulse");
+      }
+      if (s.next) { nextBtn.textContent = s.next[0]; nextBtn.setAttribute("data-next", s.next[1]); nextBtn.hidden = false; }
+      else { nextBtn.hidden = true; }
+      againBtn.textContent = s.scene === "report" && !still ? "Watch again" : "Start over";
+      againBtn.hidden = key === "checkin" || (key === "report" && (still || !tourPlayed));
+    }
+
+    // ── The report walkthrough: a pointer clicks through the room ──
+    function pointAt(el, fx, fy) {
+      var a = app.getBoundingClientRect(), r = el.getBoundingClientRect();
+      var size = cursor.getBoundingClientRect().width || 26;
+      var x = r.left - a.left + r.width * (fx == null ? 0.5 : fx) - size * 0.5;
+      var y = r.top - a.top + r.height * (fy == null ? 0.55 : fy) - size * 0.5;
+      cursor.style.transform = "translate(" + x.toFixed(1) + "px," + y.toFixed(1) + "px)";
+    }
+    function clickFx() {
+      cursor.classList.remove("click");
+      void cursor.offsetWidth;
+      cursor.classList.add("click");
+    }
+    function glide(el, to, ms) {
+      var from = el.scrollTop, t0 = null;
+      function step(ts) {
+        if (!touring) return;
+        if (t0 === null) t0 = ts;
+        var k = Math.min(1, (ts - t0) / ms);
+        var e = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+        el.scrollTop = from + (to - from) * e;
+        if (k < 1) raf = requestAnimationFrame(step);
+      }
+      raf = requestAnimationFrame(step);
+    }
+    function tabBtn(name) { return phone.querySelector('[data-tab="' + name + '"]'); }
+
+    function tour() {
+      show("report");
+      tourPlayed = true;
+      touring = true;
+      againBtn.hidden = true;
+      hint.innerHTML = WATCH;
+      all(phone, ".pulse").forEach(function (el) { el.classList.remove("pulse"); });
+      // the pointer starts low on the screen, off the content
+      cursor.style.transition = "none";
+      cursor.style.opacity = "1";
+      var a = app.getBoundingClientRect();
+      cursor.style.transform = "translate(" + (a.width * 0.74).toFixed(1) + "px," + (a.height * 0.6).toFixed(1) + "px)";
+      cursor.hidden = false;
+      void cursor.offsetWidth;
+      cursor.style.transition = "";
+
+      var t = 500;
+      function click(getEl, then, dwell) {
+        later(function () { var el = getEl(); if (el) pointAt(el); }, t);
+        later(function () { clickFx(); then(); }, t + 900);
+        t += 900 + dwell;
+      }
+
+      click(function () { return tabBtn("hx"); }, function () { selectTab("hx"); }, 2900);
+
+      click(function () { return tabBtn("results"); }, function () { selectTab("results"); }, 1500);
+      var heads = all(resScroll, ".res-h");
+      // a swipe: the fingertip lands low on the results, drags up while the page follows, then lifts
+      function hop(i, travel, rest) {
+        later(function () { cursor.style.opacity = "1"; pointAt(resScroll, 0.5, 0.74); }, t);
+        later(function () {
+          var max = resScroll.scrollHeight - resScroll.clientHeight;
+          var to = i < 0 ? max : Math.min(max, Math.max(0, heads[i].offsetTop - 8));
+          cursor.style.transitionDuration = travel + "ms, 250ms";
+          pointAt(resScroll, 0.5, 0.3);
+          glide(resScroll, to, travel);
+        }, t + 800);
+        later(function () { cursor.style.transitionDuration = ""; cursor.style.opacity = "0.25"; }, t + 800 + travel + 80);
+        t += 800 + travel + rest;
+      }
+      hop(1, 1100, 1100);   // tympanograms
+      hop(2, 1100, 1500);   // otoacoustic emissions
+      hop(-1, 1000, 1100);  // tinnitus match, otoscopy
+      later(function () { cursor.style.opacity = "1"; }, t - 200);
+
+      click(function () { return tabBtn("interp"); }, function () { selectTab("interp"); }, 2900);
+      click(function () { return tabBtn("recs"); }, function () { selectTab("recs"); }, 2900);
+      click(function () { return tabBtn("summary"); }, function () { selectTab("summary"); }, 2300);
+
+      click(function () { return phone.querySelector("[data-go='report-preview']"); }, function () {
+        markStep("sign");
+        tip.innerHTML = "";
+        overlays.forEach(function (el) { el.hidden = el.getAttribute("data-overlay") !== "r-preview"; });
+        hint.innerHTML = "Tap one: <b>Sign</b> opens the finished page.";
+      }, 2300);
+      click(function () { return $("commit"); }, function () {
+        markStep("send");
+        $("commit").textContent = "Signing…";
+        hint.innerHTML = "Tap two: <b>Sign &amp; send</b>.";
+      }, 700);
+      later(function () {
+        show("report-sent");
+        againBtn.hidden = false;
+      }, t);
+    }
+
+    // The viewer tapped during the walkthrough: stop the pointer, keep the screen.
+    function takeOver() {
+      if (!touring) return;
+      stopTimers();
+      touring = false;
+      cursor.hidden = true;
+      var preview = phone.querySelector('[data-overlay="r-preview"]');
+      if (preview && !preview.hidden) {
+        current = "report-preview";
+        $("commit").textContent = "Sign & send";
+        hint.innerHTML = STATES["report-preview"].hint;
+        $("commit").classList.add("pulse");
+      } else {
+        current = "report";
+        hint.innerHTML = MANUAL;
+        var sign = phone.querySelector("[data-go='report-preview']");
+        if (sign) sign.classList.add("pulse");
+      }
+      againBtn.textContent = "Watch again";
+      againBtn.hidden = false;
+    }
+
+    function playReferral() {
+      var lines = all(document, "#f-card .f-line");
+      var stages = all(document, "#f-stages span");
+      var total = $("f-total");
+      lines.forEach(function (l) { l.hidden = !still; });
+      stages.forEach(function (s) { s.className = still ? "on" : ""; });
+      total.hidden = !still;
+      function finish() {
+        total.hidden = false;
+        hint.innerHTML = "A fax became a booked, confirmed visit. No one at the desk did a thing.";
+        nextBtn.textContent = "Get your own demo";
+        nextBtn.setAttribute("data-next", "#demo");
+        nextBtn.hidden = false;
+        againBtn.hidden = false;
+      }
+      if (still) { finish(); return; }
+      lines.forEach(function (l, i) {
+        later(function () {
+          l.hidden = false;
+          var st = parseInt(l.getAttribute("data-stage"), 10);
+          stages.forEach(function (s, j) { s.className = j <= st ? "on" : ""; });
+          if (i === lines.length - 1) later(finish, 700);
+        }, 700 + i * 950);
+      });
+    }
+
+    // The signature pad on the kiosk.
+    var sig = $("sig"), sigTip = $("sig-tip"), ctx = sig && sig.getContext ? sig.getContext("2d") : null, drawing = false;
+    function clearSig() { if (ctx) ctx.clearRect(0, 0, sig.width, sig.height); if (sigTip) sigTip.hidden = false; }
+    function at(e) {
+      var r = sig.getBoundingClientRect();
+      return [(e.clientX - r.left) * sig.width / r.width, (e.clientY - r.top) * sig.height / r.height];
+    }
+    if (ctx) {
+      ctx.lineWidth = 4; ctx.lineCap = "round"; ctx.lineJoin = "round"; ctx.strokeStyle = "#2B3950";
+      sig.addEventListener("pointerdown", function (e) {
+        drawing = true; sigTip.hidden = true;
+        var p = at(e); ctx.beginPath(); ctx.moveTo(p[0], p[1]);
+        try { sig.setPointerCapture(e.pointerId); } catch (err) {}
+        e.preventDefault();
+      });
+      sig.addEventListener("pointermove", function (e) {
+        if (!drawing) return;
+        var p = at(e); ctx.lineTo(p[0], p[1]); ctx.stroke();
+      });
+      ["pointerup", "pointercancel", "pointerleave"].forEach(function (n) {
+        sig.addEventListener(n, function () { drawing = false; });
+      });
+      $("sig-clear").addEventListener("click", clearSig);
+    }
+
+    phone.addEventListener("click", function (e) {
+      var wasTouring = touring;
+      takeOver();
+      var go = e.target.closest ? e.target.closest("[data-go]") : null;
+      if (go && phone.contains(go)) {
+        var key = go.getAttribute("data-go");
+        if (key === "report-sent") {
+          go.textContent = "Signing…";
+          later(function () { show("report-sent"); againBtn.hidden = false; }, still ? 0 : 650);
+          return;
+        }
+        show(key);
+        if (key === "report") { againBtn.hidden = still; }
+        return;
+      }
+      var tab = e.target.closest ? e.target.closest("[data-tab]") : null;
+      if (tab) { selectTab(tab.getAttribute("data-tab")); return; }
+      if (e.target.closest && (e.target.closest("[data-live]") || e.target.closest("canvas") || e.target.closest(".a-scroll"))) return;
+      if (wasTouring) return;
+      // Anything else in the device is part of the picture. Point back at the next step.
+      guide.classList.add("nudge");
+      setTimeout(function () { guide.classList.remove("nudge"); }, 700);
+    });
+    if (resScroll) {
+      ["wheel", "touchstart"].forEach(function (n) {
+        resScroll.addEventListener(n, function () { takeOver(); }, { passive: true });
+      });
+    }
+
+    function startScene(scene) {
+      if (scene === "report" && !still) { tour(); return; }
+      show(scene);
+    }
+    chips.forEach(function (c) {
+      c.addEventListener("click", function () { startScene(c.getAttribute("data-scene")); });
+    });
+    nextBtn.addEventListener("click", function () {
+      var to = nextBtn.getAttribute("data-next");
+      if (to && to.charAt(0) === "#") {
+        var el = document.querySelector(to);
+        if (el) el.scrollIntoView({ behavior: still ? "auto" : "smooth", block: "start" });
+        return;
+      }
+      show(to);
+    });
+    againBtn.addEventListener("click", function () {
+      var s = STATES[current];
+      startScene(s ? s.scene : "report");
+    });
+
+    // At rest: the room on its History tab. The walkthrough starts when the
+    // device is on screen, once.
+    show("report");
+    hint.innerHTML = still ? "Tap the tabs to read the report, then tap <b>Sign</b>." : WATCH;
+    if (!still) {
+      all(phone, ".pulse").forEach(function (el) { el.classList.remove("pulse"); });
+      if ("IntersectionObserver" in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) {
+            if (en.isIntersecting && en.intersectionRatio >= 0.55 && !tourPlayed && current === "report") {
+              io.disconnect();
+              later(tour, 900);
+            }
+          });
+        }, { threshold: [0.55] });
+        io.observe(phone);
+      } else {
+        later(tour, 1200);
+      }
+    }
+  })();
+
+  // The demo request. Two choices, one form. Each request is delivered to the
+  // Vestibule inbox by Web3Forms. ACCESS_KEY is that service's public form key
+  // (it is not a password and is meant to sit in the page). Empty = preview,
+  // nothing sent. No patient file is ever taken on this page.
+  (function () {
+    var ACCESS_KEY = "";
+    var form = document.getElementById("ask");
+    var note = document.getElementById("ask-note");
+    if (!form) return;
+    var button = document.getElementById("ask-send");
+    var choiceField = document.getElementById("ask-choice");
+    var choices = Array.prototype.slice.call(document.querySelectorAll(".choice"));
+    var blocks = Array.prototype.slice.call(document.querySelectorAll("[data-for]"));
+    function say(cls, text) { note.className = cls; note.textContent = text; }
+    function pick(c) {
+      choiceField.value = c;
+      choices.forEach(function (b) { b.setAttribute("aria-checked", b.getAttribute("data-choice") === c ? "true" : "false"); });
+      blocks.forEach(function (b) { b.hidden = b.getAttribute("data-for") !== c; });
+      button.textContent = c === "own" ? "Email me the agreement" : "Send me my demo link";
+      say("note", "");
+    }
+    choices.forEach(function (b) {
+      b.addEventListener("click", function () { pick(b.getAttribute("data-choice")); });
+    });
+    function failed() { say("note", "That did not go through. Please write to help@vestibulehq.com."); }
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var own = choiceField.value === "own";
+      var name = form.elements.name.value.trim();
+      var practice = form.elements.practice.value.trim();
+      var email = form.elements.email.value.trim();
+      var okEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      if (!name || !practice || !okEmail) {
+        say("note", "Please fill in your name, your practice and a working email.");
+        return;
+      }
+      if (form.elements.botcheck.checked) { thanksKeep(); return; }
+      if (!ACCESS_KEY) {
+        var subj = (own ? "Demo request, my own patients' records: " : "Demo request, sample patients: ") + practice;
+        var lines = ["Name: " + name, "Practice: " + practice, "Email: " + email, "Demo: " + (own ? "my own patients' records (please send the agreement)" : "sample patients")];
+        try { window.location.href = "mailto:help@vestibulehq.com?subject=" + encodeURIComponent(subj) + "&body=" + encodeURIComponent(lines.join("\n")); } catch (err) {}
+        say("done", "Your email should open with the request ready to send. If it does not, write to help@vestibulehq.com.");
+        return;
+      }
+      button.disabled = true;
+      say("note", "Sending.");
+      fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({
+          access_key: ACCESS_KEY,
+          subject: (own ? "Demo request, own patients (send the agreement): " : "Demo request, sample patients: ") + practice,
+          from_name: "Vestibule website",
+          demo: own ? "Own patients: send the business associate agreement" : "Sample patients",
+          name: name,
+          practice: practice,
+          email: email
+        })
+      }).then(function (r) { return r.json().catch(function () { return { success: r.ok }; }); })
+        .then(function (j) { if (j && j.success) { thanksKeep(); } else { failed(); } })
+        .catch(failed)
+        .then(function () { button.disabled = false; });
+
+      function thanksKeep(extra) {
+        var text = (own
+          ? "Thank you. We'll email the agreement to " + email + ". Once it is signed, we'll ask for the results."
+          : "Thank you. We'll send your demo link to " + email + ".") + (extra || "");
+        form.reset();
+        pick(own ? "own" : "sample");
+        say("done", text);
+      }
+    });
+  })();
+</script>
+</body>
+</html>
