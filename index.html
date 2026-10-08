@@ -19,7 +19,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Schibsted+Grotesk:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
   /* Layout: a dark navy opening with the name, the certification and the pitch
-     on the left and the app itself, playing, in a device on the right; the
+     on the left and the app itself, to click through, in a device on the right; the
      month's sample numbers under it. Light bands follow in the order a practice
      owner asks: what it does, how a visit runs, what else is in it, who built
      it, how to try it. */
@@ -234,10 +234,25 @@
   .demo-guide.nudge { border-color: var(--night-tan); }
   .demo-hint { margin: 0; font-size: 0.98rem; line-height: 1.4; }
   .demo-hint b { color: var(--night-tan); }
-  .demo-steps { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.3rem; font-size: 0.8rem; line-height: 1.3; color: var(--night-soft); }
-  .demo-steps li { padding: 0.1rem 0.5rem; border: 1px solid var(--night-rule); border-radius: 999px; }
-  .demo-steps li.done { color: var(--night-ink); border-color: rgba(205, 180, 169, 0.55); }
-  .demo-steps li.on { background: var(--night-tan); border-color: var(--night-tan); color: #222D40; font-weight: 700; }
+  /* every step's words sit in one cell, so the box is as tall as the longest and the device under it never moves */
+  .demo-hints { display: grid; }
+  .demo-hints > * { grid-area: 1 / 1; }
+  .demo-hint.ghost { visibility: hidden; }
+  .demo-actions { min-height: 2.1rem; }
+  .demo-claim { margin: 0; font-weight: 800; font-size: 1.1rem; line-height: 1.22; letter-spacing: -0.015em; text-wrap: balance; }
+  .demo-claim b { color: var(--night-tan); white-space: nowrap; }
+  /* Noah first, then the three clicks that count */
+  .demo-steps { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem; font-size: 0.82rem; line-height: 1.2; color: var(--night-soft); }
+  .demo-steps li { display: inline-flex; align-items: center; gap: 0.4em; padding: 0.2rem 0.7rem 0.2rem 0.26rem; border: 1px solid var(--night-rule); border-radius: 999px; white-space: nowrap; }
+  .demo-steps li b { flex: none; width: 1.55em; height: 1.55em; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 0.92em; line-height: 1; font-variant-numeric: tabular-nums; background: rgba(205, 180, 169, 0.2); color: var(--night-tan); }
+  .demo-steps li.pre { padding-left: 0.7rem; border-style: dashed; }
+  .demo-steps li.on { background: var(--night-tan); border-color: var(--night-tan); border-style: solid; color: #222D40; font-weight: 700; }
+  .demo-steps li.on b { background: #222D40; color: var(--night-tan); }
+  .demo-steps li.done { color: var(--night-ink); border-color: rgba(205, 180, 169, 0.55); border-style: solid; }
+  .demo-steps li.done b { font-size: 0; background: var(--night-tan); width: 1.17rem; height: 1.17rem; }
+  .demo-steps li.done b::before, .demo-steps li.pre.done::before { content: "\2713"; font-size: 0.72rem; font-weight: 800; }
+  .demo-steps li.done b::before { color: #222D40; }
+  .demo-steps li.pre.done::before { color: var(--night-tan); }
   .demo-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.9rem; }
   .demo-actions .go {
     font: inherit; font-size: 0.92rem; font-weight: 700;
@@ -249,7 +264,10 @@
     background: none; border: 0; padding: 0.2rem 0; cursor: pointer;
     text-decoration: underline; text-underline-offset: 0.2em;
   }
-  .demo-foot { margin: 0; color: var(--night-soft); font-size: 0.88rem; text-align: center; max-width: 21rem; }
+  .demo-also { margin: 0; display: flex; align-items: flex-start; gap: 0.65rem; max-width: 31rem; font-size: 0.95rem; line-height: 1.4; color: var(--night-ink); }
+  .demo-also svg { flex: none; width: 1.05rem; height: 1.8rem; margin-top: 0.12rem; color: var(--night-tan); }
+  .demo-also b { color: var(--night-tan); }
+  .demo-foot { margin: 0; color: var(--night-soft); font-size: 0.88rem; text-align: center; max-width: 24rem; }
   .device-cap { margin: 0 0 -0.2rem; font-size: 0.78rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--night-tan); text-align: center; }
 
   /* ── The phone. Its colors are the app's own and do not follow the page theme. ── */
@@ -309,10 +327,6 @@
   .a-code.dx { background: #ECFDF5; border-color: #A7F3D0; color: #065F46; }
   .a-state { color: #111827 !important; font-size: 1em !important; margin: 0.5em 0 0.6em !important; }
   .a-sign { display: block; width: 100%; border: 0; border-radius: 0.6em; padding: 0.85em; background: #15803D; color: #fff; font-weight: 700; }
-  .a-nav { display: flex; background: #fff; border-top: 1px solid #E5E7EB; padding: 0.5em 0 0.7em; }
-  .a-nav span { flex: 1; display: grid; justify-items: center; gap: 0.15em; font-size: 0.7em; color: #4B5563; }
-  .a-nav svg { width: 1.9em; height: 1.9em; }
-  .a-nav .here { color: #1D4ED8; }
   .a-modal { position: absolute; inset: 0; z-index: 5; background: rgba(0, 0, 0, 0.6); display: flex; align-items: center; justify-content: center; padding: 0.8em; }
   .a-modal-in { width: 100%; max-height: 100%; display: flex; flex-direction: column; background: #fff; border-radius: 0.7em; overflow: hidden; box-shadow: 0 1em 3em rgba(0, 0, 0, 0.4); }
   .a-pdf { background: #E5E7EB; padding: 0.8em; min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; -ms-overflow-style: none; }
@@ -340,7 +354,7 @@
   .a-fill { flex: 1; }
   .ok { color: #15803D; font-weight: 700; }
 
-  /* Report room: the panes, the callout, the results charts, the pointer */
+  /* Report room: the panes, the callout, the results charts */
   .a-panes { flex: 1; min-height: 0; position: relative; display: flex; flex-direction: column; }
   .a-box.has-scroll { padding: 0; display: flex; }
   .a-box.has-scroll[hidden] { display: none; }
@@ -352,8 +366,7 @@
   .res-h { margin: 0 0 0.35em !important; display: flex; align-items: center; gap: 0.5em; font-weight: 700; font-size: 0.95em; color: #111827; }
   .res-h em { font-style: normal; font-size: 0.78em; font-weight: 700; color: #1D4ED8; background: #EFF6FF; border-radius: 0.3em; padding: 0.05em 0.4em; }
   .res-audio { display: block; width: 100%; height: auto; }
-  .res-line { margin: 0.35em 0 0.95em !important; padding-bottom: 0.8em; border-bottom: 1px solid #F1F5F9; font-size: 0.92em; line-height: 1.42; color: #374151; }
-  .res-line.last { border-bottom: 0; margin-bottom: 0 !important; padding-bottom: 0; }
+  .res-line { margin: 0 !important; font-size: 0.94em; line-height: 1.42; color: #374151; }
   .res-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5em; }
   .res-pair figure { margin: 0; min-width: 0; }
   .res-pair svg { display: block; width: 100%; height: auto; }
@@ -373,13 +386,6 @@
   .a-tip.off { opacity: 0; transform: translateY(0.4em); }
   .a-tip b { color: #E9C9BC; font-weight: 700; }
   .a-tip.flow { position: static; margin: 0 0.95em; }
-  .a-cursor { position: absolute; left: 0; top: 0; z-index: 9; width: 2.1em; height: 2.1em; pointer-events: none; transform: translate(16em, 30em); transition: transform 0.75s cubic-bezier(0.45, 0.05, 0.2, 1), opacity 0.25s ease; }
-  .a-cursor b { position: absolute; inset: 0; border-radius: 50%; background: rgba(255, 255, 255, 0.6); border: 0.16em solid rgba(17, 24, 39, 0.62); box-shadow: 0 0.2em 0.6em rgba(0, 0, 0, 0.35); }
-  .a-cursor i { position: absolute; inset: -0.45em; border-radius: 50%; border: 0.2em solid #F59E0B; opacity: 0; }
-  .a-cursor.click b { animation: press 0.4s ease-out; }
-  .a-cursor.click i { animation: tap 0.5s ease-out; }
-  @keyframes press { 0% { transform: scale(1); } 35% { transform: scale(0.72); } 100% { transform: scale(1); } }
-  @keyframes tap { 0% { opacity: 0.95; transform: scale(0.35); } 100% { opacity: 0; transform: scale(1.25); } }
 
   /* The device: a phone, or the lobby kiosk on its stand */
   .stage { width: min(19.5rem, 100%); container-type: inline-size; display: flex; flex-direction: column; align-items: center; }
@@ -391,7 +397,7 @@
   .stage.kiosk .app { font-size: 11px; font-size: 3.75cqw; }
   .stage.kiosk .kstand { display: flex; }
 
-  /* The device as a computer: the report demo starts at a desk, in the chart and in Noah */
+  /* The device as a computer: the report demo runs on it from start to finish */
   .dstand { display: none; width: 100%; flex-direction: column; align-items: center; }
   .dstand i { width: 12%; height: 1.5rem; background: linear-gradient(90deg, #2B3852, #56698C 45%, #2B3852); }
   .dstand b { width: 32%; height: 0.75rem; border-radius: 0.5rem 0.5rem 0.15rem 0.15rem; background: linear-gradient(#56698C, #2B3852); box-shadow: 0 0.6rem 1.1rem rgba(0, 0, 0, 0.4); }
@@ -400,14 +406,12 @@
   .stage.desk .screen { aspect-ratio: 16 / 10; border-radius: 0.3rem; }
   .stage.desk .app { font-size: 10.5px; font-size: 3cqw; }
   .stage.desk .dstand { display: flex; }
-  .hero-demo.is-desk .demo-guide { width: min(30rem, 100%); min-height: 11.6rem; align-content: start; }
-  .demo-guide:has(.demo-steps:not([hidden])) { min-height: 12.2rem; align-content: start; }
-  @media (min-width: 80rem) { .hero-demo.is-desk .demo-guide { min-height: 9.4rem; } }
+  .hero-demo.is-desk .demo-guide { width: min(35.5rem, 100%); min-height: 0; align-content: start; }
+  @media (min-width: 80rem) { .hero-demo.is-desk .demo-guide { min-height: 0; } }
   /* the words in the guide change length as the demo plays; the page must not follow them */
   .demo-side { overflow-anchor: none; }
   .hero-demo.swap { animation: demo-swap 0.5s ease-out; }
   @keyframes demo-swap { from { opacity: 0.12; } to { opacity: 1; } }
-  .demo-steps li b { font-weight: 800; margin-right: 0.3em; }
 
   /* Kiosk */
   .k { background: #FAF8F5; color: #34425C; }
@@ -461,7 +465,7 @@
   .f-line span { color: #6B7280; font-size: 0.93em; }
   .f-line b.ok { color: #15803D; font-weight: 700; }
 
-  /* Report demo, the first screens: a chart on a computer, Noah's main screen drawn in simple form, the same chart on the phone */
+  /* Report demo, the first screens: a chart on a computer and Noah's main screen drawn in simple form */
   .d-top { display: flex; align-items: center; gap: 0.75em; padding: 0.6em 1.2em; background: #34425C; color: #fff; font-size: 0.8em; }
   .d-top .a-logo { width: 1.7em; height: 1.7em; }
   .d-top > b { font-size: 1.05em; letter-spacing: -0.01em; white-space: nowrap; }
@@ -470,17 +474,15 @@
   .d-top .a-burger { margin: 0 0.5em 0 0.3em; font-size: 0.9em; }
   .d-top .a-me { font-size: 0.74em; }
   .d-page { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 0.6em; padding: 0.8em 1.3em 0.9em; }
-  .d-head, .p-head { display: flex; align-items: center; gap: 0.7em; }
-  .d-av, .p-av { width: 2.6em; height: 2.6em; flex: none; border-radius: 50%; background: #E5E7EB; color: #4B5563; font-weight: 700; display: grid; place-items: center; }
-  .d-name, .p-name { display: block; font-size: 1.45em; line-height: 1.12; letter-spacing: -0.01em; }
-  .d-sub, .p-sub { display: block; font-size: 0.88em; color: #4B5563; }
-  .d-row, .p-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4em; }
+  .d-head { display: flex; align-items: center; gap: 0.7em; }
+  .d-av { width: 2.6em; height: 2.6em; flex: none; border-radius: 50%; background: #E5E7EB; color: #4B5563; font-weight: 700; display: grid; place-items: center; }
+  .d-name { display: block; font-size: 1.45em; line-height: 1.12; letter-spacing: -0.01em; }
+  .d-sub { display: block; font-size: 0.88em; color: #4B5563; }
+  .d-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4em; }
   .d-btn, .d-ok, .d-due { display: inline-flex; align-items: center; gap: 0.4em; white-space: nowrap; border: 1px solid #D1D5DB; background: #fff; color: #374151; border-radius: 0.35em; padding: 0.38em 0.65em; font-size: 0.8em; font-weight: 500; line-height: 1.3; }
   .d-btn.pri { background: #2563EB; border-color: #2563EB; color: #fff; font-weight: 600; }
   .d-ok { border-color: #6EE7B7; background: #ECFDF5; color: #064E3B; }
-  .d-due, .p-row button.d-due { border-color: #FBBF24; background: #FEF3C7; color: #78350F; font-weight: 600; }
-  .p-row button.d-due { position: relative; font-size: 0.8em; }
-  .p-row button.d-due::before { content: ""; position: absolute; inset: -0.7em -0.5em; }
+  .d-due { border-color: #FBBF24; background: #FEF3C7; color: #78350F; font-weight: 600; }
   .d-due.in { animation: due-pop 0.6s ease-out; }
   @keyframes due-pop { 0% { opacity: 0; transform: scale(0.6); } 60% { opacity: 1; transform: scale(1.12); } 100% { transform: none; } }
   .d-row button.d-noah { position: relative; font-size: 0.8em; font-weight: 500; color: #1F2937; padding: 0.16em 0.7em 0.16em 0.3em; }
@@ -490,14 +492,15 @@
   .d-card { flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: center; background: #fff; border-radius: 0.6em; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.1); padding: 0.5em 0.85em; }
   .d-empty { margin: 0; text-align: center; color: #6B7280; }
   .d-empty b { display: block; font-size: 1.02em; color: #374151; }
-  .d-res { display: flex; align-items: center; gap: 1em; border-radius: 0.4em; }
+  .d-res { display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-rows: 1fr auto; grid-template-areas: "plot txt" "plot from"; column-gap: 1em; align-items: center; border-radius: 0.4em; }
   .d-res.in { animation: d-land 1.3s ease-out; }
   @keyframes d-land { 0% { background: #FDEFD8; opacity: 0.2; } 30% { opacity: 1; } 100% { background: transparent; } }
-  .d-plot { flex: none; width: 10.2em; }
-  .d-txt { min-width: 0; }
+  .d-plot { grid-area: plot; width: 10.2em; }
+  .d-txt { grid-area: txt; min-width: 0; align-self: end; }   /* the mark on Report due points up from the top of this card */
   .d-txt p { margin: 0 0 0.45em; font-size: 0.9em; line-height: 1.4; color: #374151; }
+  .d-txt p:last-child { margin-bottom: 0; }
   .d-txt .res-h { font-size: 1em; }
-  .d-txt .d-from { display: inline-block; margin: 0.25em 0 0; padding: 0.4em 0.7em 0.45em; font-size: 0.82em; background: #1F2A3D; color: #fff; border-radius: 0.85em; border-top-left-radius: 0.2em; font-weight: 500; line-height: 1.3; }
+  .d-from { grid-area: from; justify-self: start; align-self: start; margin: 0.5em 0 0.35em; padding: 0.4em 0.7em 0.45em; font-size: 0.74em; background: #1F2A3D; color: #fff; border-radius: 0.85em; border-top-left-radius: 0.2em; font-weight: 500; line-height: 1.3; }
   .d-from b { color: #E9C9BC; }
   .aud { display: block; width: 100%; height: auto; }
 
@@ -556,19 +559,6 @@
   @keyframes aud-draw { to { stroke-dashoffset: 0; } }
   @keyframes aud-pop { to { opacity: 1; } }
 
-  /* the same chart on the phone */
-  .p-head { padding: 0.75em 0.95em 0; }
-  .p-av { width: 2.9em; height: 2.9em; }
-  .p-name { font-size: 1.3em; }
-  .p-row { padding: 0.7em 0.95em 0; }
-  .p-tip { margin: 0.65em 0.95em 0 !important; }
-  .p-tabs { border-bottom: 0; padding-bottom: 0.1em; }
-  .p-card { margin: 0.6em 0.95em; background: #fff; border-radius: 0.6em; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.1); padding: 0.2em 0.85em; }
-  .p-line { display: flex; align-items: center; gap: 0.75em; padding: 0.55em 0; border-top: 1px solid #F1F5F9; font-size: 0.92em; line-height: 1.35; color: #374151; }
-  .p-line:first-child { border-top: 0; }
-  .p-line .res-h { margin: 0 !important; }
-  .p-plot { flex: none; width: 8.4em; }
-
   /* The next thing to tap */
   .pulse { position: relative; }
   .pulse::after { content: ""; position: absolute; inset: -0.32em; border-radius: inherit; border: 2px solid #F59E0B; pointer-events: none; animation: pulse 1.7s ease-out infinite; }
@@ -576,6 +566,115 @@
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .pulse::after { animation: none; opacity: 1; }
+  }
+
+  /* The mark on the next thing to click. It sits beside its target and a click on it counts as a click on the target. */
+  .app .a-flag {
+    position: absolute; left: 0; top: 0; z-index: 8;
+    display: inline-flex; align-items: center; gap: 0.45em;
+    margin: 0; padding: 0.42em 0.75em 0.46em;
+    border: 0; border-radius: 0.55em;
+    background: #F59E0B; color: #111827;
+    font-size: 0.88em; font-size: clamp(11.5px, 0.88em, 15px);
+    font-weight: 800; line-height: 1.15; white-space: nowrap;
+    box-shadow: 0 0 0 0.13em #fff, 0 0.45em 1.1em rgba(15, 23, 42, 0.4);
+    --bx: 0em; --by: 0em;
+  }
+  .a-flag::after { content: ""; position: absolute; width: 0.7em; height: 0.7em; background: inherit; transform: rotate(45deg); }
+  .a-flag[data-side="top"] { --by: -0.3em; }
+  .a-flag[data-side="top"]::after { left: var(--a, 50%); bottom: -0.3em; margin-left: -0.35em; }
+  .a-flag[data-side="bottom"] { --by: 0.3em; }
+  .a-flag[data-side="bottom"]::after { left: var(--a, 50%); top: -0.3em; margin-left: -0.35em; }
+  .a-flag[data-side="left"] { --bx: -0.3em; }
+  .a-flag[data-side="left"]::after { top: var(--a, 50%); right: -0.3em; margin-top: -0.35em; }
+  .a-flag[data-side="right"], .a-flag[data-side="inside"] { --bx: 0.3em; }
+  .a-flag[data-side="right"]::after, .a-flag[data-side="inside"]::after { top: var(--a, 50%); left: -0.3em; margin-top: -0.35em; }
+  .a-flag b { flex: none; width: 1.5em; height: 1.5em; border-radius: 50%; display: grid; place-items: center; background: #111827; color: #FBBF24; font-size: 0.95em; line-height: 1; font-variant-numeric: tabular-nums; }
+  .a-flag.bob { animation: flag-bob 0.9s ease-in-out infinite alternate; }
+  @keyframes flag-bob { to { transform: translate(var(--bx), var(--by)); } }
+  @media (prefers-reduced-motion: reduce) { .a-flag.bob { animation: none; } }
+
+  /* The report room, the finished report and the Reports list, on the same computer */
+  .stage { container-name: stage; }
+  .d-row button.d-due { position: relative; font-size: 0.8em; }
+  .d-row button.d-due::before { content: ""; position: absolute; inset: -0.9em -0.5em; }
+  .d-crumb { flex: none; display: flex; margin: 0; padding: 0.55em 1.86em 0.5em; font-size: 0.7em; line-height: 1.35; color: #4B5563; background: #fff; border-bottom: 1px solid #E5E7EB; white-space: nowrap; }
+  .d-crumb > span:first-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+  .d-crumb > span:last-child { flex: none; white-space: pre; }
+  .d-crumb b { color: #111827; }
+  .d-crumb i { font-style: normal; color: #1D4ED8; }
+  .r-body { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) 9.4em; grid-template-rows: auto auto minmax(0, 1fr); grid-template-areas: "tabs tabs" "opt opt" "pane side"; gap: 0.38em 0.7em; padding: 0.45em 1.3em 0.4em; }
+  .r-tabs { grid-area: tabs; padding: 0; gap: 0.3em; }
+  .r-tabs button { position: relative; font-size: 0.7em; padding: 0.3em 0.75em; white-space: nowrap; }
+  .r-tabs button::after { content: ""; position: absolute; inset: -0.55em -0.2em; }
+  /* the softer line under the sections: something the viewer may click, and does not have to */
+  .r-optline { grid-area: opt; margin: -0.12em 0 0; line-height: 1; }
+  .app .r-opt { position: relative; margin: 0; padding: 0.3em 0.85em 0.34em; border: 0; border-radius: 999px; background: #FFFBEB; color: #78350F; box-shadow: inset 0 0 0 1.5px #F59E0B; font: inherit; font-size: 0.7em; font-size: clamp(10px, 0.7em, 13px); font-weight: 700; line-height: 1.2; white-space: nowrap; cursor: pointer; }
+  .r-opt::before { content: "\2191\00a0"; }
+  .r-opt::after { content: ""; position: absolute; inset: -0.45em -0.2em; }
+  .r-panes { grid-area: pane; min-width: 0; min-height: 0; display: flex; flex-direction: column; }
+  .r-panes .a-box { margin: 0; padding: 0.62em 0.9em; font-size: 0.72em; line-height: 1.4; }
+  .r-panes .a-box.has-scroll { padding: 0; }
+  .r-panes .a-scroll { padding: 0.75em 0.5em 0.9em 0.9em; }
+  .res-blk { display: grid; grid-template-columns: 12.5em minmax(0, 1fr); gap: 0 1.1em; align-items: center; padding-bottom: 0.8em; margin-bottom: 0.8em; border-bottom: 1px solid #F1F5F9; }
+  .res-blk > .res-h { grid-column: 1 / -1; }
+  .res-blk.txt { display: block; }
+  .res-blk:last-child { padding-bottom: 0; margin-bottom: 0; border-bottom: 0; }
+  .r-side { grid-area: side; min-width: 0; display: flex; flex-direction: column; gap: 0.5em; }
+  .r-chair { padding: 0.45em 0.65em 0.5em; background: #fff; border-radius: 0.6em; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.1); font-size: 0.64em; line-height: 1.35; color: #6B7280; }
+  .r-chair b { display: block; font-weight: 500; font-size: 1.12em; color: #4B5563; }
+  .r-side .a-tip { position: static; margin: 0; padding: 0.55em 0.7em 0.6em; font-size: 0.68em; line-height: 1.35; }
+  .r-dock { flex: none; display: grid; gap: 0.3em; padding: 0.4em 1.3em 0.5em; background: #fff; border-top: 1px solid #E5E7EB; }
+  .r-dock p { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 0.4em; font-size: 0.7em; color: #4B5563; }
+  .r-dock p > span { margin-right: 0.4em; }
+  .r-dock p > b { margin-left: auto; font-weight: 500; color: #111827; }
+  .r-dock .a-sign { position: relative; padding: 0.5em; font-size: 0.84em; }
+  .r-prev { padding: 0.7em 1.5em; }
+  .r-prev .a-modal-in { height: 100%; max-width: 31em; }
+  .r-prev .a-pdf { flex: 1; padding: 0.6em; }
+  .a-pages { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.6em; }
+  .a-pages .sheet + .sheet { margin-top: 0; }
+  .r-prev .a-bar { padding: 0.5em 0.7em; }
+  .r-prev .a-bar .note { font-size: 0.7em; }
+  .r-prev .a-bar .back { font-size: 0.72em; }
+  .r-prev .a-bar .commit { position: relative; font-size: 0.8em; }
+  .r-list { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 0.55em; padding: 0.75em 1.3em 0.8em; }
+  .r-list .a-h1 { padding: 0; font-size: 1.15em; }
+  .r-list .a-seg { padding: 0 0 0.55em; }
+  .r-list .a-seg span { font-size: 0.72em; }
+  .r-list .a-list { margin: 0; }
+  .r-list .a-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 0 0.8em; padding: 0.55em 0.8em; font-size: 0.72em; line-height: 1.4; }
+  .r-list .a-row b { display: inline; margin-right: 0.45em; font-size: 1.06em; }
+  .r-list .a-row small { display: block; font-size: 1em; color: #4B5563; }
+  .r-list .a-tip.flow { align-self: flex-start; margin: 0.1em 0 0; font-size: 0.74em; }
+
+  /* A narrow screen gets a taller monitor and larger type, so the same screens stay readable on a phone */
+  @container stage (max-width: 27rem) {
+    .stage.desk .screen { aspect-ratio: 5 / 4; }
+    .stage.desk .app { font-size: 3.55cqw; --narrow: 1; }
+    .d-nav, .x-wide { display: none; }
+    .d-top > b { margin-right: auto; }
+    .d-top { padding-inline: 0.9em; }
+    .d-page { padding-inline: 0.9em; }
+    .d-row .d-btn:nth-child(2) { display: none; }   /* one row of buttons: Quick-Book steps aside */
+    .d-res { grid-template-rows: auto auto; grid-template-areas: "plot txt" "from from"; column-gap: 0.8em; }
+    .d-plot { width: 8.2em; }
+    .d-txt p { font-size: 0.86em; }
+    .d-from { margin: 0.45em 0 0; font-size: 0.78em; }
+    .d-crumb { padding-inline: 1.3em; }
+    .r-body { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto minmax(0, 1fr); grid-template-areas: "tabs" "opt" "pane"; gap: 0.4em; padding: 0.5em 0.9em; }
+    .r-tabs { gap: 0.22em; }
+    .r-tabs button { font-size: 0.66em; padding: 0.3em 0.6em; }
+    .r-side { display: contents; }
+    .r-chair { display: none; }   /* the optional line takes its place */
+    .r-side .a-tip { grid-area: pane; align-self: end; position: relative; z-index: 3; margin: 0 0.7em 0.6em; }
+    .r-panes .a-box { font-size: 0.78em; }
+    .res-blk { grid-template-columns: 9.5em minmax(0, 1fr); gap: 0 0.8em; }
+    .r-dock { padding-inline: 0.9em; }
+    .r-dock .a-sign { text-align: left; padding-left: 1.1em; }   /* room for the mark inside the button */
+    .r-prev { padding: 0.5em 0.7em; }
+    .a-pages { grid-template-columns: minmax(0, 1fr); }
+    .r-list { padding-inline: 0.9em; }
   }
 
   /* ── The sample report page. A document, so its colors are fixed. ── */
@@ -757,6 +856,8 @@
   .ask .trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
   .ask .note { margin: 0; color: var(--night-soft); font-size: 0.98rem; }
   .ask .done { margin: 0; font-weight: 700; color: var(--night-tan); }
+  .ask label small { font-weight: 400; font-size: 0.92rem; line-height: 1.35; color: var(--night-soft); }
+  .ask .ask-or { margin: -0.35rem 0 0; color: var(--night-soft); font-size: 0.95rem; }
   .mail { margin-top: 2.5rem !important; padding-top: 1.4rem; border-top: 1px solid var(--night-rule); color: var(--night-soft); }
   .mail a { color: var(--night-ink); font-weight: 700; }
 
@@ -850,29 +951,25 @@
         </div>
       </div>
 
-      <div class="hero-demo is-desk" id="try" aria-label="A guided preview of Vestibule">
+      <div class="hero-demo is-desk" id="try" aria-label="A click-through preview of Vestibule">
         <div class="demo-side">
-        <div class="scene-chips" role="group" aria-label="Pick something to watch">
+        <div class="scene-chips" role="group" aria-label="Pick something to try">
           <button type="button" data-scene="report" aria-pressed="true">Sign a report</button>
           <button type="button" data-scene="checkin" aria-pressed="false">Lobby kiosk check-in</button>
           <button type="button" data-scene="referral" aria-pressed="false">Automate referrals</button>
         </div>
         <div class="demo-guide" id="demo-guide">
-          <p class="demo-hint" id="demo-hint" aria-live="polite">Watch a visit become a signed report. The tests come in from Noah, and the report takes three clicks.</p>
+          <p class="demo-claim" id="demo-claim">Once you are out of Noah, a finished report is <b>three clicks</b> away.</p>
           <ol class="demo-steps" id="demo-steps" aria-hidden="true">
-            <li data-step="noah">Noah</li>
+            <li class="pre" data-step="noah">In Noah</li>
             <li data-step="due"><b>1</b>Report due</li>
-            <li data-step="hx">History</li>
-            <li data-step="results">Results</li>
-            <li data-step="interp">Interpretation</li>
-            <li data-step="recs">Recommendations</li>
-            <li data-step="summary">Summary</li>
-            <li data-step="sign"><b>2</b>Preview</li>
+            <li data-step="sign"><b>2</b>Preview report</li>
             <li data-step="send"><b>3</b>Sign &amp; send</li>
           </ol>
+          <div class="demo-hints" id="demo-hints"><p class="demo-hint" id="demo-hint" aria-live="polite"><b>Try it yourself.</b> This is a patient's chart on your computer. Click <b>Open in Noah</b>.</p></div>
           <div class="demo-actions">
             <button type="button" class="go" id="demo-next" hidden></button>
-            <button type="button" class="again" id="demo-again" hidden>Watch again</button>
+            <button type="button" class="again" id="demo-again" hidden>Start over</button>
           </div>
         </div>
         </div>
@@ -882,7 +979,7 @@
         <div class="phone" id="phone">
           <div class="screen">
             <div class="app">
-              <span class="a-cursor" id="cursor" aria-hidden="true" hidden><b></b><i></i></span>
+              <button type="button" class="a-flag" id="flag" tabindex="-1" aria-hidden="true" hidden></button>
 
               <!-- Report, the first screens: a patient's chart on a computer -->
               <div class="scr d" data-screen="d-chart">
@@ -902,7 +999,7 @@
                   <div class="d-row">
                     <span class="d-btn pri">Contact</span>
                     <span class="d-btn">Quick-Book</span>
-                    <span class="d-due" id="d-due" hidden>Report due</span>
+                    <button type="button" class="d-due" id="d-due" data-go="report" hidden>Report due</button>
                     <span class="d-ok">Noah ✓</span>
                     <button type="button" class="d-btn d-noah" data-go="report-noah"><img data-seal alt="" width="28" height="28">Open in Noah</button>
                   </div>
@@ -913,8 +1010,8 @@
                       <div class="d-txt">
                         <p class="res-h">Audiogram <em>NOAH</em></p>
                         <p>Mild to moderate sloping sensorineural hearing loss bilaterally. SRT 35 and 40 dB HL. Word recognition 88% and 92%.</p>
-                        <p class="d-from">In from Noah <b>as soon as it was saved.</b></p>
                       </div>
+                      <p class="d-from">In from Noah <b>as soon as it was saved.</b></p>
                     </div>
                   </div>
                 </div>
@@ -951,135 +1048,104 @@
                 </div>
               </div>
 
-              <!-- Report: the same chart on the phone, the tests already in from Noah -->
-              <div class="scr" data-screen="p-chart" hidden>
-                <div class="a-top">
+              <!-- Report: the room, on the same computer. The report is already written; every section can be opened, and none has to be. -->
+              <div class="scr d" data-screen="r-room" hidden>
+                <div class="d-top">
                   <span class="a-logo"><svg viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 12c2.5-4 5.5-4 8 0"/><path d="M2 8.5c4-6 10-6 14 0"/><circle cx="8" cy="15" r="1" fill="#fff"/></svg></span>
                   <b>Coastal Hearing</b>
+                  <span class="d-nav" aria-hidden="true"><span>Today</span><span>Calendar</span><span>Patients</span><span>Billing</span></span>
                   <span class="a-pill">Quick-Book</span>
                   <span class="a-burger"><i>2</i></span>
                   <span class="a-me">JA</span>
                 </div>
-                <p class="a-crumb"><b>Roy Calloway</b> › Chart</p>
-                <div class="p-head">
-                  <span class="p-av" aria-hidden="true">RC</span>
-                  <div><b class="p-name">Roy Calloway</b><span class="p-sub">3/14/1952 · Seabrook</span></div>
-                </div>
-                <div class="p-row">
-                  <span class="d-btn pri">Contact</span>
-                  <span class="d-btn">Quick-Book</span>
-                  <button type="button" class="d-due" data-go="report">Report due</button>
-                  <span class="d-ok">Noah ✓</span>
-                </div>
-                <p class="a-tip flow p-tip"><b>Reports in 3 clicks.</b> This button appeared the moment the tests were saved in Noah.</p>
-                <div class="a-seg p-tabs" aria-hidden="true"><span>Overview</span><span class="on">Diagnostics</span><span>History</span></div>
-                <div class="p-card">
-                  <div class="p-line"><div class="p-plot" data-aud></div><div><p class="res-h">Audiogram <em>NOAH</em></p>Mild to moderate sloping sensorineural hearing loss bilaterally. SRT 35 and 40 dB HL. Word recognition 88% and 92%.</div></div>
-                </div>
-                <div class="a-fill"></div>
-                <div class="a-nav" aria-hidden="true">
-                  <span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M3 9l7-6 7 6v8h-5v-5H8v5H3z"/></svg>Today</span>
-                  <span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="3" y="4.5" width="14" height="12.5" rx="2"/><path d="M3 8.5h14M7 2.5v4M13 2.5v4"/></svg>Calendar</span>
-                  <span class="here"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="7.5" cy="7" r="3"/><path d="M2 17c0-3 2.5-5 5.5-5s5.5 2 5.5 5M13.5 4.5a3 3 0 010 5.5M15 12.5c1.8.6 3 2.2 3 4.5"/></svg>Patients</span>
-                  <span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="10" cy="10" r="7.5"/><path d="M12.5 7.5c-.5-1-1.5-1.3-2.5-1.3-1.4 0-2.5.7-2.5 1.9 0 2.6 5 1.2 5 3.9 0 1.2-1.1 1.9-2.5 1.9-1.2 0-2.2-.4-2.7-1.4M10 4.8v10.4"/></svg>Billing</span>
-                  <span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 16V9M8.5 16V4M13 16v-5M17 16v-8"/></svg>Insights</span>
-                </div>
-              </div>
-
-              <!-- Report: the room -->
-              <div class="scr" data-screen="r-room" hidden>
-                <div class="a-top">
-                  <span class="a-logo"><svg viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 12c2.5-4 5.5-4 8 0"/><path d="M2 8.5c4-6 10-6 14 0"/><circle cx="8" cy="15" r="1" fill="#fff"/></svg></span>
-                  <b>Coastal Hearing</b>
-                  <span class="a-pill">Quick-Book</span>
-                  <span class="a-burger"><i>2</i></span>
-                  <span class="a-me">JA</span>
-                </div>
-                <p class="a-crumb"><b>Roy Calloway</b> · <i>Chart</i> › <i><span data-d="0">10/7/2026</span> visit</i> › Report · 3/14/1952 · Audiological Assessment · Seabrook · → Dr. Whitfield (fax)</p>
-                <div class="a-tabs">
-                  <button type="button" data-tab="hx" class="on">Hx</button>
-                  <button type="button" data-tab="results">Results</button>
-                  <button type="button" data-tab="interp">Interpretation</button>
-                  <button type="button" data-tab="recs">Recommendations</button>
-                  <button type="button" data-tab="summary">Summary</button>
-                </div>
-                <div class="a-chair"><b>Chairside</b> · Sent to report 10:42 AM</div>
-                <div class="a-panes">
-                  <div class="a-box" data-pane="hx">
+                <p class="d-crumb"><span><b>Roy Calloway</b> · <i>Chart</i> › <i><span data-d="0">10/7/2026</span> visit</i> › Report<span class="x-wide"> · Audiological Assessment</span></span><span> · → Dr. Whitfield (fax)</span></p>
+                <div class="r-body">
+                  <div class="a-tabs r-tabs">
+                    <button type="button" data-tab="hx" class="on">Hx</button>
+                    <button type="button" data-tab="results">Results</button>
+                    <button type="button" data-tab="interp">Interpretation</button>
+                    <button type="button" data-tab="recs">Recommendations</button>
+                    <button type="button" data-tab="summary">Summary</button>
+                  </div>
+                  <p class="r-optline"><button type="button" class="r-opt" id="r-opt">Optional: click any section for more detail</button></p>
+                  <div class="r-panes">
+                    <div class="a-box" data-pane="hx">
                     <p>Onset was gradual. The patient reports a family history of hearing loss. The patient has never worn hearing aids.</p>
                     <p>The patient reports constant ringing tinnitus in both ears, 2 years. The tinnitus is bothersome, rated 6 of 10, and affects sleep.</p>
-                  </div>
-                  <div class="a-box has-scroll" data-pane="results" hidden>
-                    <div class="a-scroll" id="res-scroll" tabindex="0" aria-label="Test results">
-                      <p class="res-h">Audiogram <em>NOAH</em></p>
-                      <svg viewBox="0 0 222 197" class="res-audio" role="img" aria-label="Audiogram: mild to moderate sloping hearing loss in both ears"><path d="M52 13V182M78 13V182M104 13V182M130 13V182M156 13V182M182 13V182M26 39H208M26 52H208M26 65H208M26 78H208M26 91H208M26 104H208M26 117H208M26 130H208M26 143H208M26 156H208M26 169H208" fill="none" stroke="#DDDDDD" stroke-width="0.6"/><path d="M93.21 13V182M119.21 13V182M145.21 13V182M171.21 13V182" fill="none" stroke="#9E9E9E" stroke-width="0.33" stroke-dasharray="1.8 1.8" opacity="0.55"/><path d="M26 26H208" stroke="#8C8C8C" stroke-width="1.14"/><rect x="26" y="13" width="182" height="169" fill="none" stroke="#737373" stroke-width="0.84"/><g font-family="Helvetica, Arial, sans-serif" font-size="5.6" fill="#737373" text-anchor="middle"><text x="26" y="9.64">125</text><text x="52" y="9.64">250</text><text x="78" y="9.64">500</text><text x="104" y="9.64">1000</text><text x="130" y="9.64">2000</text><text x="156" y="9.64">4000</text><text x="182" y="9.64">8000</text><text x="208" y="9.64">16000</text></g><g font-family="Helvetica, Arial, sans-serif" font-size="5.6" fill="#737373" text-anchor="end"><text x="21.8" y="27.96">0</text><text x="21.8" y="53.96">20</text><text x="21.8" y="79.96">40</text><text x="21.8" y="105.96">60</text><text x="21.8" y="131.96">80</text><text x="21.8" y="157.96">100</text><text x="21.8" y="183.96">120</text></g><polyline points="52,52 78,65 104,71.5 130,84.5 145.21,91 156,97.5 171.21,97.5 182,91" fill="none" stroke="#C81E1E" stroke-width="1.05"/><polyline points="52,58.5 78,71.5 104,78 130,84.5 145.21,97.5 156,97.5 171.21,91 182,97.5" fill="none" stroke="#1D4ED8" stroke-width="1.05"/><g fill="#fff" stroke="#C81E1E" stroke-width="1.16"><circle cx="52" cy="52" r="3"/><circle cx="78" cy="65" r="3"/><circle cx="104" cy="71.5" r="3"/><circle cx="130" cy="84.5" r="3"/><circle cx="145.21" cy="91" r="3"/><circle cx="156" cy="97.5" r="3"/><circle cx="171.21" cy="97.5" r="3"/><circle cx="182" cy="91" r="3"/></g><g fill="none" stroke="#1D4ED8" stroke-width="1.21" stroke-linecap="round"><path d="M49.24 55.74l5.52 5.52M54.76 55.74l-5.52 5.52"/><path d="M75.24 68.74l5.52 5.52M80.76 68.74l-5.52 5.52"/><path d="M101.24 75.24l5.52 5.52M106.76 75.24l-5.52 5.52"/><path d="M127.24 81.74l5.52 5.52M132.76 81.74l-5.52 5.52"/><path d="M142.45 94.74l5.52 5.52M147.97 94.74l-5.52 5.52"/><path d="M153.24 94.74l5.52 5.52M158.76 94.74l-5.52 5.52"/><path d="M168.45 88.24l5.52 5.52M173.97 88.24l-5.52 5.52"/><path d="M179.24 94.74l5.52 5.52M184.76 94.74l-5.52 5.52"/></g><g fill="none" stroke="#C81E1E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M72.75 61.85l-3.6 3.15 3.6 3.15"/><path d="M98.75 68.35l-3.6 3.15 3.6 3.15"/><path d="M124.75 81.35l-3.6 3.15 3.6 3.15"/><path d="M150.75 94.35l-3.6 3.15 3.6 3.15"/></g><g font-family="Helvetica, Arial, sans-serif" font-size="5.8" fill="#4B5563"><text x="26" y="193.5"><tspan fill="#C81E1E">O</tspan> right</text><text x="62" y="193.5"><tspan fill="#1D4ED8">X</tspan> left</text><text x="92" y="193.5"><tspan fill="#C81E1E">&lt;</tspan> bone</text><text x="208" y="193.5" text-anchor="end">dB HL by Hz</text></g></svg>
-                      <p class="res-line">Mild to moderate sloping sensorineural hearing loss bilaterally. SRT 35 and 40 dB HL. Word recognition 88% and 92%.</p>
-
-                      <p class="res-h">Tympanometry <em>NOAH</em></p>
-                      <div class="res-pair">
-                        <figure>
-                          <svg viewBox="0 0 160 73" role="img" aria-label="Right tympanogram, type A"><rect x="50.6" y="25" width="44.8" height="24" fill="#EAFBF0" stroke="#9ED1AD" stroke-width="0.5"/><path d="M17 45H129M17 35H129M17 25H129M17 15H129M39.4 5V55M61.8 5V55M106.6 5V55" fill="none" stroke="#DDDDDD" stroke-width="0.5"/><path d="M84.2 5V55" stroke="#999999" stroke-width="0.9"/><rect x="17" y="5" width="112" height="50" fill="none" stroke="#737373" stroke-width="0.8"/><g font-family="Helvetica, Arial, sans-serif" font-size="5.4" fill="#737373" text-anchor="end"><text x="13.22" y="56.89">0.0</text><text x="13.22" y="46.89">0.5</text><text x="13.22" y="36.89">1.0</text><text x="13.22" y="26.89">1.5</text><text x="13.22" y="16.89">2.0</text><text x="13.22" y="6.89">2.5</text></g><g font-family="Helvetica, Arial, sans-serif" font-size="5.4" fill="#737373" text-anchor="middle"><text x="17" y="62.83">-300</text><text x="61.8" y="62.83">-100</text><text x="84.2" y="62.83">0</text><text x="129" y="62.83">+200</text></g><polyline points="17,55 19.24,55 21.48,55 23.72,55 25.96,55 28.2,55 30.44,55 32.68,55 34.92,55 37.16,55 39.4,55 41.64,54.99 43.88,54.98 46.12,54.95 48.36,54.9 50.6,54.8 52.84,54.63 55.08,54.19 57.32,53.68 59.56,53.01 61.8,52.14 64.04,51.01 66.28,49.6 68.52,47.93 70.76,46.06 73,44.15 75.24,42.41 77.48,41.03 79.72,40.23 81.96,40.2 84.2,41.18 86.44,43.09 88.68,45.53 90.92,48.07 93.16,50.36 95.4,51.87 97.64,53.16 99.88,53.96 102.12,54.36 104.36,54.45 106.6,54.58 108.84,54.64 111.08,54.67 113.32,54.67 115.56,54.68 117.8,54.68 120.04,54.68 122.28,54.68 124.52,54.68 126.76,54.68 129,54.68" fill="none" stroke="#C81E1E" stroke-width="1.15" stroke-linejoin="round"/><path d="M132 55H144" stroke="#737373" stroke-width="0.8"/><rect x="134" y="33" width="8" height="22" fill="#C81E1E"/><text x="138" y="31" font-family="Helvetica, Arial, sans-serif" font-size="5" fill="#C81E1E" text-anchor="middle">1.10</text><text x="17" y="69.85" font-family="Helvetica, Arial, sans-serif" font-size="5.2" fill="#6B7280">measured</text><text x="144" y="69.85" font-family="Helvetica, Arial, sans-serif" font-size="5" fill="#737373" text-anchor="end">Volume</text></svg>
-                          <figcaption class="r">Right · type A</figcaption>
-                        </figure>
-                        <figure>
-                          <svg viewBox="0 0 160 73" role="img" aria-label="Left tympanogram, type A"><rect x="50.6" y="25" width="44.8" height="24" fill="#EAFBF0" stroke="#9ED1AD" stroke-width="0.5"/><path d="M17 45H129M17 35H129M17 25H129M17 15H129M39.4 5V55M61.8 5V55M106.6 5V55" fill="none" stroke="#DDDDDD" stroke-width="0.5"/><path d="M84.2 5V55" stroke="#999999" stroke-width="0.9"/><rect x="17" y="5" width="112" height="50" fill="none" stroke="#737373" stroke-width="0.8"/><g font-family="Helvetica, Arial, sans-serif" font-size="5.4" fill="#737373" text-anchor="end"><text x="13.22" y="56.89">0.0</text><text x="13.22" y="46.89">0.5</text><text x="13.22" y="36.89">1.0</text><text x="13.22" y="26.89">1.5</text><text x="13.22" y="16.89">2.0</text><text x="13.22" y="6.89">2.5</text></g><g font-family="Helvetica, Arial, sans-serif" font-size="5.4" fill="#737373" text-anchor="middle"><text x="17" y="62.83">-300</text><text x="61.8" y="62.83">-100</text><text x="84.2" y="62.83">0</text><text x="129" y="62.83">+200</text></g><polyline points="17,55 19.24,55 21.48,55 23.72,55 25.96,55 28.2,55 30.44,55 32.68,55 34.92,55 37.16,55 39.4,54.99 41.64,54.98 43.88,54.96 46.12,54.93 48.36,54.87 50.6,54.77 52.84,54.6 55.08,54.12 57.32,53.82 59.56,53.38 61.8,52.74 64.04,51.84 66.28,50.66 68.52,49.21 70.76,47.55 73,45.82 75.24,44.16 77.48,42.74 79.72,41.74 81.96,41.4 84.2,41.4 86.44,42.31 88.68,43.92 90.92,45.91 93.16,47.99 95.4,49.89 97.64,51.14 99.88,52.31 102.12,53.12 104.36,53.65 106.6,54 108.84,54.46 111.08,54.57 113.32,54.63 115.56,54.66 117.8,54.67 120.04,54.68 122.28,54.68 124.52,54.68 126.76,54.68 129,54.68" fill="none" stroke="#1D4ED8" stroke-width="1.15" stroke-linejoin="round"/><path d="M132 55H144" stroke="#737373" stroke-width="0.8"/><rect x="134" y="31" width="8" height="24" fill="#1D4ED8"/><text x="138" y="29" font-family="Helvetica, Arial, sans-serif" font-size="5" fill="#1D4ED8" text-anchor="middle">1.20</text><text x="17" y="69.85" font-family="Helvetica, Arial, sans-serif" font-size="5.2" fill="#6B7280">measured</text><text x="144" y="69.85" font-family="Helvetica, Arial, sans-serif" font-size="5" fill="#737373" text-anchor="end">Volume</text></svg>
-                          <figcaption class="l">Left · type A</figcaption>
-                        </figure>
-                      </div>
-                      <p class="res-line">Normal type 'A' tympanograms bilaterally with 1.1 and 1.2 mL ECV.</p>
-
-                      <p class="res-h">DPOAE · 12 frequencies <em>NOAH</em></p>
-                      <div class="res-pair">
-                        <figure>
-                          <svg viewBox="0 0 160 67" role="img" aria-label="Right ear DP-gram: emissions present at 500 and 1000 hertz only"><path d="M17 48.75H153M17 42.5H153M17 36.25H153M17 23.75H153M17 17.5H153M17 11.25H153M17 5H153" fill="none" stroke="#DDDDDD" stroke-width="0.4"/><path d="M17 30H153" stroke="#737373" stroke-width="0.7"/><path d="M17 5V55H153" fill="none" stroke="#737373" stroke-width="0.8"/><g font-family="Helvetica, Arial, sans-serif" font-size="5.4" fill="#737373" text-anchor="end"><text x="13.4" y="56.9">-40</text><text x="13.4" y="44.4">-20</text><text x="13.4" y="31.9">0</text><text x="13.4" y="19.4">20</text><text x="13.4" y="6.9">40</text></g><g font-family="Helvetica, Arial, sans-serif" font-size="5.4" fill="#737373" text-anchor="middle"><text x="17" y="62.8">500</text><text x="48.47" y="62.8">1k</text><text x="79.93" y="62.8">2k</text><text x="111.4" y="62.8">4k</text><text x="153" y="62.8">10k</text></g><polyline points="17,26.12 48.47,24.75 66.87,32.56 79.93,35.81 98.34,38 111.4,39.5 121.53,40.25 129.81,40.69 136.81,40.19 142.87,41.38 148.22,41.88 153,42.69" fill="none" stroke="#C81E1E" stroke-width="1"/><circle cx="17" cy="26.12" r="2.1" fill="#C81E1E" stroke="#C81E1E" stroke-width="0.95"/><path d="M14.96 19.39L16.49 20.93L19.38 17.19" fill="none" stroke="#15803D" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="48.47" cy="24.75" r="2.1" fill="#C81E1E" stroke="#C81E1E" stroke-width="0.95"/><path d="M46.43 18.02L47.96 19.55L50.85 15.81" fill="none" stroke="#15803D" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="66.87" cy="32.56" r="2.1" fill="#fff" stroke="#C81E1E" stroke-width="0.95"/><circle cx="79.93" cy="35.81" r="2.1" fill="#fff" stroke="#C81E1E" stroke-width="0.95"/><circle cx="98.34" cy="38" r="2.1" fill="#fff" stroke="#C81E1E" stroke-width="0.95"/><circle cx="111.4" cy="39.5" r="2.1" fill="#fff" stroke="#C81E1E" stroke-width="0.95"/><circle cx="121.53" cy="40.25" r="2.1" fill="#fff" stroke="#C81E1E" stroke-width="0.95"/><circle cx="129.81" cy="40.69" r="2.1" fill="#fff" stroke="#C81E1E" stroke-width="0.95"/><circle cx="136.81" cy="40.19" r="2.1" fill="#fff" stroke="#C81E1E" stroke-width="0.95"/><circle cx="142.87" cy="41.38" r="2.1" fill="#fff" stroke="#C81E1E" stroke-width="0.95"/><circle cx="148.22" cy="41.88" r="2.1" fill="#fff" stroke="#C81E1E" stroke-width="0.95"/><circle cx="153" cy="42.69" r="2.1" fill="#fff" stroke="#C81E1E" stroke-width="0.95"/></svg>
-                          <figcaption class="r">Right · dB SPL</figcaption>
-                        </figure>
-                        <figure>
-                          <svg viewBox="0 0 160 67" role="img" aria-label="Left ear DP-gram: emissions present at 500 and 1000 hertz only"><path d="M17 48.75H153M17 42.5H153M17 36.25H153M17 23.75H153M17 17.5H153M17 11.25H153M17 5H153" fill="none" stroke="#DDDDDD" stroke-width="0.4"/><path d="M17 30H153" stroke="#737373" stroke-width="0.7"/><path d="M17 5V55H153" fill="none" stroke="#737373" stroke-width="0.8"/><g font-family="Helvetica, Arial, sans-serif" font-size="5.4" fill="#737373" text-anchor="end"><text x="13.4" y="56.9">-40</text><text x="13.4" y="44.4">-20</text><text x="13.4" y="31.9">0</text><text x="13.4" y="19.4">20</text><text x="13.4" y="6.9">40</text></g><g font-family="Helvetica, Arial, sans-serif" font-size="5.4" fill="#737373" text-anchor="middle"><text x="17" y="62.8">500</text><text x="48.47" y="62.8">1k</text><text x="79.93" y="62.8">2k</text><text x="111.4" y="62.8">4k</text><text x="153" y="62.8">10k</text></g><polyline points="17,26.81 48.47,26.06 66.87,33.88 79.93,36.31 98.34,38.75 111.4,40.12 121.53,40.56 129.81,41.31 136.81,41 142.87,42 148.22,41.81 153,42.56" fill="none" stroke="#1D4ED8" stroke-width="1"/><circle cx="17" cy="26.81" r="2.1" fill="#1D4ED8" stroke="#1D4ED8" stroke-width="0.95"/><path d="M14.96 20.08L16.49 21.61L19.38 17.87" fill="none" stroke="#15803D" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="48.47" cy="26.06" r="2.1" fill="#1D4ED8" stroke="#1D4ED8" stroke-width="0.95"/><path d="M46.43 19.33L47.96 20.86L50.85 17.12" fill="none" stroke="#15803D" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="66.87" cy="33.88" r="2.1" fill="#fff" stroke="#1D4ED8" stroke-width="0.95"/><circle cx="79.93" cy="36.31" r="2.1" fill="#fff" stroke="#1D4ED8" stroke-width="0.95"/><circle cx="98.34" cy="38.75" r="2.1" fill="#fff" stroke="#1D4ED8" stroke-width="0.95"/><circle cx="111.4" cy="40.12" r="2.1" fill="#fff" stroke="#1D4ED8" stroke-width="0.95"/><circle cx="121.53" cy="40.56" r="2.1" fill="#fff" stroke="#1D4ED8" stroke-width="0.95"/><circle cx="129.81" cy="41.31" r="2.1" fill="#fff" stroke="#1D4ED8" stroke-width="0.95"/><circle cx="136.81" cy="41" r="2.1" fill="#fff" stroke="#1D4ED8" stroke-width="0.95"/><circle cx="142.87" cy="42" r="2.1" fill="#fff" stroke="#1D4ED8" stroke-width="0.95"/><circle cx="148.22" cy="41.81" r="2.1" fill="#fff" stroke="#1D4ED8" stroke-width="0.95"/><circle cx="153" cy="42.56" r="2.1" fill="#fff" stroke="#1D4ED8" stroke-width="0.95"/></svg>
-                          <figcaption class="l">Left · dB SPL</figcaption>
-                        </figure>
-                      </div>
-                      <p class="res-line">Right ear: present in the low frequencies, absent in the mid and high frequency bands. Left ear: present in the low frequencies, absent in the mid and high frequency bands.</p>
-
-                      <p class="res-h">Tinnitus</p>
-                      <p class="res-line">Tinnitus matched to a 6 kHz tone at 8 dB SL. Tinnitus was maskable at 12 dB SL and positive for partial residual inhibition.</p>
-
-                      <p class="res-h">Otoscopy</p>
-                      <p class="res-line last">Unremarkable bilaterally.</p>
                     </div>
-                    <span class="a-rail" aria-hidden="true"><i id="res-thumb"></i></span>
-                  </div>
-                  <div class="a-box" data-pane="interp" hidden>
+                    <div class="a-box has-scroll" data-pane="results" hidden>
+                      <div class="a-scroll" id="res-scroll" tabindex="0" aria-label="Test results">
+                        <div class="res-blk">
+                          <p class="res-h">Audiogram <em>NOAH</em></p>
+                      <svg viewBox="0 0 222 197" class="res-audio" role="img" aria-label="Audiogram: mild to moderate sloping hearing loss in both ears"><path d="M52 13V182M78 13V182M104 13V182M130 13V182M156 13V182M182 13V182M26 39H208M26 52H208M26 65H208M26 78H208M26 91H208M26 104H208M26 117H208M26 130H208M26 143H208M26 156H208M26 169H208" fill="none" stroke="#DDDDDD" stroke-width="0.6"/><path d="M93.21 13V182M119.21 13V182M145.21 13V182M171.21 13V182" fill="none" stroke="#9E9E9E" stroke-width="0.33" stroke-dasharray="1.8 1.8" opacity="0.55"/><path d="M26 26H208" stroke="#8C8C8C" stroke-width="1.14"/><rect x="26" y="13" width="182" height="169" fill="none" stroke="#737373" stroke-width="0.84"/><g font-family="Helvetica, Arial, sans-serif" font-size="5.6" fill="#737373" text-anchor="middle"><text x="26" y="9.64">125</text><text x="52" y="9.64">250</text><text x="78" y="9.64">500</text><text x="104" y="9.64">1000</text><text x="130" y="9.64">2000</text><text x="156" y="9.64">4000</text><text x="182" y="9.64">8000</text><text x="208" y="9.64">16000</text></g><g font-family="Helvetica, Arial, sans-serif" font-size="5.6" fill="#737373" text-anchor="end"><text x="21.8" y="27.96">0</text><text x="21.8" y="53.96">20</text><text x="21.8" y="79.96">40</text><text x="21.8" y="105.96">60</text><text x="21.8" y="131.96">80</text><text x="21.8" y="157.96">100</text><text x="21.8" y="183.96">120</text></g><polyline points="52,52 78,65 104,71.5 130,84.5 145.21,91 156,97.5 171.21,97.5 182,91" fill="none" stroke="#C81E1E" stroke-width="1.05"/><polyline points="52,58.5 78,71.5 104,78 130,84.5 145.21,97.5 156,97.5 171.21,91 182,97.5" fill="none" stroke="#1D4ED8" stroke-width="1.05"/><g fill="#fff" stroke="#C81E1E" stroke-width="1.16"><circle cx="52" cy="52" r="3"/><circle cx="78" cy="65" r="3"/><circle cx="104" cy="71.5" r="3"/><circle cx="130" cy="84.5" r="3"/><circle cx="145.21" cy="91" r="3"/><circle cx="156" cy="97.5" r="3"/><circle cx="171.21" cy="97.5" r="3"/><circle cx="182" cy="91" r="3"/></g><g fill="none" stroke="#1D4ED8" stroke-width="1.21" stroke-linecap="round"><path d="M49.24 55.74l5.52 5.52M54.76 55.74l-5.52 5.52"/><path d="M75.24 68.74l5.52 5.52M80.76 68.74l-5.52 5.52"/><path d="M101.24 75.24l5.52 5.52M106.76 75.24l-5.52 5.52"/><path d="M127.24 81.74l5.52 5.52M132.76 81.74l-5.52 5.52"/><path d="M142.45 94.74l5.52 5.52M147.97 94.74l-5.52 5.52"/><path d="M153.24 94.74l5.52 5.52M158.76 94.74l-5.52 5.52"/><path d="M168.45 88.24l5.52 5.52M173.97 88.24l-5.52 5.52"/><path d="M179.24 94.74l5.52 5.52M184.76 94.74l-5.52 5.52"/></g><g fill="none" stroke="#C81E1E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M72.75 61.85l-3.6 3.15 3.6 3.15"/><path d="M98.75 68.35l-3.6 3.15 3.6 3.15"/><path d="M124.75 81.35l-3.6 3.15 3.6 3.15"/><path d="M150.75 94.35l-3.6 3.15 3.6 3.15"/></g><g font-family="Helvetica, Arial, sans-serif" font-size="5.8" fill="#4B5563"><text x="26" y="193.5"><tspan fill="#C81E1E">O</tspan> right</text><text x="62" y="193.5"><tspan fill="#1D4ED8">X</tspan> left</text><text x="92" y="193.5"><tspan fill="#C81E1E">&lt;</tspan> bone</text><text x="208" y="193.5" text-anchor="end">dB HL by Hz</text></g></svg>
+                          <p class="res-line">Mild to moderate sloping sensorineural hearing loss bilaterally. SRT 35 and 40 dB HL. Word recognition 88% and 92%.</p>
+                        </div>
+                        <div class="res-blk">
+                          <p class="res-h">Tympanometry <em>NOAH</em></p>
+                          <div class="res-pair">
+                            <figure>
+                          <svg viewBox="0 0 160 73" role="img" aria-label="Right tympanogram, type A"><rect x="50.6" y="25" width="44.8" height="24" fill="#EAFBF0" stroke="#9ED1AD" stroke-width="0.5"/><path d="M17 45H129M17 35H129M17 25H129M17 15H129M39.4 5V55M61.8 5V55M106.6 5V55" fill="none" stroke="#DDDDDD" stroke-width="0.5"/><path d="M84.2 5V55" stroke="#999999" stroke-width="0.9"/><rect x="17" y="5" width="112" height="50" fill="none" stroke="#737373" stroke-width="0.8"/><g font-family="Helvetica, Arial, sans-serif" font-size="5.4" fill="#737373" text-anchor="end"><text x="13.22" y="56.89">0.0</text><text x="13.22" y="46.89">0.5</text><text x="13.22" y="36.89">1.0</text><text x="13.22" y="26.89">1.5</text><text x="13.22" y="16.89">2.0</text><text x="13.22" y="6.89">2.5</text></g><g font-family="Helvetica, Arial, sans-serif" font-size="5.4" fill="#737373" text-anchor="middle"><text x="17" y="62.83">-300</text><text x="61.8" y="62.83">-100</text><text x="84.2" y="62.83">0</text><text x="129" y="62.83">+200</text></g><polyline points="17,55 19.24,55 21.48,55 23.72,55 25.96,55 28.2,55 30.44,55 32.68,55 34.92,55 37.16,55 39.4,55 41.64,54.99 43.88,54.98 46.12,54.95 48.36,54.9 50.6,54.8 52.84,54.63 55.08,54.19 57.32,53.68 59.56,53.01 61.8,52.14 64.04,51.01 66.28,49.6 68.52,47.93 70.76,46.06 73,44.15 75.24,42.41 77.48,41.03 79.72,40.23 81.96,40.2 84.2,41.18 86.44,43.09 88.68,45.53 90.92,48.07 93.16,50.36 95.4,51.87 97.64,53.16 99.88,53.96 102.12,54.36 104.36,54.45 106.6,54.58 108.84,54.64 111.08,54.67 113.32,54.67 115.56,54.68 117.8,54.68 120.04,54.68 122.28,54.68 124.52,54.68 126.76,54.68 129,54.68" fill="none" stroke="#C81E1E" stroke-width="1.15" stroke-linejoin="round"/><path d="M132 55H144" stroke="#737373" stroke-width="0.8"/><rect x="134" y="33" width="8" height="22" fill="#C81E1E"/><text x="138" y="31" font-family="Helvetica, Arial, sans-serif" font-size="5" fill="#C81E1E" text-anchor="middle">1.10</text><text x="17" y="69.85" font-family="Helvetica, Arial, sans-serif" font-size="5.2" fill="#6B7280">measured</text><text x="144" y="69.85" font-family="Helvetica, Arial, sans-serif" font-size="5" fill="#737373" text-anchor="end">Volume</text></svg>
+                              <figcaption class="r">Right · type A</figcaption>
+                            </figure>
+                            <figure>
+                          <svg viewBox="0 0 160 73" role="img" aria-label="Left tympanogram, type A"><rect x="50.6" y="25" width="44.8" height="24" fill="#EAFBF0" stroke="#9ED1AD" stroke-width="0.5"/><path d="M17 45H129M17 35H129M17 25H129M17 15H129M39.4 5V55M61.8 5V55M106.6 5V55" fill="none" stroke="#DDDDDD" stroke-width="0.5"/><path d="M84.2 5V55" stroke="#999999" stroke-width="0.9"/><rect x="17" y="5" width="112" height="50" fill="none" stroke="#737373" stroke-width="0.8"/><g font-family="Helvetica, Arial, sans-serif" font-size="5.4" fill="#737373" text-anchor="end"><text x="13.22" y="56.89">0.0</text><text x="13.22" y="46.89">0.5</text><text x="13.22" y="36.89">1.0</text><text x="13.22" y="26.89">1.5</text><text x="13.22" y="16.89">2.0</text><text x="13.22" y="6.89">2.5</text></g><g font-family="Helvetica, Arial, sans-serif" font-size="5.4" fill="#737373" text-anchor="middle"><text x="17" y="62.83">-300</text><text x="61.8" y="62.83">-100</text><text x="84.2" y="62.83">0</text><text x="129" y="62.83">+200</text></g><polyline points="17,55 19.24,55 21.48,55 23.72,55 25.96,55 28.2,55 30.44,55 32.68,55 34.92,55 37.16,55 39.4,54.99 41.64,54.98 43.88,54.96 46.12,54.93 48.36,54.87 50.6,54.77 52.84,54.6 55.08,54.12 57.32,53.82 59.56,53.38 61.8,52.74 64.04,51.84 66.28,50.66 68.52,49.21 70.76,47.55 73,45.82 75.24,44.16 77.48,42.74 79.72,41.74 81.96,41.4 84.2,41.4 86.44,42.31 88.68,43.92 90.92,45.91 93.16,47.99 95.4,49.89 97.64,51.14 99.88,52.31 102.12,53.12 104.36,53.65 106.6,54 108.84,54.46 111.08,54.57 113.32,54.63 115.56,54.66 117.8,54.67 120.04,54.68 122.28,54.68 124.52,54.68 126.76,54.68 129,54.68" fill="none" stroke="#1D4ED8" stroke-width="1.15" stroke-linejoin="round"/><path d="M132 55H144" stroke="#737373" stroke-width="0.8"/><rect x="134" y="31" width="8" height="24" fill="#1D4ED8"/><text x="138" y="29" font-family="Helvetica, Arial, sans-serif" font-size="5" fill="#1D4ED8" text-anchor="middle">1.20</text><text x="17" y="69.85" font-family="Helvetica, Arial, sans-serif" font-size="5.2" fill="#6B7280">measured</text><text x="144" y="69.85" font-family="Helvetica, Arial, sans-serif" font-size="5" fill="#737373" text-anchor="end">Volume</text></svg>
+                              <figcaption class="l">Left · type A</figcaption>
+                            </figure>
+                          </div>
+                          <p class="res-line">Normal type 'A' tympanograms bilaterally with 1.1 and 1.2 mL ECV.</p>
+                        </div>
+                        <div class="res-blk">
+                          <p class="res-h">DPOAE · 12 frequencies <em>NOAH</em></p>
+                          <div class="res-pair">
+                            <figure>
+                          <svg viewBox="0 0 160 67" role="img" aria-label="Right ear DP-gram: emissions present at 500 and 1000 hertz only"><path d="M17 48.75H153M17 42.5H153M17 36.25H153M17 23.75H153M17 17.5H153M17 11.25H153M17 5H153" fill="none" stroke="#DDDDDD" stroke-width="0.4"/><path d="M17 30H153" stroke="#737373" stroke-width="0.7"/><path d="M17 5V55H153" fill="none" stroke="#737373" stroke-width="0.8"/><g font-family="Helvetica, Arial, sans-serif" font-size="5.4" fill="#737373" text-anchor="end"><text x="13.4" y="56.9">-40</text><text x="13.4" y="44.4">-20</text><text x="13.4" y="31.9">0</text><text x="13.4" y="19.4">20</text><text x="13.4" y="6.9">40</text></g><g font-family="Helvetica, Arial, sans-serif" font-size="5.4" fill="#737373" text-anchor="middle"><text x="17" y="62.8">500</text><text x="48.47" y="62.8">1k</text><text x="79.93" y="62.8">2k</text><text x="111.4" y="62.8">4k</text><text x="153" y="62.8">10k</text></g><polyline points="17,26.12 48.47,24.75 66.87,32.56 79.93,35.81 98.34,38 111.4,39.5 121.53,40.25 129.81,40.69 136.81,40.19 142.87,41.38 148.22,41.88 153,42.69" fill="none" stroke="#C81E1E" stroke-width="1"/><circle cx="17" cy="26.12" r="2.1" fill="#C81E1E" stroke="#C81E1E" stroke-width="0.95"/><path d="M14.96 19.39L16.49 20.93L19.38 17.19" fill="none" stroke="#15803D" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="48.47" cy="24.75" r="2.1" fill="#C81E1E" stroke="#C81E1E" stroke-width="0.95"/><path d="M46.43 18.02L47.96 19.55L50.85 15.81" fill="none" stroke="#15803D" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="66.87" cy="32.56" r="2.1" fill="#fff" stroke="#C81E1E" stroke-width="0.95"/><circle cx="79.93" cy="35.81" r="2.1" fill="#fff" stroke="#C81E1E" stroke-width="0.95"/><circle cx="98.34" cy="38" r="2.1" fill="#fff" stroke="#C81E1E" stroke-width="0.95"/><circle cx="111.4" cy="39.5" r="2.1" fill="#fff" stroke="#C81E1E" stroke-width="0.95"/><circle cx="121.53" cy="40.25" r="2.1" fill="#fff" stroke="#C81E1E" stroke-width="0.95"/><circle cx="129.81" cy="40.69" r="2.1" fill="#fff" stroke="#C81E1E" stroke-width="0.95"/><circle cx="136.81" cy="40.19" r="2.1" fill="#fff" stroke="#C81E1E" stroke-width="0.95"/><circle cx="142.87" cy="41.38" r="2.1" fill="#fff" stroke="#C81E1E" stroke-width="0.95"/><circle cx="148.22" cy="41.88" r="2.1" fill="#fff" stroke="#C81E1E" stroke-width="0.95"/><circle cx="153" cy="42.69" r="2.1" fill="#fff" stroke="#C81E1E" stroke-width="0.95"/></svg>
+                              <figcaption class="r">Right · dB SPL</figcaption>
+                            </figure>
+                            <figure>
+                          <svg viewBox="0 0 160 67" role="img" aria-label="Left ear DP-gram: emissions present at 500 and 1000 hertz only"><path d="M17 48.75H153M17 42.5H153M17 36.25H153M17 23.75H153M17 17.5H153M17 11.25H153M17 5H153" fill="none" stroke="#DDDDDD" stroke-width="0.4"/><path d="M17 30H153" stroke="#737373" stroke-width="0.7"/><path d="M17 5V55H153" fill="none" stroke="#737373" stroke-width="0.8"/><g font-family="Helvetica, Arial, sans-serif" font-size="5.4" fill="#737373" text-anchor="end"><text x="13.4" y="56.9">-40</text><text x="13.4" y="44.4">-20</text><text x="13.4" y="31.9">0</text><text x="13.4" y="19.4">20</text><text x="13.4" y="6.9">40</text></g><g font-family="Helvetica, Arial, sans-serif" font-size="5.4" fill="#737373" text-anchor="middle"><text x="17" y="62.8">500</text><text x="48.47" y="62.8">1k</text><text x="79.93" y="62.8">2k</text><text x="111.4" y="62.8">4k</text><text x="153" y="62.8">10k</text></g><polyline points="17,26.81 48.47,26.06 66.87,33.88 79.93,36.31 98.34,38.75 111.4,40.12 121.53,40.56 129.81,41.31 136.81,41 142.87,42 148.22,41.81 153,42.56" fill="none" stroke="#1D4ED8" stroke-width="1"/><circle cx="17" cy="26.81" r="2.1" fill="#1D4ED8" stroke="#1D4ED8" stroke-width="0.95"/><path d="M14.96 20.08L16.49 21.61L19.38 17.87" fill="none" stroke="#15803D" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="48.47" cy="26.06" r="2.1" fill="#1D4ED8" stroke="#1D4ED8" stroke-width="0.95"/><path d="M46.43 19.33L47.96 20.86L50.85 17.12" fill="none" stroke="#15803D" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="66.87" cy="33.88" r="2.1" fill="#fff" stroke="#1D4ED8" stroke-width="0.95"/><circle cx="79.93" cy="36.31" r="2.1" fill="#fff" stroke="#1D4ED8" stroke-width="0.95"/><circle cx="98.34" cy="38.75" r="2.1" fill="#fff" stroke="#1D4ED8" stroke-width="0.95"/><circle cx="111.4" cy="40.12" r="2.1" fill="#fff" stroke="#1D4ED8" stroke-width="0.95"/><circle cx="121.53" cy="40.56" r="2.1" fill="#fff" stroke="#1D4ED8" stroke-width="0.95"/><circle cx="129.81" cy="41.31" r="2.1" fill="#fff" stroke="#1D4ED8" stroke-width="0.95"/><circle cx="136.81" cy="41" r="2.1" fill="#fff" stroke="#1D4ED8" stroke-width="0.95"/><circle cx="142.87" cy="42" r="2.1" fill="#fff" stroke="#1D4ED8" stroke-width="0.95"/><circle cx="148.22" cy="41.81" r="2.1" fill="#fff" stroke="#1D4ED8" stroke-width="0.95"/><circle cx="153" cy="42.56" r="2.1" fill="#fff" stroke="#1D4ED8" stroke-width="0.95"/></svg>
+                              <figcaption class="l">Left · dB SPL</figcaption>
+                            </figure>
+                          </div>
+                      <p class="res-line">Right ear: present in the low frequencies, absent in the mid and high frequency bands. Left ear: present in the low frequencies, absent in the mid and high frequency bands.</p>
+                        </div>
+                        <div class="res-blk txt">
+                          <p class="res-h">Tinnitus</p>
+                      <p class="res-line">Tinnitus matched to a 6 kHz tone at 8 dB SL. Tinnitus was maskable at 12 dB SL and positive for partial residual inhibition.</p>
+                        </div>
+                        <div class="res-blk txt">
+                          <p class="res-h">Otoscopy</p>
+                          <p class="res-line">Unremarkable bilaterally.</p>
+                        </div>
+                      </div>
+                      <span class="a-rail" aria-hidden="true"><i id="res-thumb"></i></span>
+                    </div>
+                    <div class="a-box" data-pane="interp" hidden>
                     <p>Results revealed a symmetrical sensorineural hearing loss, mild to moderate in the right ear and mild to moderate in the left ear. Tinnitus is likely related to the hearing loss. Test reliability was good.</p>
-                  </div>
-                  <div class="a-box" data-pane="recs" hidden>
+                    </div>
+                    <div class="a-box" data-pane="recs" hidden>
                     <p>1. Trial with amplification to improve speech understanding, reduce listening effort and cognitive load, reduce tinnitus perception, and possibly reduce the risk of cognitive decline.</p>
                     <p>2. Tinnitus maskers and coping strategies discussed.</p>
                     <p>3. Re-evaluation in 12 months.</p>
-                  </div>
-                  <div class="a-box" data-pane="summary" hidden>
+                    </div>
+                    <div class="a-box" data-pane="summary" hidden>
                     <p><b>The patient presents with a 2-year history of hearing difficulty, particularly in noise, and tinnitus.</b></p>
                     <p><b>Results revealed a mild to moderate sensorineural hearing loss bilaterally; tinnitus is likely related to the hearing loss.</b></p>
+                    </div>
                   </div>
-                  <p class="a-tip" id="tip" role="status"></p>
+                  <div class="r-side">
+                    <div class="r-chair"><b>Chairside</b><span>Sent to report 10:42 AM</span></div>
+                    <p class="a-tip" id="tip" role="status"></p>
+                  </div>
                 </div>
-                <div class="a-dock">
-                  <p><span>Procedures</span><i class="a-code">92557</i><i class="a-code">92567</i><i class="a-code">92588</i><i class="a-code">92625</i></p>
-                  <p class="a-state">Draft</p>
+                <div class="r-dock">
+                  <p><span>Procedures</span><i class="a-code">92557</i><i class="a-code">92567</i><i class="a-code">92588</i><i class="a-code">92625</i><b>Draft</b></p>
                   <button type="button" class="a-sign" data-go="report-preview">Preview report</button>
                 </div>
-                <div class="a-nav" aria-hidden="true">
-                  <span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M3 9l7-6 7 6v8h-5v-5H8v5H3z"/></svg>Today</span>
-                  <span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="3" y="4.5" width="14" height="12.5" rx="2"/><path d="M3 8.5h14M7 2.5v4M13 2.5v4"/></svg>Calendar</span>
-                  <span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="7.5" cy="7" r="3"/><path d="M2 17c0-3 2.5-5 5.5-5s5.5 2 5.5 5M13.5 4.5a3 3 0 010 5.5M15 12.5c1.8.6 3 2.2 3 4.5"/></svg>Patients</span>
-                  <span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="10" cy="10" r="7.5"/><path d="M12.5 7.5c-.5-1-1.5-1.3-2.5-1.3-1.4 0-2.5.7-2.5 1.9 0 2.6 5 1.2 5 3.9 0 1.2-1.1 1.9-2.5 1.9-1.2 0-2.2-.4-2.7-1.4M10 4.8v10.4"/></svg>Billing</span>
-                  <span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 16V9M8.5 16V4M13 16v-5M17 16v-8"/></svg>Insights</span>
-                </div>
 
-                <!-- Report: the composed page, before signing -->
-                <div class="a-modal" data-overlay="r-preview" hidden>
+                <!-- Report: the composed pages, before signing -->
+                <div class="a-modal r-prev" data-overlay="r-preview" hidden>
                   <div class="a-modal-in">
-                    <div class="a-pdf" id="pdf-slot" tabindex="0" aria-label="The finished report, every page"></div>
+                    <div class="a-pdf" id="pdf-scroll" tabindex="0" aria-label="The finished report, every page"><div class="a-pages" id="pdf-slot"></div></div>
                     <div class="a-bar">
                       <span class="note">add note</span>
                       <button type="button" class="back" data-go="report">← Back to edit</button>
@@ -1090,36 +1156,29 @@
               </div>
 
               <!-- Report: signed and sent -->
-              <div class="scr" data-screen="r-done" hidden>
-                <div class="a-top">
+              <div class="scr d" data-screen="r-done" hidden>
+                <div class="d-top">
                   <span class="a-logo"><svg viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 12c2.5-4 5.5-4 8 0"/><path d="M2 8.5c4-6 10-6 14 0"/><circle cx="8" cy="15" r="1" fill="#fff"/></svg></span>
                   <b>Coastal Hearing</b>
+                  <span class="d-nav" aria-hidden="true"><span>Today</span><span>Calendar</span><span>Patients</span><span>Billing</span></span>
                   <span class="a-pill">Quick-Book</span>
                   <span class="a-burger"><i>1</i></span>
                   <span class="a-me">JA</span>
                 </div>
-                <p class="a-h1">Reports</p>
-                <div class="a-seg"><span>Owed <small>2</small></span><span class="on">Done <small>2</small></span></div>
-                <div class="a-list">
-                  <div class="a-row">
-                    <b>Roy Calloway</b>
-                    <span data-d="0">10/7/2026</span> · Audiological Assessment
-                    <div class="last"><span>→ Dr. Whitfield · signed <span data-md="0">10/7</span> · <span id="deliv">sending</span></span><i class="a-chip">Send to…</i></div>
+                <div class="r-list">
+                  <p class="a-h1">Reports</p>
+                  <div class="a-seg"><span>Owed <small>2</small></span><span class="on">Done <small>2</small></span></div>
+                  <div class="a-list">
+                    <div class="a-row">
+                      <div><b>Roy Calloway</b><span data-d="0">10/7/2026</span> · Audiological Assessment<small>→ Dr. Whitfield · signed <span data-md="0">10/7</span> · <span id="deliv">sending</span></small></div>
+                      <i class="a-chip">Send to…</i>
+                    </div>
+                    <div class="a-row">
+                      <div><b>Marcus Webb</b><span data-d="-21">9/16/2026</span> · Audiological Assessment<small>in-house · signed <span data-md="-21">9/16</span> · delivered</small></div>
+                      <i class="a-chip">Send to…</i>
+                    </div>
                   </div>
-                  <div class="a-row">
-                    <b>Marcus Webb</b>
-                    <span data-d="-21">9/16/2026</span> · Audiological Assessment
-                    <div class="last"><span>in-house · signed <span data-md="-21">9/16</span> · delivered</span><i class="a-chip">Send to…</i></div>
-                  </div>
-                </div>
-                <p class="a-tip flow" id="tip-done" role="status" hidden>Faxed to Dr. Whitfield, the referring physician. Fax confirmed, 4 pages.</p>
-                <div class="a-fill"></div>
-                <div class="a-nav" aria-hidden="true">
-                  <span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M3 9l7-6 7 6v8h-5v-5H8v5H3z"/></svg>Today</span>
-                  <span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="3" y="4.5" width="14" height="12.5" rx="2"/><path d="M3 8.5h14M7 2.5v4M13 2.5v4"/></svg>Calendar</span>
-                  <span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="7.5" cy="7" r="3"/><path d="M2 17c0-3 2.5-5 5.5-5s5.5 2 5.5 5M13.5 4.5a3 3 0 010 5.5M15 12.5c1.8.6 3 2.2 3 4.5"/></svg>Patients</span>
-                  <span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="10" cy="10" r="7.5"/><path d="M12.5 7.5c-.5-1-1.5-1.3-2.5-1.3-1.4 0-2.5.7-2.5 1.9 0 2.6 5 1.2 5 3.9 0 1.2-1.1 1.9-2.5 1.9-1.2 0-2.2-.4-2.7-1.4M10 4.8v10.4"/></svg>Billing</span>
-                  <span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 16V9M8.5 16V4M13 16v-5M17 16v-8"/></svg>Insights</span>
+                  <p class="a-tip flow" id="tip-done" role="status" hidden><b>3 clicks.</b> Faxed to Dr. Whitfield, the referring physician. Fax confirmed, 4 pages.</p>
                 </div>
               </div>
 
@@ -1211,7 +1270,8 @@
         <div class="dstand" aria-hidden="true"><i></i><b></b></div>
         </div>
 
-        <p class="demo-foot" id="demo-foot">A guided preview with sample patients. Noah's screen is drawn here in simple form.</p>
+        <p class="demo-also" id="demo-also"><svg viewBox="0 0 14 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="1.3" y="1.3" width="11.4" height="21.4" rx="2.6"/><path d="M5.3 19.6h3.4" stroke-linecap="round"/></svg><span><b>On your phone, too.</b> Reports can be started and completed in the app on your phone, as long as the testing was done in Noah on the desktop.</span></p>
+        <p class="demo-foot" id="demo-foot">A click-through preview with sample patients. Noah's screen is drawn here in simple form.</p>
       </div>
 
       <div class="ask-after">
@@ -1495,12 +1555,12 @@
           <div data-for="own" hidden>
             <h3>With your own patients' records</h3>
             <ol class="own-steps">
-              <li><b>Sign the business associate agreement.</b><span>We email it to you. It covers your patients' information.</span></li>
+              <li><b>Sign the business associate agreement.</b><span>We text it to your phone and you sign it right there. If you would rather, we email it. It covers your patients' information.</span></li>
               <li><b>Send us results for a few patients.</b><span>Once the agreement is signed, print the results to PDF and upload or email the copies to us.</span></li>
               <li><b>Click through your own patients.</b><span>We load them into your demo and send you the login.</span></li>
             </ol>
           </div>
-          <p class="or-here">Not ready to share an email? <a href="#try">Watch the preview first.</a></p>
+          <p class="or-here">Not ready to share an email? <a href="#try">Try the preview first.</a></p>
         </div>
         <form class="ask" id="ask" novalidate>
           <input type="hidden" id="ask-choice" name="choice" value="sample">
@@ -1511,8 +1571,13 @@
             <input type="text" id="ask-practice" name="practice" autocomplete="organization" required>
           </label>
           <label for="ask-email">Email
-            <input type="email" id="ask-email" name="email" autocomplete="email" inputmode="email" required>
+            <input type="email" id="ask-email" name="email" autocomplete="email" inputmode="email">
           </label>
+          <label for="ask-phone" data-for="own" hidden>Mobile phone
+            <small>We text the agreement to this number, and you sign it on your phone.</small>
+            <input type="tel" id="ask-phone" name="phone" autocomplete="tel" inputmode="tel">
+          </label>
+          <p class="ask-or" data-for="own" hidden>A mobile number, an email, or both. One is enough.</p>
           <label class="trap" aria-hidden="true">Leave this empty
             <input type="checkbox" id="ask-bot" name="botcheck" tabindex="-1" autocomplete="off">
           </label>
@@ -1534,10 +1599,10 @@
 </footer>
 
 <script>
-  // The guided preview in the device. Every screen is plain markup above; this
-  // decides which one shows, plays the report walkthrough with a pointer (it
-  // starts at a computer, in the chart and in Noah, and moves to the phone), and
-  // hands the controls to the viewer the moment they tap.
+  // The click-through preview in the device. Every screen is plain markup above;
+  // this decides which one shows and puts a mark on the next thing to click.
+  // Nothing plays by itself: the viewer does every click. The report runs on
+  // one computer from start to finish, the chart, Noah, the room and the send.
   (function () {
     var stage = document.getElementById("stage");
     var phone = document.getElementById("phone");
@@ -1546,13 +1611,13 @@
     function all(root, sel) { return Array.prototype.slice.call(root.querySelectorAll(sel)); }
 
     var app = phone.querySelector(".app");
-    var guide = $("demo-guide"), hint = $("demo-hint"), stepsEl = $("demo-steps");
-    var nextBtn = $("demo-next"), againBtn = $("demo-again"), foot = $("demo-foot");
-    var cursor = $("cursor"), tip = $("tip"), tipDone = $("tip-done"), cap = $("device-cap");
+    var guide = $("demo-guide"), hint = $("demo-hint"), stepsEl = $("demo-steps"), claim = $("demo-claim");
+    var nextBtn = $("demo-next"), againBtn = $("demo-again"), foot = $("demo-foot"), also = $("demo-also");
+    var flag = $("flag"), tip = $("tip"), tipDone = $("tip-done"), cap = $("device-cap");
     var resScroll = $("res-scroll"), thumb = $("res-thumb");
     var demo = $("try"), dEmpty = $("d-empty"), dRes = $("d-res"), dDue = $("d-due");
     var nPlot = phone.querySelector(".n-plot"), nWhen = $("n-when"), nDate = $("n-date"), nAsk = $("n-ask");
-    var nLines = all(phone, ".n-s"), nMods = all(phone, ".n-mods [data-mod]"), pdf = $("pdf-slot");
+    var nLines = all(phone, ".n-s"), nMods = all(phone, ".n-mods [data-mod]"), pdf = $("pdf-scroll"), hints = $("demo-hints");
     var chips = all(document, "[data-scene]");
     var screens = all(phone, "[data-screen]");
     var overlays = all(phone, "[data-overlay]");
@@ -1560,14 +1625,12 @@
     var panes = all(phone, "[data-pane]");
     var stepItems = all(stepsEl, "li");
     var still = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
-    var timers = [], raf = 0;
-    var current = "report-desk", touring = false, tourPlayed = false, noahDrawn = false;
+    var timers = [];
+    var current = "report-desk", noahDrawn = false;
+    var marked = null, markSpec = null;
 
     function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
-    function stopTimers() {
-      timers.forEach(clearTimeout); timers = [];
-      if (raf) { cancelAnimationFrame(raf); raf = 0; }
-    }
+    function stopTimers() { timers.forEach(clearTimeout); timers = []; }
 
     // Today's date in the sample screens, so the preview never looks stale.
     (function () {
@@ -1677,7 +1740,7 @@
       noahModule("");
     }
 
-    // When the computer becomes the phone, the phone is taller: bring it into view if the viewer was watching.
+    // When one device becomes another (the computer, the kiosk, the phone), bring it into view if the viewer was looking at it.
     function keepInView() {
       var r = phone.getBoundingClientRect();
       var vh = window.innerHeight || document.documentElement.clientHeight;
@@ -1691,22 +1754,25 @@
     }
 
     // The device and the screen for a state. No timers are touched here.
-    // Answers true when the computer has just become the phone.
+    // Answers true when the device itself changed.
     function setStage(s) {
-      var desk = s.device === "desk", wasDesk = stage.classList.contains("desk");
-      stage.classList.toggle("kiosk", s.scene === "checkin");
+      var desk = s.device === "desk", wasDesk = stage.classList.contains("desk"), wasKiosk = stage.classList.contains("kiosk");
+      var kiosk = s.scene === "checkin";
+      stage.classList.toggle("kiosk", kiosk);
       stage.classList.toggle("desk", desk);
+      var changed = desk !== wasDesk || kiosk !== wasKiosk;
       if (demo) {
         demo.classList.toggle("is-desk", desk);
-        if (desk !== wasDesk && !still) { demo.classList.remove("swap"); void demo.offsetWidth; demo.classList.add("swap"); }
+        if (changed && !still) { demo.classList.remove("swap"); void demo.offsetWidth; demo.classList.add("swap"); }
       }
       screens.forEach(function (el) { el.hidden = el.getAttribute("data-screen") !== s.screen; });
       overlays.forEach(function (el) { el.hidden = el.getAttribute("data-overlay") !== s.overlay; });
       if (nAsk) nAsk.hidden = !s.ask;
-      if (cap) cap.textContent = s.scene === "checkin" ? "The kiosk in your lobby" : desk ? "On your computer"
-        : "On your phone" + (s.clicks === 3 ? " \u00b7 3 clicks. Done!" : s.clicks ? " \u00b7 click " + s.clicks + " of 3" : "");
-      if (foot) foot.textContent = desk ? FOOT.desk : (FOOT[s.scene] || FOOT.report);
-      return wasDesk && !desk;
+      if (cap) cap.textContent = kiosk ? "The kiosk in your lobby" : !desk ? "On your phone"
+        : "On your computer" + (s.clicks === 3 ? " · 3 clicks. Done!" : s.n ? " · click " + s.n + " of 3" : "");
+      if (foot) foot.textContent = FOOT[s.scene] || FOOT.report;
+      if (also) also.hidden = s.scene !== "report";
+      return changed;
     }
 
     // The sample report turns its pages in place.
@@ -1743,15 +1809,10 @@
       summary: ""
     };
     var FOOT = {
-      desk: "A guided preview with sample patients. Noah's screen is drawn here in simple form.",
-      report: "A guided preview with sample patients. Your own demo is the whole app.",
+      report: "A click-through preview with sample patients. Noah's screen is drawn here in simple form.",
       checkin: "The kiosk is a tablet in your lobby. Patients check themselves in and sign their consent forms on it.",
-      referral: "A guided preview with sample patients. Your own demo is the whole app."
+      referral: "A preview with sample patients. Your own demo is the whole app."
     };
-    var WATCH = "Watch a visit become a signed report. The tests come in from Noah, and the report takes three clicks.";
-    var MANUAL = "The report is already written. Read or edit any section if you like, then tap <b>Preview report</b>: click 2 of 3.";
-    var LANDED = "Saved. The results are on the chart already, and so is an amber <b>Report due</b> button.";
-    var OPTIONAL = "Optional: tap any section to read it or edit it.";
 
     function markStep(key) {
       var hit = -1;
@@ -1779,57 +1840,113 @@
       panes.forEach(function (p) { p.hidden = p.getAttribute("data-pane") !== name; });
       tip.innerHTML = TIPS[name] || "";
       if (name === "results" && resScroll) { resScroll.scrollTop = 0; syncThumb(); }
-      markStep(name);
     }
+
+    // ── The marks: "Click here", then "Click here next" ──
+    // A mark sits beside its target, inside the screen, with its point on the target.
+    function place(el, target, side, align) {
+      var a = app.getBoundingClientRect(), r = target.getBoundingClientRect();
+      if (!a.width || !r.width) return;
+      var w = el.offsetWidth, h = el.offsetHeight;
+      var gap = Math.max(7, w * 0.07), pad = 4, nub = Math.min(w * 0.2, 20);
+      var cx = r.left - a.left + r.width / 2, cy = r.top - a.top + r.height / 2;
+      var px = typeof align === "number" ? cx + align * r.width : cx;   // a number moves the point along the target
+      var x, y;
+      if (side === "inside") {
+        // inside the button, at its right end; where that would cover the button's own words, above it instead
+        var words = null;
+        try { var rg = document.createRange(); rg.selectNodeContents(target); words = rg.getBoundingClientRect(); } catch (err) {}
+        x = r.right - a.left - w - Math.max(8, r.height * 0.3);
+        y = cy - h / 2;
+        if (words && words.width && x < words.right - a.left + 14) { side = "top"; align = "end"; }
+      }
+      if (side === "top" || side === "bottom") {
+        x = typeof align === "number" ? px - nub : align === "start" ? cx - nub : align === "end" ? cx - w + nub : cx - w / 2;
+        y = side === "top" ? r.top - a.top - h - gap : r.bottom - a.top + gap;
+      } else if (side !== "inside") {
+        y = cy - h / 2;
+        x = side === "left" ? r.left - a.left - w - gap : r.right - a.left + gap;
+      }
+      x = Math.max(pad, Math.min(a.width - w - pad, x));
+      y = Math.max(pad, Math.min(a.height - h - pad, y));
+      el.style.left = x.toFixed(1) + "px";
+      el.style.top = y.toFixed(1) + "px";
+      var along = side === "top" || side === "bottom" ? Math.max(9, Math.min(w - 9, px - x)) : Math.max(7, Math.min(h - 7, cy - y));
+      el.style.setProperty("--a", along.toFixed(1) + "px");
+      el.setAttribute("data-side", side);
+    }
+    // On a narrow screen a mark may need another side: a spec can carry one as its 4th and 5th items.
+    function narrow() {
+      try { return getComputedStyle(app).getPropertyValue("--narrow").trim() === "1"; } catch (err) { return false; }
+    }
+    function placeMarks() {
+      if (marked && markSpec && !flag.hidden) {
+        var alt = markSpec.length > 3 && narrow();
+        place(flag, marked, alt ? markSpec[3] : markSpec[1], alt ? markSpec[4] : markSpec[2]);
+      }
+    }
+    function clearMarks() {
+      flag.hidden = true;
+      flag.classList.remove("bob");
+      marked = null; markSpec = null;
+    }
+    function setMark(s) {
+      var scope = phone.querySelector('[data-screen="' + s.screen + '"]') || phone;
+      var t = s.target ? scope.querySelector(s.target) : null;
+      if (!t) return;
+      t.classList.add("pulse");
+      if (!s.flag) return;
+      marked = t; markSpec = s.flag;
+      flag.innerHTML = (s.n ? "<b>" + s.n + "</b>" : "") + s.flag[0];
+      flag.hidden = false;
+      placeMarks();
+      if (!still) { void flag.offsetWidth; flag.classList.add("bob"); }
+    }
+    flag.addEventListener("click", function () { if (marked) marked.click(); });
+    window.addEventListener("resize", placeMarks);
+    if (window.ResizeObserver) { try { new ResizeObserver(placeMarks).observe(app); } catch (err) {} }
+    if (document.fonts && document.fonts.ready) { try { document.fonts.ready.then(placeMarks); } catch (err) {} }
 
     var STATES = {
       "report-desk": {
         scene: "report", device: "desk", screen: "d-chart", step: "noah",
-        hint: "<b>On your computer.</b> This is a patient's chart. Tap <b>Open in Noah</b>.",
-        target: "[data-go='report-noah']",
+        hint: "<b>Try it yourself.</b> This is a patient's chart on your computer. Click <b>Open in Noah</b>.",
+        target: "[data-go='report-noah']", flag: ["Click here", "top", "end", "right", "center"],
         enter: function () { resetDesk(); }
       },
       "report-noah": {
         scene: "report", device: "desk", screen: "d-chart", overlay: "d-noah", step: "noah",
-        hint: "Noah opens on that patient. The testing is done and saved in Noah, the way it always has been. Then close Noah with the <b>✕</b>.",
-        target: "[data-go='report-noah-save']",
+        hint: "Noah opens on that patient. You test and save in Noah, the way you always have. Then close Noah with the <b>✕</b>.",
+        target: "[data-go='report-noah-save']", flag: ["Click here next", "left", "center"], wait: 2500,
         enter: function () { drawInNoah(); }
       },
       "report-noah-save": {
         scene: "report", device: "desk", screen: "d-chart", overlay: "d-noah", ask: true, step: "noah",
-        hint: "Noah asks to save the new patient data. Tap <b>Yes</b>.",
-        target: "[data-go='report-landed']",
+        hint: "Noah asks to save the new patient data. Click <b>Yes</b>.",
+        target: "[data-go='report-landed']", flag: ["Click here next", "left", "center"],
         enter: function () { noahDrawn = true; drawInNoah(); }
       },
       "report-landed": {
-        scene: "report", device: "desk", screen: "d-chart", step: "due",
-        hint: LANDED,
-        next: ["Next: on your phone", "report-chart"],
-        enter: function () {
-          landOnChart();
-          if (!still) later(function () { show("report-chart"); }, 2800);
-        }
-      },
-      "report-chart": {
-        scene: "report", screen: "p-chart", step: "due",
-        hint: "<b>On your phone.</b> The same chart, the same amber button. Tap <b>Report due</b>: click 1 of 3.",
-        target: "[data-go='report']"
+        scene: "report", device: "desk", screen: "d-chart", step: "due", n: 1,
+        hint: "<b>You are out of Noah.</b> The results are already on the chart, and an amber <b>Report due</b> button appeared by itself. Click it.",
+        target: "#d-due", flag: ["Click here", "bottom", "start"],
+        enter: function () { landOnChart(); }
       },
       "report": {
-        scene: "report", screen: "r-room", clicks: 1,
-        hint: MANUAL,
-        target: "[data-go='report-preview']",
+        scene: "report", device: "desk", screen: "r-room", step: "sign", n: 2, clicks: 1,
+        hint: "<b>That was click 1.</b> The report is already written. Click <b>Preview report</b>. Opening a section first is optional.",
+        target: "[data-go='report-preview']", flag: ["Click here next", "inside", "end"],
         enter: function () { selectTab("hx"); $("commit").textContent = "Sign & send"; }
       },
       "report-preview": {
-        scene: "report", screen: "r-room", overlay: "r-preview", clicks: 2,
-        hint: "This is the report the physician receives. Scroll through it, then tap <b>Sign &amp; send</b>: click 3 of 3.",
-        target: "#commit",
-        enter: function () { $("commit").textContent = "Sign & send"; markStep("sign"); }
+        scene: "report", device: "desk", screen: "r-room", overlay: "r-preview", step: "send", n: 3, clicks: 2,
+        hint: "<b>That was click 2.</b> This is the report the physician receives. Click <b>Sign &amp; send</b>.",
+        target: "#commit", flag: ["Click here next", "top", "end"],
+        enter: function () { $("commit").textContent = "Sign & send"; if (pdf) pdf.scrollTop = 0; }
       },
       "report-sent": {
-        scene: "report", screen: "r-done", clicks: 3,
-        hint: "Three clicks. Signed, and faxed to the referring physician. <b>Done!</b>",
+        scene: "report", device: "desk", screen: "r-done", clicks: 3,
+        hint: "<b>Three clicks.</b> Signed, and faxed to the referring physician. Done!",
         next: ["Next: the lobby kiosk", "checkin"],
         enter: function () {
           var d = $("deliv");
@@ -1839,28 +1956,28 @@
           later(function () {
             d.textContent = "fax confirmed 4 pg"; d.className = "ok";
             tipDone.hidden = false;
-          }, still ? 0 : 1500);
+          }, still ? 0 : 1300);
         }
       },
       "checkin": {
         scene: "checkin", screen: "k-grid",
         hint: "<b>The kiosk in your lobby.</b> Patients check themselves in and sign their consent forms here. Tap <b>DF</b>, the 11:30.",
-        target: "[data-go='checkin-dob']"
+        target: "[data-go='checkin-dob']", flag: ["Tap here", "bottom", 0.36]   // off to the side, clear of the next patient's initials
       },
       "checkin-dob": {
         scene: "checkin", screen: "k-dob",
         hint: "The patient keys in a birth date. We did that part for you. Tap <b>Check in</b>.",
-        target: "[data-go='checkin-consent']"
+        target: "[data-go='checkin-consent']", flag: ["Tap here next", "top", "end"]
       },
       "checkin-consent": {
         scene: "checkin", screen: "k-consent",
         hint: "Every consent form that is due, on one screen. Tap <b>I agree</b>.",
-        target: "[data-go='checkin-sign']"
+        target: "[data-go='checkin-sign']", flag: ["Tap here next", "top", "end"]
       },
       "checkin-sign": {
         scene: "checkin", screen: "k-sign",
         hint: "The patient signs with a finger. Try it, then tap <b>Complete check-in</b>.",
-        target: "[data-go='checkin-done']",
+        target: "[data-go='checkin-done']", flag: ["Sign, then tap here", "top", "end"],
         enter: function () { clearSig(); }
       },
       "checkin-done": {
@@ -1875,205 +1992,51 @@
       }
     };
 
+    // The words for every step of a scene, unseen, hold the guide at one height through that scene.
+    var REFERRAL_DONE = "A fax became a booked, confirmed visit. No one at the desk did a thing.";
+    var ghostScene = "";
+    function holdHeight(scene) {
+      if (!hints || scene === ghostScene) return;
+      ghostScene = scene;
+      all(hints, ".ghost").forEach(function (g) { hints.removeChild(g); });
+      var words = Object.keys(STATES).filter(function (k) { return STATES[k].scene === scene; }).map(function (k) { return STATES[k].hint; });
+      if (scene === "referral") words.push(REFERRAL_DONE);
+      words.forEach(function (w) {
+        var g = document.createElement("p");
+        g.className = "demo-hint ghost";
+        g.setAttribute("aria-hidden", "true");
+        g.innerHTML = w;
+        hints.appendChild(g);
+      });
+    }
+
     function show(key) {
       var s = STATES[key];
       if (!s) return;
       stopTimers();
-      touring = false;
-      cursor.hidden = true;
       current = key;
-      var toPhone = setStage(s);
+      holdHeight(s.scene);
+      var changed = setStage(s);
       chips.forEach(function (c) { c.setAttribute("aria-pressed", c.getAttribute("data-scene") === s.scene ? "true" : "false"); });
       all(phone, ".pulse").forEach(function (el) { el.classList.remove("pulse"); });
+      clearMarks();
       stepsEl.hidden = s.scene !== "report";
+      if (claim) claim.hidden = s.scene !== "report";
       if (s.step) markStep(s.step);
-      if (s.enter) s.enter();
       hint.innerHTML = s.hint;
-      if (s.target) {
-        var scope = phone.querySelector('[data-screen="' + s.screen + '"]') || phone;
-        var t = scope.querySelector(s.target);
-        if (t) t.classList.add("pulse");
-      }
       if (s.next) { nextBtn.textContent = s.next[0]; nextBtn.setAttribute("data-next", s.next[1]); nextBtn.hidden = false; }
       else { nextBtn.hidden = true; }
-      againBtn.textContent = s.scene === "report" && !still ? "Watch again" : "Start over";
-      againBtn.hidden = key === "checkin" || (key === "report-desk" && (still || !tourPlayed));
-      if (toPhone) keepInView();
-    }
-
-    // ── The report walkthrough: a pointer clicks through the chart, Noah and the room ──
-    function pointAt(el, fx, fy) {
-      var a = app.getBoundingClientRect(), r = el.getBoundingClientRect();
-      var size = cursor.getBoundingClientRect().width || 26;
-      var x = r.left - a.left + r.width * (fx == null ? 0.5 : fx) - size * 0.5;
-      var y = r.top - a.top + r.height * (fy == null ? 0.55 : fy) - size * 0.5;
-      cursor.style.transform = "translate(" + x.toFixed(1) + "px," + y.toFixed(1) + "px)";
-    }
-    function clickFx() {
-      cursor.classList.remove("click");
-      void cursor.offsetWidth;
-      cursor.classList.add("click");
-    }
-    function glide(el, to, ms) {
-      var from = el.scrollTop, t0 = null;
-      function step(ts) {
-        if (!touring) return;
-        if (t0 === null) t0 = ts;
-        var k = Math.min(1, (ts - t0) / ms);
-        var e = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
-        el.scrollTop = from + (to - from) * e;
-        if (k < 1) raf = requestAnimationFrame(step);
+      againBtn.hidden = key === "report-desk" || key === "checkin" || key === "referral";
+      var seen = key === "report-noah" && noahDrawn;   // Noah was already opened once: nothing new to wait for
+      if (s.enter) s.enter();
+      if (s.target) {
+        // The mark waits where something has to be seen first (the test going into Noah).
+        if (s.wait && !still && !seen) later(function () { setMark(s); }, s.wait);
+        else setMark(s);
+        later(placeMarks, 60);
+        later(placeMarks, 380);
       }
-      raf = requestAnimationFrame(step);
-    }
-    function tabBtn(name) { return phone.querySelector('[data-tab="' + name + '"]'); }
-
-    function tour() {
-      show("report-desk");
-      tourPlayed = true;
-      touring = true;
-      againBtn.hidden = true;
-      hint.innerHTML = WATCH;
-      all(phone, ".pulse").forEach(function (el) { el.classList.remove("pulse"); });
-      // the pointer starts low on the screen, off the content
-      function park(fx, fy) {
-        cursor.style.transition = "none";
-        cursor.style.opacity = "1";
-        var a = app.getBoundingClientRect();
-        cursor.style.transform = "translate(" + (a.width * fx).toFixed(1) + "px," + (a.height * fy).toFixed(1) + "px)";
-        cursor.hidden = false;
-        void cursor.offsetWidth;
-        cursor.style.transition = "";
-      }
-      park(0.8, 0.74);
-
-      var t = 900;
-      function click(getEl, then, dwell) {
-        later(function () { var el = getEl(); if (el) pointAt(el); }, t);
-        later(function () { clickFx(); then(); }, t + 900);
-        t += 900 + dwell;
-      }
-      function go(sel) { return function () { return phone.querySelector("[data-go='" + sel + "']"); }; }
-
-      // On the computer: the chart, Noah, the save
-      click(go("report-noah"), function () {
-        current = "report-noah";
-        setStage(STATES[current]);
-        drawInNoah();
-        hint.innerHTML = "Noah opens on that patient. The testing is done and saved in Noah, the way it always has been.";
-      }, 3700);
-      click(go("report-noah-save"), function () {
-        current = "report-noah-save";
-        setStage(STATES[current]);
-        hint.innerHTML = "Close Noah. It asks to save the new patient data.";
-      }, 800);
-      click(go("report-landed"), function () {
-        current = "report-landed";
-        setStage(STATES[current]);
-        landOnChart();
-        markStep("due");
-        hint.innerHTML = LANDED;
-      }, 2700);
-
-      // On the phone: the same chart, then the three clicks
-      later(function () {
-        current = "report-chart";
-        var moved = setStage(STATES["report-chart"]);
-        hint.innerHTML = "<b>Now on your phone.</b> The same chart, the same amber button. <b>Reports in 3 clicks.</b>";
-        park(0.74, 0.62);
-        if (moved) keepInView();
-      }, t);
-      t += 2600;
-      click(function () { return phone.querySelector("[data-screen='p-chart'] [data-go='report']"); }, function () {
-        current = "report";
-        setStage(STATES[current]);
-        selectTab("hx");
-        $("commit").textContent = "Sign & send";
-        hint.innerHTML = "Click 1: <b>Report due</b> opens the report. It is already written.";
-      }, 3000);
-
-      click(function () { return tabBtn("results"); }, function () {
-        selectTab("results");
-        hint.innerHTML = OPTIONAL;
-      }, 1500);
-      var heads = all(resScroll, ".res-h");
-      // a swipe: the fingertip lands low on the results, drags up while the page follows, then lifts
-      function hop(i, travel, rest) {
-        later(function () { cursor.style.opacity = "1"; pointAt(resScroll, 0.5, 0.74); }, t);
-        later(function () {
-          var max = resScroll.scrollHeight - resScroll.clientHeight;
-          var to = i < 0 ? max : Math.min(max, Math.max(0, heads[i].offsetTop - 8));
-          cursor.style.transitionDuration = travel + "ms, 250ms";
-          pointAt(resScroll, 0.5, 0.3);
-          glide(resScroll, to, travel);
-        }, t + 800);
-        later(function () { cursor.style.transitionDuration = ""; cursor.style.opacity = "0.25"; }, t + 800 + travel + 80);
-        t += 800 + travel + rest;
-      }
-      hop(1, 1100, 1000);   // tympanograms
-      hop(2, 1100, 1300);   // otoacoustic emissions
-      hop(-1, 1000, 1000);  // tinnitus match, otoscopy
-      later(function () { cursor.style.opacity = "1"; }, t - 200);
-
-      click(function () { return tabBtn("interp"); }, function () { selectTab("interp"); }, 2600);
-      click(function () { return tabBtn("recs"); }, function () { selectTab("recs"); }, 2600);
-      click(function () { return tabBtn("summary"); }, function () { selectTab("summary"); }, 2200);
-
-      click(go("report-preview"), function () {
-        markStep("sign");
-        tip.innerHTML = "";
-        setStage(STATES["report-preview"]);
-        if (pdf) pdf.scrollTop = 0;
-        hint.innerHTML = "Click 2: <b>Preview report</b> opens the finished report, every page of it.";
-      }, 1000);
-      // read it through: the pages scroll by, the way a thumb would move them
-      if (pdf) {
-        later(function () { pointAt(pdf, 0.5, 0.7); }, t);
-        later(function () {
-          cursor.style.transitionDuration = "3400ms, 250ms";
-          pointAt(pdf, 0.5, 0.25);
-          glide(pdf, pdf.scrollHeight - pdf.clientHeight, 3400);
-        }, t + 800);
-        later(function () { cursor.style.transitionDuration = ""; hint.innerHTML = "Looks good."; }, t + 800 + 3400 + 80);
-        t += 800 + 3400 + 900;
-      }
-      click(function () { return $("commit"); }, function () {
-        markStep("send");
-        $("commit").textContent = "Signing…";
-        hint.innerHTML = "Click 3: <b>Sign &amp; send</b>.";
-      }, 700);
-      later(function () {
-        show("report-sent");
-        againBtn.hidden = false;
-      }, t);
-    }
-
-    // The viewer tapped during the walkthrough: stop the pointer, keep the screen.
-    function takeOver() {
-      if (!touring) return;
-      if (current !== "report" && current !== "report-preview") {
-        show(current);                // stops the pointer and the timers, keeps the screen
-        againBtn.textContent = "Watch again";
-        againBtn.hidden = false;
-        return;
-      }
-      stopTimers();
-      touring = false;
-      cursor.hidden = true;
-      var preview = phone.querySelector('[data-overlay="r-preview"]');
-      if (preview && !preview.hidden) {
-        current = "report-preview";
-        $("commit").textContent = "Sign & send";
-        hint.innerHTML = STATES["report-preview"].hint;
-        $("commit").classList.add("pulse");
-      } else {
-        current = "report";
-        hint.innerHTML = MANUAL;
-        var sign = phone.querySelector("[data-go='report-preview']");
-        if (sign) sign.classList.add("pulse");
-      }
-      againBtn.textContent = "Watch again";
-      againBtn.hidden = false;
+      if (changed) keepInView();
     }
 
     function playReferral() {
@@ -2085,7 +2048,7 @@
       total.hidden = !still;
       function finish() {
         total.hidden = false;
-        hint.innerHTML = "A fax became a booked, confirmed visit. No one at the desk did a thing.";
+        hint.innerHTML = REFERRAL_DONE;
         nextBtn.textContent = "Get your own demo";
         nextBtn.setAttribute("data-next", "#demo");
         nextBtn.hidden = false;
@@ -2128,43 +2091,36 @@
     }
 
     phone.addEventListener("click", function (e) {
-      var wasTouring = touring;
-      takeOver();
-      var go = e.target.closest ? e.target.closest("[data-go]") : null;
+      if (!e.target.closest) return;
+      if (e.target.closest(".a-flag")) return;          // the mark passes its click to its target itself
+      var go = e.target.closest("[data-go]");
       if (go && phone.contains(go)) {
         var key = go.getAttribute("data-go");
         if (key === "report-sent") {
+          clearMarks();
+          go.classList.remove("pulse");
           go.textContent = "Signing…";
-          later(function () { show("report-sent"); againBtn.hidden = false; }, still ? 0 : 650);
+          later(function () { show("report-sent"); }, still ? 0 : 650);
           return;
         }
         show(key);
         return;
       }
-      var tab = e.target.closest ? e.target.closest("[data-tab]") : null;
-      if (tab) { selectTab(tab.getAttribute("data-tab")); return; }
-      if (e.target.closest && (e.target.closest("[data-live]") || e.target.closest("canvas") || e.target.closest(".a-scroll") || e.target.closest(".a-pdf"))) return;
-      if (wasTouring) return;
+      // The soft line under the sections: optional, and it opens the interpretation.
+      if (e.target.closest("#r-opt")) { selectTab("interp"); later(placeMarks, 30); return; }
+      var tab = e.target.closest("[data-tab]");
+      if (tab) {
+        selectTab(tab.getAttribute("data-tab"));
+        later(placeMarks, 30);
+        return;
+      }
+      if (e.target.closest("[data-live]") || e.target.closest("canvas") || e.target.closest(".a-scroll") || e.target.closest(".a-pdf")) return;
       // Anything else in the device is part of the picture. Point back at the next step.
       guide.classList.add("nudge");
       setTimeout(function () { guide.classList.remove("nudge"); }, 700);
     });
-    if (resScroll) {
-      ["wheel", "touchstart"].forEach(function (n) {
-        resScroll.addEventListener(n, function () { takeOver(); }, { passive: true });
-      });
-    }
 
-    if (pdf) {
-      ["wheel", "touchstart"].forEach(function (n) {
-        pdf.addEventListener(n, function () { takeOver(); }, { passive: true });
-      });
-    }
-
-    function startScene(scene) {
-      if (scene === "report") { if (still) show("report-desk"); else tour(); return; }
-      show(scene);
-    }
+    function startScene(scene) { show(scene === "report" ? "report-desk" : scene); }
     chips.forEach(function (c) {
       c.addEventListener("click", function () { startScene(c.getAttribute("data-scene")); });
     });
@@ -2182,32 +2138,16 @@
       startScene(s ? s.scene : "report");
     });
 
-    // At rest: a chart on a computer, before Noah is opened. The walkthrough
-    // starts when the device is on screen, once.
+    // At rest: a chart on a computer, before Noah is opened, with the first mark on it.
     show("report-desk");
-    hint.innerHTML = still ? STATES["report-desk"].hint : WATCH;
-    if (!still) {
-      all(phone, ".pulse").forEach(function (el) { el.classList.remove("pulse"); });
-      if ("IntersectionObserver" in window) {
-        var io = new IntersectionObserver(function (entries) {
-          entries.forEach(function (en) {
-            if (en.isIntersecting && en.intersectionRatio >= 0.55 && !tourPlayed && current === "report-desk") {
-              io.disconnect();
-              later(tour, 900);
-            }
-          });
-        }, { threshold: [0.55] });
-        io.observe(phone);
-      } else {
-        later(tour, 1200);
-      }
-    }
   })();
 
   // The demo request. Two choices, one form. Each request is delivered to the
   // Vestibule inbox by Web3Forms. ACCESS_KEY is that service's public form key
   // (it is not a password and is meant to sit in the page). Empty = preview,
-  // nothing sent. No patient file is ever taken on this page.
+  // nothing sent. No patient file is ever taken on this page. For a demo with
+  // a practice's own records, a mobile number or an email is enough: with a
+  // number, the agreement goes by text and is signed on the phone.
   (function () {
     var ACCESS_KEY = "63ba2e59-3dbc-4b1d-9b22-82c68cb8ae86";
     var form = document.getElementById("ask");
@@ -2222,7 +2162,7 @@
       choiceField.value = c;
       choices.forEach(function (b) { b.setAttribute("aria-checked", b.getAttribute("data-choice") === c ? "true" : "false"); });
       blocks.forEach(function (b) { b.hidden = b.getAttribute("data-for") !== c; });
-      button.textContent = c === "own" ? "Email me the agreement" : "Get my demo";
+      button.textContent = c === "own" ? "Send me the agreement" : "Get my demo";
       say("note", "");
     }
     choices.forEach(function (b) {
@@ -2235,42 +2175,58 @@
       var name = form.elements.name.value.trim();
       var practice = form.elements.practice.value.trim();
       var email = form.elements.email.value.trim();
+      var phone = own ? form.elements.phone.value.trim() : "";
       var okEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-      if (!name || !practice || !okEmail) {
+      var digits = phone.replace(/\D/g, "");
+      var okPhone = digits.length >= 10 && digits.length <= 15;
+      if (own) {
+        if (!name || !practice || (!email && !phone)) {
+          say("note", "Please fill in your name, your practice, and a mobile number or an email.");
+          return;
+        }
+        if (phone && !okPhone) { say("note", "That mobile number looks short. Please check it."); return; }
+        if (email && !okEmail) { say("note", "That email does not look right. Please check it."); return; }
+      } else if (!name || !practice || !okEmail) {
         say("note", "Please fill in your name, your practice and a working email.");
         return;
       }
+      var byText = own && okPhone;
       if (form.elements.botcheck.checked) { thanksKeep(); return; }
       if (!ACCESS_KEY) {
         var subj = (own ? "Demo request, my own patients' records: " : "Demo request, sample patients: ") + practice;
-        var lines = ["Name: " + name, "Practice: " + practice, "Email: " + email, "Demo: " + (own ? "my own patients' records (please send the agreement)" : "sample patients")];
+        var lines = ["Name: " + name, "Practice: " + practice];
+        if (email) lines.push("Email: " + email);
+        if (phone) lines.push("Mobile: " + phone);
+        lines.push("Demo: " + (own ? "my own patients' records (please send the agreement" + (byText ? " by text" : "") + ")" : "sample patients"));
         try { window.location.href = "mailto:help@vestibulehq.com?subject=" + encodeURIComponent(subj) + "&body=" + encodeURIComponent(lines.join("\n")); } catch (err) {}
         say("done", "Your email should open with the request ready to send. If it does not, write to help@vestibulehq.com.");
         return;
       }
+      var body = {
+        access_key: ACCESS_KEY,
+        subject: (own ? "Demo request, own patients (send the agreement" + (byText ? " by text" : " by email") + "): " : "Demo request, sample patients: ") + practice,
+        from_name: "Vestibule website",
+        demo: own ? "Own patients: send the business associate agreement " + (byText ? "by text to " + phone : "by email") : "Sample patients",
+        name: name,
+        practice: practice
+      };
+      if (email) body.email = email;
+      if (phone) body.phone = phone;
       button.disabled = true;
       say("note", "Sending.");
       fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json", "Accept": "application/json" },
-        body: JSON.stringify({
-          access_key: ACCESS_KEY,
-          subject: (own ? "Demo request, own patients (send the agreement): " : "Demo request, sample patients: ") + practice,
-          from_name: "Vestibule website",
-          demo: own ? "Own patients: send the business associate agreement" : "Sample patients",
-          name: name,
-          practice: practice,
-          email: email
-        })
+        body: JSON.stringify(body)
       }).then(function (r) { return r.json().catch(function () { return { success: r.ok }; }); })
         .then(function (j) { if (j && j.success) { thanksKeep(); } else { failed(); } })
         .catch(failed)
         .then(function () { button.disabled = false; });
 
-      function thanksKeep(extra) {
-        var text = (own
-          ? "Thank you. We'll email the agreement to " + email + ". Once it is signed, we'll ask for the results."
-          : "Thank you. We'll send your demo link to " + email + ".") + (extra || "");
+      function thanksKeep() {
+        var text = !own ? "Thank you. We'll send your demo link to " + email + "."
+          : byText ? "Thank you. We'll text the agreement to " + phone + ". Sign it on your phone, and then we'll ask for the results."
+          : "Thank you. We'll email the agreement to " + email + ". Once it is signed, we'll ask for the results.";
         form.reset();
         pick(own ? "own" : "sample");
         say("done", text);
