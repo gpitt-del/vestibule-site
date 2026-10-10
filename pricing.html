@@ -101,15 +101,17 @@
   .offer-card p { color: var(--night-soft); margin: 0 0 0.5rem; font-size: 0.94rem; line-height: 1.5; }
   .offer-card .was { color: var(--night-soft); }
   .offer-card a { color: var(--night-ink); font-weight: 700; white-space: nowrap; text-decoration-color: var(--night-tan); }
-  /* The price line: the introductory price, then the regular price it starts from */
-  .pl { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 0.55rem 1.1rem; margin: 0 0 0.85rem; }
-  .pl-grp { display: inline-flex; align-items: flex-end; align-items: last baseline; gap: 0.45rem; }
-  .pl-amt { font-weight: 800; font-size: clamp(2.6rem, 1.9rem + 3.4vw, 3.5rem); line-height: 0.92; letter-spacing: -0.04em; white-space: nowrap; color: var(--night-ink); }
+  /* The price line: the introductory price, how long it lasts, then the regular price it starts from. It wraps between its parts. */
+  .pl { display: flex; flex-wrap: wrap; align-items: flex-end; align-items: last baseline; gap: 0.7rem 0.5rem; margin: 0; }
+  .pl-grp { display: inline-flex; align-items: flex-end; align-items: last baseline; gap: 0.5rem; }
+  .pl-amt { font-weight: 800; font-size: 2.75rem; line-height: 0.92; letter-spacing: -0.04em; white-space: nowrap; color: var(--night-ink); }
   .pl-amt small { font-size: 0.42em; font-weight: 800; letter-spacing: -0.01em; }
+  .pl-say { font-size: 1rem; line-height: 1.1; font-weight: 500; color: var(--night-tan); white-space: nowrap; }
   .pl-stack { font-size: 0.8rem; line-height: 1.1; font-weight: 700; color: var(--night-soft); }
-  .pl-then { font-size: 1rem; font-weight: 500; color: var(--night-tan); }
+  .pl-stack span { display: block; }
   .pl-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-  .offer-card .pl { margin: 0.2rem 0 0.9rem; }
+  .offer-card .pl { margin: 0.35rem 0 1rem; }
+  @media (min-width: 40rem) { .offer-card .pl-amt { font-size: 3.5rem; } }
 
   .steps { list-style: none; margin: 1.2rem 0 0; padding: 0; display: grid; gap: 1rem; }
   .step { background: var(--card); border: 1px solid var(--rule); border-radius: 14px; padding: 1.2rem 1.3rem 1rem; }
@@ -153,8 +155,9 @@
     <div class="offer-card">
       <p class="tag">Introductory offer</p>
       <p class="pl">
-        <span class="pl-grp"><b class="pl-amt">$89<span aria-hidden="true">/<small>mo</small></span><span class="pl-sr"> a month</span></b><span class="pl-stack">first<br>six<br>months</span></span>
-        <span class="pl-grp"><span class="pl-then">then</span><span class="pl-stack">as<br>little<br>as</span><b class="pl-amt">$99<span aria-hidden="true">/<small>mo</small></span><span class="pl-sr"> a month</span></b></span>
+        <span class="pl-grp"><b class="pl-amt">$89<span aria-hidden="true">/<small>mo</small></span><span class="pl-sr"> a month</span></b><span class="pl-say">first six months,</span></span>
+        <span class="pl-say">then</span>
+        <span class="pl-grp"><span class="pl-stack"><span>as</span> <span>little</span> <span>as</span></span><b class="pl-amt">$99<span aria-hidden="true">/<small>mo</small></span><span class="pl-sr"> a month</span></b></span>
       </p>
       <p>Your entire business: every feature, every office. No per-office fees and no added subscription fees during the introductory period.</p>
       <p>Limited to the first 10 practices. <a href="./#demo">Click here to claim your spot.</a></p>
