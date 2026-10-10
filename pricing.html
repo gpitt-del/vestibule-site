@@ -98,12 +98,22 @@
 
   .offer-card { background: var(--night); color: var(--night-ink); border-radius: 14px; padding: 1.4rem 1.4rem 1.2rem; }
   .offer-card .tag { margin: 0 0 0.35rem; color: var(--night-tan); font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; font-size: 0.85rem; }
-  .offer-card .big { margin: 0 0 0.5rem; color: var(--night-ink); font-weight: 800; font-size: clamp(1.6rem, 5vw, 2.2rem); line-height: 1.1; letter-spacing: -0.03em; }
-  .offer-card p { color: var(--night-soft); margin: 0 0 0.5rem; }
+  .offer-card p { color: var(--night-soft); margin: 0 0 0.5rem; font-size: 0.94rem; line-height: 1.5; }
   .offer-card .was { color: var(--night-soft); }
-  .offer-card s { text-decoration-thickness: 2px; color: var(--night-soft); font-weight: 500; }
-  .offer-card .spots { color: var(--night-ink); font-weight: 700; white-space: nowrap; }
   .offer-card a { color: var(--night-ink); font-weight: 700; white-space: nowrap; text-decoration-color: var(--night-tan); }
+  /* The price line: the introductory price, how long it lasts, then the regular price it starts from. It wraps between its parts. */
+  .pl { display: flex; flex-wrap: wrap; align-items: flex-end; align-items: last baseline; gap: 0.7rem 0.5rem; margin: 0; }
+  .pl-grp { display: inline-flex; align-items: flex-end; align-items: last baseline; gap: 0.5rem; }
+  .pl-amt { font-weight: 800; font-size: 2.75rem; line-height: 0.92; letter-spacing: -0.04em; white-space: nowrap; color: var(--night-ink); }
+  .pl-amt small { font-size: 0.42em; font-weight: 800; letter-spacing: -0.01em; }
+  .pl-say { font-size: 1rem; line-height: 1.1; font-weight: 500; color: var(--night-tan); white-space: nowrap; }
+  .pl-say.pl-then { color: var(--night-ink); }
+  .pl-amt.pl-after { color: var(--night-soft); }
+  .pl-stack { font-size: 0.8rem; line-height: 1.1; font-weight: 700; color: var(--night-ink); }
+  .pl-stack span { display: block; }
+  .pl-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .offer-card .pl { margin: 0.35rem 0 1rem; }
+  @media (min-width: 40rem) { .offer-card .pl-amt { font-size: 3.5rem; } }
 
   .steps { list-style: none; margin: 1.2rem 0 0; padding: 0; display: grid; gap: 1rem; }
   .step { background: var(--card); border: 1px solid var(--rule); border-radius: 14px; padding: 1.2rem 1.3rem 1rem; }
@@ -142,14 +152,18 @@
 <main class="wrap">
   <article class="page">
     <h1>Pricing</h1>
-    <p class="who">Start with everything at one introductory price. After six months, keep the steps you use.</p>
+    <p class="who">Start with the whole package. Keep only the features you use.</p>
 
     <div class="offer-card">
       <p class="tag">Introductory offer</p>
-      <p class="big">$89 a month for everything.</p>
-      <p>Your entire business for your first six months: every feature, every office. No per-office fees and no added subscription fees during the introductory period.</p>
-      <p>Limited to the first 12 practices. <span class="spots"><s>12</s> 10 spots remain.</span> <a href="./#demo">Click here to claim your spot.</a></p>
-      <p class="was">Then as little as $99 a month for one office, with each additional office half off. Details below.</p>
+      <p class="pl">
+        <span class="pl-grp"><b class="pl-amt">$89<span aria-hidden="true">/<small>mo</small></span><span class="pl-sr"> a month</span></b><span class="pl-say">first six months,</span></span>
+        <span class="pl-say pl-then">then</span>
+        <span class="pl-grp"><span class="pl-stack"><span>as</span> <span>little</span> <span>as</span></span><b class="pl-amt pl-after">$99<span aria-hidden="true">/<small>mo</small></span><span class="pl-sr"> a month</span></b></span>
+      </p>
+      <p>Your entire business: every feature, every office. No per-office fees and no added subscription fees during the introductory period.</p>
+      <p>Limited to the first 10 practices. <a href="./#demo">Click here to claim your spot.</a></p>
+      <p class="was">After that, as little as $99 a month for one office, with each additional office half off. Details below.</p>
     </div>
 
     <h2>The regular price, in three steps</h2>
