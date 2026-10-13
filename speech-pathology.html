@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Vestibule: the Head-Quarters for your Speech Pathology Practice</title>
 <meta name="description" content="Vestibule is practice-management software for audiology and hearing aid practices. It automates the whole visit in one place, from the referral fax to the paid claim. Certified by HIMSA for Noah ES. Built from over 60 years of audiology and hearing aid experience.">
-<link rel="canonical" href="https://vestibulehq.com/">
+<link rel="canonical" href="https://vestibulehq.com/speech-pathology">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://vestibulehq.com/">
 <meta property="og:site_name" content="Vestibule">
@@ -49,12 +49,6 @@
           <div class="screen">
             <div class="app">
               <button type="button" class="a-flag" id="flag" tabindex="-1" aria-hidden="true" hidden></button>
-
-              <!-- Counseling tools: the live Speech Intelligibility Audiogram, in the app's dark look -->
-              <div class="scr d sp" data-screen="ha-counsel" hidden>
-                <div class="sp-top"><span class="sp-seal">V</span><span class="sp-brand"><b>Riverbend Hearing &amp; Speech</b><i>Speech and hearing care</i></span><span class="sp-ctx">Counseling tools · Roy Calloway</span><button type="button" class="sp-btn sp-back" data-go="report-desk">← Back to the calendar</button></div>
-                <div class="sp-cwrap"><iframe class="sia-frame" src="tools/speech-intelligibility-audiogram.html?embed" title="Speech Intelligibility Audiogram, the counseling tool"></iframe></div>
-              </div>
               <!-- SPEECH, in the app's dark look: one day on the clinic calendar, three providers -->
               <div class="scr d sp" data-screen="sp-cal">
                 <div class="sp-top"><span class="sp-seal">V</span><span class="sp-brand"><b>Riverbend Hearing &amp; Speech</b><i>Speech and hearing care</i></span><span class="sp-nav"><span>Today<em>9+</em></span><span class="on">Calendar ▾</span><span>Patients<em>9+</em></span><span>Billing<em>9+</em></span><span>Insights</span></span><span class="sp-search">● Patients /</span><span class="sp-pill">Quick-Book</span><span class="sp-ico">☎</span><span class="sp-ico">🔔<em>9+</em></span><span class="sp-me">MO</span></div>
@@ -455,7 +449,6 @@
         <div class="demo-side">
         <div class="scene-chips" role="group" aria-label="Pick something to try">
           <button type="button" data-scene="report" aria-pressed="true">Sign a report</button>
-          <button type="button" data-scene="counsel" aria-pressed="false">Counseling tools</button>
           <button type="button" data-scene="checkin" aria-pressed="false">Lobby kiosk check-in</button>
           <button type="button" data-scene="referral" aria-pressed="false">Automate referrals</button>
         </div>
@@ -988,25 +981,6 @@
         next: ["Next: the lobby kiosk", "checkin"],
         enter: function () { allStepsDone(); }
       },
-      "counsel": {
-        scene: "counsel", device: "desk", screen: "ha-counsel", tool: "theirs",
-        hint: "<b>Counseling tools.</b> The patient's audiogram over the speech canoe: the sounds above their lines fall outside their range of hearing, and their Speech Intelligibility Index is right there. Click <b>Play</b>.",
-        target: "[data-hot='play']", flag: ["Click here", "top", "end"],
-        enter: function () { hotTo("play", "counsel-hear"); }
-      },
-      "counsel-hear": {
-        scene: "counsel", device: "desk", screen: "ha-counsel",
-        hint: "A voice in a restaurant, played through their hearing loss: the filter follows the chart, each ear its own. Click <b>Normal hearing</b> to compare.",
-        target: "[data-hot='normal']", flag: ["Click here next", "bottom", "start"],
-        enter: function () { hotTo("normal", "counsel-normal"); }
-      },
-      "counsel-normal": {
-        scene: "counsel", device: "desk", screen: "ha-counsel",
-        hint: "The same sound as a normal ear hears it, SII 100%. Switch back and forth while it plays; the family hears the difference without a word of explanation.",
-        target: "[data-hot='their']", flag: ["Switch back", "bottom", "start"],
-        next: ["Next: sign a report", "report-desk"],
-        enter: function () { hotTo("their", "counsel-hear"); }
-      },
       "checkin": {
         scene: "checkin", screen: "k-grid",
         hint: "<b>The kiosk in your lobby.</b> Patients check themselves in and sign their consent forms here. Tap <b>DF</b>, the 11:30.",
@@ -1042,7 +1016,6 @@
 
     var FOOT = {
       report: "A click-through preview with a sample clinic and sample patients.",
-      counsel: "The counseling tools, with a sample patient. On the live app the sounds play through the patient's own audiogram.",
       checkin: "The kiosk is a tablet in your lobby. Patients check themselves in and sign their consent forms on it.",
       referral: "A preview with sample patients. Your own demo is the whole app."
     };
@@ -1050,7 +1023,7 @@
       STATES: STATES, FOOT: FOOT,
       NAMES: ["The report", "Results and plan"],
       start: "report-desk",
-      againHidden: ["report-desk", "checkin", "referral", "counsel"]
+      againHidden: ["report-desk", "checkin", "referral"]
     };
   };
 </script>
