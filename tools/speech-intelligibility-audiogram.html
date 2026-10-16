@@ -84,6 +84,8 @@
   .bar{display:inline-block; width:200px; height:10px; border-radius:5px; background:var(--line); overflow:hidden; vertical-align:middle; cursor:pointer}
   .bar:focus-visible{outline:3px solid var(--focus); outline-offset:2px}
   .bar span{display:block; height:100%; width:0; background:var(--ink-2)}
+  .sound-tools{display:inline-flex; gap:8px; align-items:center}
+  .sound-tools[hidden], .sound-tools .btn[hidden]{display:none}
   .credit{margin:-6px 2px 14px; font-size:12px; line-height:1.4; color:var(--mute); max-width:90ch}
   .credit a{color:inherit}
   .panel{background:var(--panel); border-radius:14px; padding:10px 6px 4px; box-shadow:0 1px 0 var(--line); overflow-x:auto}
@@ -144,6 +146,8 @@
       <option value="male" selected>Male voice</option>
       <option value="female">Female voice</option>
       <option value="train">Railroad crossing</option>
+      <option value="record">Record a voice</option>
+      <option value="load">Load a file</option>
     </select>
     <label class="sel">Background
       <select id="bg" aria-label="Background">
@@ -157,12 +161,17 @@
     <span class="bar" id="bar" role="slider" tabindex="0" aria-label="Position in the sound" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="prog"></span></span>
     <label class="chk"><input type="checkbox" id="loop" checked> Loop</label>
     <span class="sound-note" id="soundNote"></span>
+    <span class="sound-tools" id="soundTools" hidden>
+      <button type="button" class="btn ghost" id="rec" hidden>Record</button>
+      <button type="button" class="btn ghost" id="load" hidden>Load a file</button>
+      <input type="file" id="file" accept="audio/*" hidden>
+    </span>
   </div>
-  <p class="credit">Voices and restaurant babble: <a href="https://datashare.ed.ac.uk/handle/10283/3443">CSTR VCTK Corpus</a> (version 0.92), University of Edinburgh, CC BY 4.0. Speakers p311 (male), p339 (female); babble p360, p334, p311, p345, p294, p318, p333, p299. Edits: sentence recordings concatenated, silence-trimmed, loudness-normalized (EBU R128, -18 LUFS, -1 dBTP), mixed. No other processing.</p>
+  <p class="credit">Voices and restaurant babble: <a href="https://datashare.ed.ac.uk/handle/10283/3443">CSTR VCTK Corpus</a> (University of Edinburgh), <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, edited.</p>
 
   <div class="panel"><svg id="chart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 790 735" aria-label="Audiogram with the speech canoe and phonemes"></svg></div>
 
-  <p class="legend"><b>O</b> right ear, <b>X</b> left ear. Everything above the line is outside that ear's hearing range; the gray letters are the speech sounds it misses. The index counts how much of conversational speech is within reach. The sound keeps playing when you switch between Normal hearing and Their hearing; only the filter changes. On headphones each ear gets its own filter.</p>
+  <p class="legend"><b>O</b> right ear, <b>X</b> left ear. Everything above the line is outside that ear's hearing range; the gray letters are the speech sounds it misses. The index counts how much of conversational speech is within reach. The sound keeps playing when you switch between Normal hearing and Their hearing; only the filter changes. On headphones each ear gets its own filter. A voice you record or load is kept only in this page's memory and is gone when the page is reloaded.</p>
 </main>
 
 <script>
@@ -448,12 +457,15 @@
   // the rule of record (10/12): 1.5 dB out for every dB of threshold above 20, capped at 60
   const att = T => Math.min(60, 1.5*Math.max(0, T-20));
 
-  // What plays: the two voices (the Rainbow Passage, from the files), or the railroad crossing (synthesized).
+  // What plays: the two voices (the Rainbow Passage, from the files), the railroad crossing (synthesized),
+  // or a voice recorded or loaded here: a speech entry with no file, its clip in this page's memory only (gone on reload).
   // The background goes under the voices only: the 8-talker babble, looped, set from the speech's level.
   const SOUNDS = {
     'male':   {kind:'speech', file:'sounds/rainbow_p311_M_Iowa.mp3'},
     'female': {kind:'speech', file:'sounds/rainbow_p339_F_Pennsylvania.mp3'},
-    'train':  {kind:'synth'}
+    'train':  {kind:'synth'},
+    'record': {kind:'speech', tool:'rec'},
+    'load':   {kind:'speech', tool:'load'}
   };
   const BABBLE_FILE = 'sounds/babble_vctk_8talker.mp3';
   const BG_DB = {quiet:null, soft:10, loud:5};     // the babble this many dB below the voice
@@ -461,11 +473,11 @@
   const buffers = {};          // id -> AudioBuffer (the babble under 'babble')
   const fetched = {};          // url -> Promise<ArrayBuffer>
   const level = {};            // id -> RMS of the voice with its pauses removed; 'babble' -> RMS of the bed
-  let ctx=null, chain=null, src=null, bgSrc=null, bgGain=null, playing=false, current='male', bg='quiet', loading=false;
+  let ctx=null, chain=null, src=null, bgSrc=null, bgGain=null, playing=false, current='male', bg='quiet', loading=false, recorder=null, recTimer=null;
   let curBuf=null, startAt=0, offset=0, raf=null;
 
   const $ = id => document.getElementById(id);
-  const soundSel=$('sound'), bgSel=$('bg'), playBtn=$('play'), loopChk=$('loop'), note=$('soundNote'), timeEl=$('time'), progEl=$('prog'), barEl=$('bar');
+  const soundSel=$('sound'), bgSel=$('bg'), playBtn=$('play'), loopChk=$('loop'), note=$('soundNote'), tools=$('soundTools'), recBtn=$('rec'), loadBtn=$('load'), fileIn=$('file'), timeEl=$('time'), progEl=$('prog'), barEl=$('bar');
   const fmt = t => { t=Math.max(0,Math.floor(t)); return Math.floor(t/60)+':'+String(t%60).padStart(2,'0'); };
   function elapsed(){ if(!curBuf) return 0; const d=curBuf.duration; const e = offset + (playing && ctx ? ctx.currentTime-startAt : 0); return loopChk.checked ? e % d : Math.min(e, d); }
   function tick(){ if(!curBuf){ timeEl.textContent='0:00 / 0:00'; progEl.style.width='0'; barEl.setAttribute('aria-valuenow','0'); return; } const e=elapsed(), d=curBuf.duration; timeEl.textContent=fmt(e)+' / '+fmt(d); progEl.style.width=(100*e/d).toFixed(1)+'%'; barEl.setAttribute('aria-valuenow',Math.round(100*e/d)); if (playing) raf=requestAnimationFrame(tick); }
@@ -549,7 +561,7 @@
   async function bufferFor(id){
     const s = SOUNDS[id];
     if (s.kind==='synth'){ if(!buffers.train) buffers.train = synthTrain(); return buffers.train; }
-    if (!buffers[id]){
+    if (!buffers[id] && s.file){
       loading = true; refreshSoundUI();
       try { buffers[id] = await decodeFile(s.file); level[id] = rmsOf(buffers[id], true); }
       catch (e) { note.textContent = 'That recording could not be loaded.'; }
@@ -572,9 +584,10 @@
     current = soundSel.value; bg = bgSel.value;
     const s = SOUNDS[current];
     bgSel.disabled = s.kind!=='speech';
-    playBtn.disabled = loading;
+    playBtn.disabled = loading || (!!s.tool && !buffers[current]);
+    tools.hidden = !s.tool; recBtn.hidden = s.tool!=='rec'; loadBtn.hidden = s.tool!=='load';
     if (loading) note.textContent = 'Loading…';
-    else note.textContent = s.kind==='synth' ? 'Synthesized stand-in: a far-off horn at 7 s, the train closing in from the left, the crossing signal (long, long, short, long) as it reaches you at 20 s.' : '';
+    else if (!recorder) note.textContent = s.kind==='synth' ? 'Synthesized stand-in: a far-off horn at 7 s, the train closing in from the left, the crossing signal (long, long, short, long) as it reaches you at 20 s.' : '';
   }
 
   // ---------- playing ----------
@@ -626,8 +639,35 @@
   }
   playBtn.addEventListener('click', ()=> playing ? stop() : play());
   loopChk.addEventListener('change', ()=>{ if (src) src.loop = loopChk.checked; });
-  soundSel.addEventListener('change', async ()=>{ const was=playing; stop(); offset=0; curBuf=null; refreshSoundUI(); ensureCtx(); curBuf=await bufferFor(current); tick(); if (was && curBuf) play(); });
+  soundSel.addEventListener('change', async ()=>{ if (recorder) recorder.stop(); const was=playing; stop(); offset=0; curBuf=null; refreshSoundUI(); ensureCtx(); curBuf=await bufferFor(current); tick(); if (was && curBuf) play(); });
   bgSel.addEventListener('change', ()=>{ refreshSoundUI(); if (!playing) return; if (!hasBg()) stopBg(); else if (bgSrc) setBgLevel(); else startBg(); });
+
+  // ---------- a voice recorded or loaded here (the d7467cb record and load, as Sound entries) ----------
+  // The clip is decoded into this page's memory and nowhere else: no store, gone on reload. From then on it is a voice
+  // like the two files: the same filter chain, Loop and Background, the babble set from its speech level (pauses removed).
+  async function takeClip(id, blob){
+    let buf;
+    try { ensureCtx(); buf = await ctx.decodeAudioData(await blob.arrayBuffer()); }
+    catch(e){ note.textContent='That file could not be read as audio.'; return; }
+    buffers[id] = buf; level[id] = rmsOf(buf, true);
+    if (current===id){ stop(); curBuf=buf; offset=0; refreshSoundUI(); tick(); }
+  }
+  loadBtn.addEventListener('click', ()=> fileIn.click());
+  fileIn.addEventListener('change', ()=>{ if (fileIn.files[0]) takeClip(current, fileIn.files[0]); fileIn.value=''; });
+  recBtn.addEventListener('click', async ()=>{
+    if (recorder){ recorder.stop(); return; }
+    stop();
+    const target=current; let stream;
+    try{ stream = await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false, noiseSuppression:false, autoGainControl:false}}); }
+    catch(e){ note.textContent='The microphone is blocked here. Open the page in its own tab, or use Load a file.'; return; }
+    const chunks=[]; recorder = new MediaRecorder(stream);
+    recorder.ondataavailable = e=>chunks.push(e.data);
+    recorder.onstop = ()=>{ stream.getTracks().forEach(t=>t.stop()); clearInterval(recTimer); recorder=null; recBtn.textContent='Record'; takeClip(target, new Blob(chunks,{type:chunks[0]&&chunks[0].type||'audio/webm'})); };
+    recorder.start(); const t0=Date.now();
+    recBtn.textContent='Stop (0 s)';
+    recTimer=setInterval(()=>{ const s=Math.round((Date.now()-t0)/1000); recBtn.textContent=`Stop (${s} s)`; if (s>=45 && recorder) recorder.stop(); },250);
+    note.textContent='Recording. Read the passage, then press Stop (45 s at most).';
+  });
 
   // the chosen voice is fetched once the tool is in view, so the first Play does not wait on the download
   function prefetch(){ const s = SOUNDS[soundSel.value]; if (s.file) fetchFile(s.file).catch(()=>{}); }
@@ -681,7 +721,7 @@
   }
 
   // for checking from outside: what is playing and how the babble sits under it
-  FSA.sound = () => ({ current, bg, playing, loading, bgOn: !!bgSrc, bgGain: bgGain ? bgGain.gain.value : 0, level: Object.assign({}, level), bufs: Object.keys(buffers) });
+  FSA.sound = () => ({ current, bg, playing, loading, recording: !!recorder, bgOn: !!bgSrc, bgGain: bgGain ? bgGain.gain.value : 0, level: Object.assign({}, level), bufs: Object.keys(buffers) });
 
   refreshSoundUI();
 })();
