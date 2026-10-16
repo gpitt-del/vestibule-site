@@ -84,7 +84,8 @@
   .bar{display:inline-block; width:200px; height:10px; border-radius:5px; background:var(--line); overflow:hidden; vertical-align:middle; cursor:pointer}
   .bar:focus-visible{outline:3px solid var(--focus); outline-offset:2px}
   .bar span{display:block; height:100%; width:0; background:var(--ink-2)}
-  .sound-tools{display:inline-flex; gap:8px; align-items:center}
+  .credit{margin:-6px 2px 14px; font-size:12px; line-height:1.4; color:var(--mute); max-width:90ch}
+  .credit a{color:inherit}
   .panel{background:var(--panel); border-radius:14px; padding:10px 6px 4px; box-shadow:0 1px 0 var(--line); overflow-x:auto}
   svg{display:block; width:100%; height:auto; touch-action:none; user-select:none}
   .legend{margin:12px 2px 0; font-size:13px; color:var(--mute); max-width:70ch}
@@ -140,23 +141,24 @@
   <div class="sound" role="group" aria-label="Hear it their way">
     <span class="sound-title">Hear it their way</span>
     <select id="sound" aria-label="Sound">
-      <option value="rp-male">Rainbow Passage, male voice</option>
-      <option value="rp-female">Rainbow Passage, female voice</option>
-      <option value="rp-child">Rainbow Passage, child</option>
-      <option value="babble">Male voice in restaurant babble</option>
-      <option value="train" selected>Railroad crossing</option>
+      <option value="male" selected>Male voice</option>
+      <option value="female">Female voice</option>
+      <option value="train">Railroad crossing</option>
     </select>
+    <label class="sel">Background
+      <select id="bg" aria-label="Background">
+        <option value="quiet" selected>Quiet</option>
+        <option value="soft">Restaurant (soft)</option>
+        <option value="loud">Restaurant</option>
+      </select>
+    </label>
     <button type="button" class="btn" id="play">Play</button>
     <span class="time" id="time">0:00 / 0:00</span>
     <span class="bar" id="bar" role="slider" tabindex="0" aria-label="Position in the sound" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="prog"></span></span>
     <label class="chk"><input type="checkbox" id="loop" checked> Loop</label>
     <span class="sound-note" id="soundNote"></span>
-    <span class="sound-tools" id="soundTools" hidden>
-      <button type="button" class="btn ghost" id="rec">Record</button>
-      <button type="button" class="btn ghost" id="load">Load a file</button>
-      <input type="file" id="file" accept="audio/*" hidden>
-    </span>
   </div>
+  <p class="credit">Voices and restaurant babble: <a href="https://datashare.ed.ac.uk/handle/10283/3443">CSTR VCTK Corpus</a> (version 0.92), University of Edinburgh, CC BY 4.0. Speakers p311 (male), p339 (female); babble p360, p334, p311, p345, p294, p318, p333, p299. Edits: sentence recordings concatenated, silence-trimmed, loudness-normalized (EBU R128, -18 LUFS, -1 dBTP), mixed. No other processing.</p>
 
   <div class="panel"><svg id="chart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 790 735" aria-label="Audiogram with the speech canoe and phonemes"></svg></div>
 
@@ -446,29 +448,34 @@
   // the rule of record (10/12): 1.5 dB out for every dB of threshold above 20, capped at 60
   const att = T => Math.min(60, 1.5*Math.max(0, T-20));
 
+  // What plays: the two voices (the Rainbow Passage, from the files), or the railroad crossing (synthesized).
+  // The background goes under the voices only: the 8-talker babble, looped, set from the speech's level.
   const SOUNDS = {
-    'rp-male':   {kind:'speech'},
-    'rp-female': {kind:'speech'},
-    'rp-child':  {kind:'speech'},
-    'babble':    {kind:'babble', from:'rp-male'},
-    'train':     {kind:'synth'}
+    'male':   {kind:'speech', file:'sounds/rainbow_p311_M_Iowa.mp3'},
+    'female': {kind:'speech', file:'sounds/rainbow_p339_F_Pennsylvania.mp3'},
+    'train':  {kind:'synth'}
   };
-  const buffers = {};          // id -> AudioBuffer
-  let ctx=null, chain=null, src=null, playing=false, current='train', recorder=null, recTimer=null;
+  const BABBLE_FILE = 'sounds/babble_vctk_8talker.mp3';
+  const BG_DB = {quiet:null, soft:10, loud:5};     // the babble this many dB below the voice
+  const FADE = 0.2;                                // s: the babble's fades in, out and at its loop seam
+  const buffers = {};          // id -> AudioBuffer (the babble under 'babble')
+  const fetched = {};          // url -> Promise<ArrayBuffer>
+  const level = {};            // id -> RMS of the voice with its pauses removed; 'babble' -> RMS of the bed
+  let ctx=null, chain=null, src=null, bgSrc=null, bgGain=null, playing=false, current='male', bg='quiet', loading=false;
   let curBuf=null, startAt=0, offset=0, raf=null;
 
   const $ = id => document.getElementById(id);
-  const soundSel=$('sound'), playBtn=$('play'), loopChk=$('loop'), note=$('soundNote'), tools=$('soundTools'), recBtn=$('rec'), loadBtn=$('load'), fileIn=$('file'), timeEl=$('time'), progEl=$('prog'), barEl=$('bar');
+  const soundSel=$('sound'), bgSel=$('bg'), playBtn=$('play'), loopChk=$('loop'), note=$('soundNote'), timeEl=$('time'), progEl=$('prog'), barEl=$('bar');
   const fmt = t => { t=Math.max(0,Math.floor(t)); return Math.floor(t/60)+':'+String(t%60).padStart(2,'0'); };
   function elapsed(){ if(!curBuf) return 0; const d=curBuf.duration; const e = offset + (playing && ctx ? ctx.currentTime-startAt : 0); return loopChk.checked ? e % d : Math.min(e, d); }
   function tick(){ if(!curBuf){ timeEl.textContent='0:00 / 0:00'; progEl.style.width='0'; barEl.setAttribute('aria-valuenow','0'); return; } const e=elapsed(), d=curBuf.duration; timeEl.textContent=fmt(e)+' / '+fmt(d); progEl.style.width=(100*e/d).toFixed(1)+'%'; barEl.setAttribute('aria-valuenow',Math.round(100*e/d)); if (playing) raf=requestAnimationFrame(tick); }
-  // jump to a spot: click or drag on the bar, or arrow keys (5 s)
+  // jump to a spot: click or drag on the bar, or arrow keys (5 s); the background keeps going
   async function seekTo(sec){
     if (!curBuf){ ensureCtx(); curBuf = await bufferFor(current); if(!curBuf) return; }
     const d=curBuf.duration; const was=playing;
-    if (was){ try{ src.onended=null; src.stop(); }catch(e){} src.disconnect(); src=null; playing=false; }
+    if (was){ stopVoice(); }
     offset = Math.max(0, Math.min(d-0.01, sec));
-    if (was) play(); else tick();
+    if (was) startVoice(); else tick();
   }
   function barSeek(ev){ const r=barEl.getBoundingClientRect(); const f=Math.max(0,Math.min(1,(ev.clientX-r.left)/r.width)); if (curBuf) seekTo(f*curBuf.duration); }
   let dragging=false;
@@ -478,6 +485,7 @@
   barEl.addEventListener('keydown', ev=>{ if(!curBuf) return; if(ev.key==='ArrowRight'){ seekTo(elapsed()+5); ev.preventDefault(); } if(ev.key==='ArrowLeft'){ seekTo(elapsed()-5); ev.preventDefault(); } });
 
   // ---------- audio graph: source -> stereo upmix -> per-channel bank -> merge -> out ----------
+  // The voice and the background both enter at the upmix, so the hearing-loss filter applies to whatever plays.
   function ensureCtx(){
     if (!ctx){ ctx = new (window.AudioContext||window.webkitAudioContext)(); buildChain(); }
     if (ctx.state==='suspended') ctx.resume();
@@ -515,106 +523,118 @@
     });
   };
 
-  // ---------- sounds ----------
-  function haveSound(id){
-    const s=SOUNDS[id];
-    if (s.kind==='synth') return true;
-    if (s.kind==='babble') return !!buffers[s.from];
-    return !!buffers[id];
+  // ---------- the files ----------
+  function fetchFile(url){ return fetched[url] || (fetched[url] = fetch(url).then(r=>{ if(!r.ok) throw new Error(url+': '+r.status); return r.arrayBuffer(); })); }
+  async function decodeFile(url){ ensureCtx(); const ab = await fetchFile(url); return await ctx.decodeAudioData(ab.slice(0)); }
+  // RMS over 20 ms frames; for a voice, frames more than 30 dB under its loudest (or under -60 dBFS) are pauses and are left out
+  function rmsOf(buf, dropPauses){
+    const x = buf.getChannelData(0), win = Math.round(buf.sampleRate*0.02), n = Math.floor(x.length/win);
+    const fr = new Float64Array(n); let mx = 0;
+    for (let i=0;i<n;i++){ let acc=0; for (let k=i*win, e=k+win; k<e; k++) acc += x[k]*x[k]; fr[i]=Math.sqrt(acc/win); if (fr[i]>mx) mx=fr[i]; }
+    const thr = dropPauses ? Math.max(mx*Math.pow(10,-30/20), Math.pow(10,-60/20)) : 0;
+    let acc=0, cnt=0; for (let i=0;i<n;i++){ if (fr[i]>thr){ acc += fr[i]*fr[i]; cnt++; } }
+    return cnt ? Math.sqrt(acc/cnt) : 1e-6;
+  }
+  // the bed as a loop: its last 0.2 s crossfaded into its first 0.2 s, so it goes round without a seam
+  function loopable(buf){
+    const sr = buf.sampleRate, n = Math.round(FADE*sr), len = buf.length - n;
+    const out = ctx.createBuffer(buf.numberOfChannels, len, sr);
+    for (let ch=0; ch<buf.numberOfChannels; ch++){
+      const x = buf.getChannelData(ch), y = out.getChannelData(ch);
+      y.set(x.subarray(0, len));
+      for (let i=0;i<n;i++){ const t = (i/n)*Math.PI/2; y[i] = y[i]*Math.sin(t) + x[len+i]*Math.cos(t); }
+    }
+    return out;
   }
   async function bufferFor(id){
-    const s=SOUNDS[id];
+    const s = SOUNDS[id];
     if (s.kind==='synth'){ if(!buffers.train) buffers.train = synthTrain(); return buffers.train; }
-    if (s.kind==='babble'){ return buildBabble(buffers[s.from]); }
-    return buffers[id];
+    if (!buffers[id]){
+      loading = true; refreshSoundUI();
+      try { buffers[id] = await decodeFile(s.file); level[id] = rmsOf(buffers[id], true); }
+      catch (e) { note.textContent = 'That recording could not be loaded.'; }
+      loading = false; refreshSoundUI();
+    }
+    return buffers[id] || null;
   }
-  function refreshSoundUI(){
-    current = soundSel.value;
-    const ok = haveSound(current);
-    playBtn.disabled = !ok;
-    tools.hidden = ok || SOUNDS[current].kind==='synth';
-    if (!ok){
-      note.textContent = SOUNDS[current].kind==='babble'
-        ? 'Needs the male Rainbow Passage recording first; the babble is built from it.'
-        : 'No recording for this one yet.';
-      if (SOUNDS[current].kind==='babble') tools.hidden = true;
-    } else note.textContent = SOUNDS[current].kind==='synth' ? 'Synthesized stand-in: a far-off horn at 7 s, the train closing in from the left, the crossing signal (long, long, short, long) as it reaches you at 20 s.'
-         : (SOUNDS[current].kind==='babble' ? 'Your recording with a babble bed made from itself, 6 dB below the voice.' : 'Your recording, kept in this browser.');
+  async function babbleBuffer(){
+    if (!buffers.babble){
+      const raw = await decodeFile(BABBLE_FILE);
+      buffers.babble = loopable(raw); level.babble = rmsOf(buffers.babble, false);
+    }
+    return buffers.babble;
   }
-  soundSel.addEventListener('change', async ()=>{ const was=playing; stop(); offset=0; curBuf=null; refreshSoundUI(); if (haveSound(current)){ ensureCtx(); curBuf=await bufferFor(current); } tick(); if (was && curBuf) play(); });
+  // the babble's gain: the voice's level (pauses removed) over the bed's, then the chosen dB below it
+  function bgGainFor(id){ const dB = BG_DB[bg]; if (dB==null || !level[id] || !level.babble) return 0; return (level[id]/level.babble) * Math.pow(10, -dB/20); }
+  function hasBg(){ return SOUNDS[current].kind==='speech' && BG_DB[bg]!=null; }
 
-  async function play(){
-    ensureCtx();
-    if (!curBuf) curBuf = await bufferFor(current); if (!curBuf) return;
-    stop();
+  function refreshSoundUI(){
+    current = soundSel.value; bg = bgSel.value;
+    const s = SOUNDS[current];
+    bgSel.disabled = s.kind!=='speech';
+    playBtn.disabled = loading;
+    if (loading) note.textContent = 'Loading…';
+    else note.textContent = s.kind==='synth' ? 'Synthesized stand-in: a far-off horn at 7 s, the train closing in from the left, the crossing signal (long, long, short, long) as it reaches you at 20 s.' : '';
+  }
+
+  // ---------- playing ----------
+  function startVoice(){
     const d=curBuf.duration; if (offset>=d) offset=0;
     src = ctx.createBufferSource(); src.buffer=curBuf; src.loop=loopChk.checked;
     src.connect(chain.upmix);
-    src.onended = ()=>{ if (src && !src.loop){ src=null; playing=false; offset=0; playBtn.textContent='Play'; cancelAnimationFrame(raf); tick(); } };
+    src.onended = ()=>{ if (src && !src.loop){ src=null; playing=false; offset=0; playBtn.textContent='Play'; stopBg(); cancelAnimationFrame(raf); tick(); } };
     FSA.onChange(); src.start(0, offset % d); startAt=ctx.currentTime; playing=true; playBtn.textContent='Pause'; tick();
   }
-  function stop(){        // pause: remember where we were
+  function stopVoice(){
     if (src){ const e=elapsed(); try{ src.onended=null; src.stop(); }catch(e2){} src.disconnect(); src=null; offset=e; }
     playing=false; playBtn.textContent='Play'; cancelAnimationFrame(raf); tick();
   }
+  async function startBg(){
+    if (!hasBg()) return;
+    const want = current;
+    const bed = await babbleBuffer();
+    if (!playing || current!==want || !hasBg() || bgSrc) return;   // things moved on while the bed loaded
+    bgGain = ctx.createGain(); bgGain.gain.value = 0;
+    bgSrc = ctx.createBufferSource(); bgSrc.buffer = bed; bgSrc.loop = true;
+    bgSrc.connect(bgGain); bgGain.connect(chain.upmix);
+    const now = ctx.currentTime;
+    bgSrc.start(now, (ctx.currentTime*0.37) % bed.duration);
+    bgGain.gain.setValueAtTime(0, now); bgGain.gain.linearRampToValueAtTime(bgGainFor(current), now+FADE);
+  }
+  function setBgLevel(){
+    if (!bgSrc) return;
+    const now = ctx.currentTime, g = bgGainFor(current);
+    bgGain.gain.cancelScheduledValues(now); bgGain.gain.setValueAtTime(bgGain.gain.value, now); bgGain.gain.linearRampToValueAtTime(g, now+FADE);
+  }
+  function stopBg(){
+    if (!bgSrc) return;
+    const s2 = bgSrc, g2 = bgGain, now = ctx.currentTime;
+    bgSrc = null; bgGain = null;
+    g2.gain.cancelScheduledValues(now); g2.gain.setValueAtTime(g2.gain.value, now); g2.gain.linearRampToValueAtTime(0, now+FADE);
+    try { s2.stop(now+FADE+0.02); } catch(e) {}
+    setTimeout(()=>{ try{ s2.disconnect(); g2.disconnect(); }catch(e){} }, (FADE+0.1)*1000);
+  }
+  async function play(){
+    ensureCtx();
+    if (!curBuf) curBuf = await bufferFor(current); if (!curBuf) return;
+    stopVoice();
+    startVoice();
+    if (hasBg()) startBg();
+  }
+  function stop(){        // pause: remember where we were
+    stopVoice(); stopBg();
+  }
   playBtn.addEventListener('click', ()=> playing ? stop() : play());
   loopChk.addEventListener('change', ()=>{ if (src) src.loop = loopChk.checked; });
+  soundSel.addEventListener('change', async ()=>{ const was=playing; stop(); offset=0; curBuf=null; refreshSoundUI(); ensureCtx(); curBuf=await bufferFor(current); tick(); if (was && curBuf) play(); });
+  bgSel.addEventListener('change', ()=>{ refreshSoundUI(); if (!playing) return; if (!hasBg()) stopBg(); else if (bgSrc) setBgLevel(); else startBg(); });
 
-  // ---------- recordings: record or load, kept in this browser ----------
-  const DB='fsa-sounds';
-  function idb(){ return new Promise((res,rej)=>{ try{ const r=indexedDB.open(DB,1); r.onupgradeneeded=()=>r.result.createObjectStore('clips'); r.onsuccess=()=>res(r.result); r.onerror=()=>rej(r.error); }catch(e){ rej(e); } }); }
-  async function saveClip(id, blob){ try{ const db=await idb(); const tx=db.transaction('clips','readwrite'); tx.objectStore('clips').put(blob,id); }catch(e){} }
-  async function loadClips(){
-    try{
-      const db=await idb(); const tx=db.transaction('clips','readonly'); const st=tx.objectStore('clips');
-      for (const id of ['rp-male','rp-female','rp-child']){
-        await new Promise(res=>{ const r=st.get(id); r.onsuccess=async()=>{ if(r.result){ try{ buffers[id]=await decode(r.result); }catch(e){} } res(); }; r.onerror=()=>res(); });
-      }
-    }catch(e){}
-    refreshSoundUI();
-  }
-  async function decode(blob){ ensureCtx(); const ab=await blob.arrayBuffer(); return await ctx.decodeAudioData(ab); }
-  async function takeClip(blob){
-    try{ buffers[current] = await decode(blob); await saveClip(current, blob); }
-    catch(e){ note.textContent='That file could not be read as audio.'; return; }
-    curBuf=buffers[current]; offset=0; refreshSoundUI(); tick();
-  }
-  loadBtn.addEventListener('click', ()=> fileIn.click());
-  fileIn.addEventListener('change', ()=>{ if (fileIn.files[0]) takeClip(fileIn.files[0]); fileIn.value=''; });
-  recBtn.addEventListener('click', async ()=>{
-    if (recorder){ recorder.stop(); return; }
-    let stream;
-    try{ stream = await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false, noiseSuppression:false, autoGainControl:false}}); }
-    catch(e){ note.textContent='The microphone is blocked here. Open the page in its own tab, or use Load a file.'; return; }
-    const chunks=[]; recorder = new MediaRecorder(stream);
-    recorder.ondataavailable = e=>chunks.push(e.data);
-    recorder.onstop = ()=>{ stream.getTracks().forEach(t=>t.stop()); clearInterval(recTimer); recorder=null; recBtn.textContent='Record'; takeClip(new Blob(chunks,{type:chunks[0]&&chunks[0].type||'audio/webm'})); };
-    recorder.start(); const t0=Date.now();
-    recBtn.textContent='Stop (0 s)';
-    recTimer=setInterval(()=>{ const s=Math.round((Date.now()-t0)/1000); recBtn.textContent=`Stop (${s} s)`; if (s>=45 && recorder) recorder.stop(); },250);
-    note.textContent='Recording. Read the passage, then press Stop (45 s at most).';
-  });
-
-  // ---------- the babble bed: six shifted copies of the voice, 6 dB under it ----------
-  function buildBabble(voice){
-    const sr=voice.sampleRate, n=voice.length, v=voice.getChannelData(0);
-    const out = ctx.createBuffer(2, n, sr), L=out.getChannelData(0), R=out.getChannelData(1);
-    const rates=[0.93,0.97,1.02,1.06,0.95,1.04], offs=[0.17,0.41,0.58,0.73,0.29,0.86];
-    const bed = new Float32Array(n);
-    for (let k=0;k<rates.length;k++){
-      const rate=rates[k], off=Math.floor(offs[k]*n); let lp=0;
-      for (let i=0;i<n;i++){
-        const pos=((i*rate)+off)%n, i0=Math.floor(pos), i1=(i0+1)%n, fr=pos-i0;
-        const smp = v[i0]*(1-fr)+v[i1]*fr;
-        lp += 0.35*(smp-lp);                 // sit the babble a little behind the voice
-        bed[i] += lp;
-      }
-    }
-    let rv=0, rb=0; for (let i=0;i<n;i++){ rv+=v[i]*v[i]; rb+=bed[i]*bed[i]; }
-    const g = Math.sqrt(rv/Math.max(rb,1e-9)) * Math.pow(10,-6/20);   // bed at -6 dB re the voice
-    for (let i=0;i<n;i++){ const b=bed[i]*g; L[i]=v[i]*0.8+b*0.9; R[i]=v[i]*0.8+b*1.1; }
-    return out;
-  }
+  // the chosen voice is fetched once the tool is in view, so the first Play does not wait on the download
+  function prefetch(){ const s = SOUNDS[soundSel.value]; if (s.file) fetchFile(s.file).catch(()=>{}); }
+  if ('IntersectionObserver' in window){
+    const io = new IntersectionObserver(es=>{ if (es.some(e=>e.isIntersecting)){ prefetch(); io.disconnect(); } });
+    io.observe(document.querySelector('main'));
+  } else setTimeout(prefetch, 1500);
 
   // ---------- the railroad crossing, synthesized: the train closing in from the left, the crossing signal (long, long, short, long), the pass directly in front at 20 s ----------
   function synthTrain(){
@@ -660,8 +680,10 @@
     return buf;
   }
 
+  // for checking from outside: what is playing and how the babble sits under it
+  FSA.sound = () => ({ current, bg, playing, loading, bgOn: !!bgSrc, bgGain: bgGain ? bgGain.gain.value : 0, level: Object.assign({}, level), bufs: Object.keys(buffers) });
+
   refreshSoundUI();
-  loadClips();
 })();
 </script>
 </body>
