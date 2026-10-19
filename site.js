@@ -210,8 +210,8 @@
     var TIPS = {
       hx: "Already written, from your <b>recorded or dictated history</b> with the patient.",
       results: "Results are in the app <b>from Noah, instantly.</b>",
-      interp: "<b>AI interprets automatically.</b> Edit as needed.",
-      recs: "<b>AI generated.</b> Edit as needed.",
+      interp: "<b>Reports scripted in your own words. Three clicks.</b> Edit as needed.",
+      recs: "<b>Reports scripted in your own words. Three clicks.</b> Edit as needed.",
       summary: ""
     };
     var FOOT = {

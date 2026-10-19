@@ -793,6 +793,10 @@
   .trio { display: grid; gap: 2.25rem; }
   .trio article { min-width: 0; }
   .trio p { color: var(--ink-soft); }
+  /* The fourth card is a door to the speech-language pathology page */
+  .trio .door { display: block; min-width: 0; text-decoration: none; }
+  .trio .door h3 { text-decoration: underline; text-underline-offset: 0.2em; text-decoration-color: var(--tan); }
+  .trio .door:hover h3 { text-decoration-color: currentColor; }
 
   /* How a visit runs */
   .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; counter-reset: step; }
@@ -897,7 +901,7 @@
     .ticks { grid-template-columns: repeat(3, 1fr); }
     .sec { padding-block: 5rem; }
     .feature { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 3.5rem; }
-    .trio { grid-template-columns: repeat(3, 1fr); gap: 3rem; }
+    .trio { gap: 3rem; }
     .steps { grid-template-columns: 1fr 1fr; column-gap: 3.5rem; }
     .features { grid-template-columns: 1fr 1fr; column-gap: 3.5rem; }
     .pair { grid-template-columns: 1fr 1fr; gap: 3.5rem; }
@@ -908,6 +912,7 @@
   }
   @media (min-width: 80rem) {
     .wrap { max-width: 78rem; }
+    .trio { grid-template-columns: repeat(4, 1fr); }
     .hero { padding-block: 2.75rem 3.25rem; }
     .hero-grid { grid-template-columns: minmax(0, 1fr) auto; }
     .hits { grid-template-columns: 1fr 1fr; max-width: 36rem; }
