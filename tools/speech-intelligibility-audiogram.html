@@ -84,6 +84,17 @@
   .bar{display:inline-block; width:200px; height:10px; border-radius:5px; background:var(--line); overflow:hidden; vertical-align:middle; cursor:pointer}
   .bar:focus-visible{outline:3px solid var(--focus); outline-offset:2px}
   .bar span{display:block; height:100%; width:0; background:var(--ink-2)}
+  /* the volume slider: the bar's track, tan up to the thumb (--p is 0..1, set as the slider moves), a navy thumb */
+  .vol{display:inline-flex; align-items:center; gap:8px; font-size:13px; color:var(--ink)}
+  .vol input{
+    -webkit-appearance:none; appearance:none; width:200px; height:10px; margin:0; padding:0; border:0; border-radius:5px; cursor:pointer;
+    --fill:calc(8px + (100% - 16px)*var(--p,1));
+    background:linear-gradient(to right, var(--tan) var(--fill), var(--line) var(--fill));
+  }
+  .vol input::-webkit-slider-runnable-track{height:10px; border-radius:5px; background:transparent}
+  .vol input::-webkit-slider-thumb{-webkit-appearance:none; appearance:none; width:16px; height:16px; margin-top:-3px; border:0; border-radius:50%; background:var(--ink-2)}
+  .vol input::-moz-range-track{height:10px; border-radius:5px; background:transparent}
+  .vol input::-moz-range-thumb{width:16px; height:16px; border:0; border-radius:50%; background:var(--ink-2)}
   .sound-tools{display:inline-flex; gap:8px; align-items:center}
   .sound-tools[hidden], .sound-tools .btn[hidden]{display:none}
   .credit{margin:-6px 2px 14px; font-size:12px; line-height:1.4; color:var(--mute); max-width:90ch}
@@ -104,7 +115,7 @@
   .sii-ear{font:500 11px Poppins, system-ui, sans-serif; fill:#35455F}
   .sym{cursor:ns-resize}
   @media (prefers-reduced-motion: no-preference){ .sym{transition:transform .08s} }
-  @media (max-width:560px){ h1{font-size:28px} svg{min-width:640px} }
+  @media (max-width:560px){ h1{font-size:28px} svg{min-width:640px} .vol{flex:1 1 100%} .vol input{flex:1; width:auto; min-width:0} }
   /* embedded in the site's preview device: no heading, tight margins, always the light look */
   html.embed main{padding:12px 16px 14px}
   html.embed h1, html.embed .lede{display:none}
@@ -160,6 +171,7 @@
     <span class="time" id="time">0:00 / 0:00</span>
     <span class="bar" id="bar" role="slider" tabindex="0" aria-label="Position in the sound" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="prog"></span></span>
     <label class="chk"><input type="checkbox" id="loop" checked> Loop</label>
+    <label class="vol">Volume <input type="range" id="vol" min="0" max="100" step="5" value="100" aria-label="Volume" autocomplete="off"></label>
     <span class="sound-note" id="soundNote"></span>
     <span class="sound-tools" id="soundTools" hidden>
       <button type="button" class="btn ghost" id="rec" hidden>Record</button>
@@ -477,7 +489,7 @@
   let curBuf=null, startAt=0, offset=0, raf=null;
 
   const $ = id => document.getElementById(id);
-  const soundSel=$('sound'), bgSel=$('bg'), playBtn=$('play'), loopChk=$('loop'), note=$('soundNote'), tools=$('soundTools'), recBtn=$('rec'), loadBtn=$('load'), fileIn=$('file'), timeEl=$('time'), progEl=$('prog'), barEl=$('bar');
+  const soundSel=$('sound'), bgSel=$('bg'), playBtn=$('play'), loopChk=$('loop'), note=$('soundNote'), tools=$('soundTools'), recBtn=$('rec'), loadBtn=$('load'), fileIn=$('file'), timeEl=$('time'), progEl=$('prog'), barEl=$('bar'), volIn=$('vol');
   const fmt = t => { t=Math.max(0,Math.floor(t)); return Math.floor(t/60)+':'+String(t%60).padStart(2,'0'); };
   function elapsed(){ if(!curBuf) return 0; const d=curBuf.duration; const e = offset + (playing && ctx ? ctx.currentTime-startAt : 0); return loopChk.checked ? e % d : Math.min(e, d); }
   function tick(){ if(!curBuf){ timeEl.textContent='0:00 / 0:00'; progEl.style.width='0'; barEl.setAttribute('aria-valuenow','0'); return; } const e=elapsed(), d=curBuf.duration; timeEl.textContent=fmt(e)+' / '+fmt(d); progEl.style.width=(100*e/d).toFixed(1)+'%'; barEl.setAttribute('aria-valuenow',Math.round(100*e/d)); if (playing) raf=requestAnimationFrame(tick); }
@@ -496,8 +508,11 @@
   barEl.addEventListener('pointerup', ()=>{ dragging=false; });
   barEl.addEventListener('keydown', ev=>{ if(!curBuf) return; if(ev.key==='ArrowRight'){ seekTo(elapsed()+5); ev.preventDefault(); } if(ev.key==='ArrowLeft'){ seekTo(elapsed()-5); ev.preventDefault(); } });
 
-  // ---------- audio graph: source -> stereo upmix -> per-channel bank -> merge -> out ----------
+  // ---------- audio graph: source -> stereo upmix -> per-channel bank -> merge -> master -> volume -> out ----------
   // The voice and the background both enter at the upmix, so the hearing-loss filter applies to whatever plays.
+  // The Volume slider is one gain after the mix (master is the fixed 0.9 headroom trim), so the babble's level under the
+  // voice never moves with it: gain = (slider/100)^2, 100 is the level before the slider existed, 50 is about 12 dB down,
+  // 0 is silent. Changes ramp over 20 ms. The value lives in the slider for this page's session only; nothing is stored.
   function ensureCtx(){
     if (!ctx){ ctx = new (window.AudioContext||window.webkitAudioContext)(); buildChain(); }
     if (ctx.state==='suspended') ctx.resume();
@@ -521,9 +536,19 @@
     splitter.connect(L.input,0); splitter.connect(R.input,1);
     L.output.connect(merger,0,0); R.output.connect(merger,0,1);
     const master = ctx.createGain(); master.gain.value=0.9;
-    merger.connect(master); master.connect(ctx.destination);
-    chain = {upmix, L, R, master};
+    const volume = ctx.createGain(); volume.gain.value=volGain();
+    merger.connect(master); master.connect(volume); volume.connect(ctx.destination);
+    chain = {upmix, L, R, master, volume};
   }
+  function volGain(){ return Math.pow((+volIn.value)/100, 2); }
+  function setVolume(){
+    volIn.style.setProperty('--p', (+volIn.value)/100);
+    if (!chain) return;
+    const g = chain.volume.gain, now = ctx.currentTime;
+    g.cancelScheduledValues(now); g.setValueAtTime(g.value, now); g.linearRampToValueAtTime(volGain(), now+0.02);
+  }
+  volIn.addEventListener('input', setVolume);
+  setVolume();
   // the chart drives the filters: every render() calls this
   FSA.onChange = function(){
     if (!ctx || !chain) return;
@@ -721,7 +746,7 @@
   }
 
   // for checking from outside: what is playing and how the babble sits under it
-  FSA.sound = () => ({ current, bg, playing, loading, recording: !!recorder, bgOn: !!bgSrc, bgGain: bgGain ? bgGain.gain.value : 0, level: Object.assign({}, level), bufs: Object.keys(buffers) });
+  FSA.sound = () => ({ current, bg, playing, loading, recording: !!recorder, bgOn: !!bgSrc, bgGain: bgGain ? bgGain.gain.value : 0, volume: +volIn.value, volGain: chain ? chain.volume.gain.value : volGain(), level: Object.assign({}, level), bufs: Object.keys(buffers) });
 
   refreshSoundUI();
 })();
