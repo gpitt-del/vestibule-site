@@ -256,23 +256,48 @@
   :is(.fold, .as-fold) .n-sess > i.old { animation: none; }
   :is(.fold, .as-fold) .n-sess > i.on { background: #C7DAF0; border-radius: 0.2em; }
   :is(.fold, .as-fold) .n-sess em { font-style: normal; font-weight: 700; color: #1B6FB5; }
-  /* The preview screen (click 1): the report's page one as the app shows it, the sources rail and the verbs */
+  /* The preview screen (click 1): the report's four pages in a scroll, page one as the app shows it, the sources rail and the verbs */
   .fc-prev { position: absolute; inset: 0; z-index: 5; display: flex; flex-direction: column; background: #F3F4F6; color: #111827; }
   .fc-signed { flex: none; margin: 0; padding: 0.45em 1.2em 0.5em; background: #DCFCE7; color: #14532D; border-bottom: 1px solid #86EFAC; font-size: 0.78em; line-height: 1.35; }
   .fc-signed b { color: #14532D; }
   .pv-body { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) 11.5em; gap: 0.7em; padding: 0.7em 1.2em 0.8em; }
   .pv-scroll { min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; border-radius: 0.3em; }
   .pv-scroll:focus-visible { outline: 2px solid #1D4ED8; outline-offset: -2px; }
-  .pv-paper.sh { height: auto; padding: 1.8em 2.2em 1.6em; font-size: clamp(11px, 0.72em, 13.5px); background: #fff; border-radius: 0.25em; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.2); }
-  .pv-paper .sh-res { grid-template-columns: 44% minmax(0, 1fr); gap: 0 1.6em; align-items: start; }
-  .pv-paper .fc-plot { max-width: none; margin: 0; }
-  .pv-paper .sh-note { margin-top: 0.4em; }
-  .pv-kv { margin-top: 0.6em; font-size: 1.02em; }
-  .pv-kv dt { white-space: nowrap; }
-  .pv-was { color: #6B7280; }
-  .pv-tbl { width: auto; min-width: 60%; margin: 0.35em 0; }
-  .pv-tbl th, .pv-tbl td { padding: 0.18em 0.9em; }
-  .pv-paper .sh-sig svg[hidden] { display: none; }
+  /* The pages in the scroll (SITE-REPORT-1): page one as the app's preview shows it (.ap), then the three
+     pages after it in the sample report's own forms (.sh.sh-data, the #get sample's pages 2 to 4), each a
+     sheet of paper; the pages take their own height. */
+  .pv-scroll > .pv-paper { font-size: clamp(11px, 0.72em, 13.5px); background: #fff; border-radius: 0.25em; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.2); }
+  .pv-paper + .pv-paper { margin-top: 0.8em; }
+  .pv-paper.sh { height: auto; padding: 1.8em 2.2em 1.6em; }
+  .pv-paper .sh-cal { margin-top: 1.2em; }
+  .pv-paper.ap { padding: 1.5em 2em 1.4em; font-family: Helvetica, Arial, "Liberation Sans", sans-serif; line-height: 1.35; color: #1F2937; }
+  .ap-lh { padding-bottom: 0.45em; border-bottom: 0.2em solid #34425C; }
+  .ap-lh b { display: block; font-size: 1.2em; font-weight: 700; color: #34425C; }
+  .ap-lh span { display: block; margin-top: 0.1em; font-size: 0.74em; color: #4B5563; }
+  .ap-title { margin: 1em 0 0.55em; padding-bottom: 0.3em; border-bottom: 1px solid #34425C; font-weight: 700; font-size: 1.08em; letter-spacing: 0.08em; text-transform: uppercase; }
+  .ap-pt { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.55em 1em; padding: 0.55em 0.9em 0.65em; background: #F3F4F6; font-size: 0.98em; }
+  .ap-pt small { display: block; font-size: 0.66em; letter-spacing: 0.1em; text-transform: uppercase; color: #6B7280; }
+  .ap-h { margin: 1em 0 0.3em; font-size: 0.68em; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #374151; }
+  .ap-field { margin: 0; padding: 0.3em 0.55em; border: 1px solid #CBD5E1; border-radius: 0.2em; background: #fff; }
+  .ap-sum, .ap-int { margin-top: 0.9em; padding: 0.5em 0.9em 0.6em; background: #EEF4FB; border-left: 0.34em solid #34425C; }
+  .ap-sum small { display: block; margin-bottom: 0.3em; font-size: 0.66em; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #374151; }
+  .ap-int > b { display: block; margin-bottom: 0.3em; }
+  .ap-fig { margin-top: 0.9em; }
+  .ap-fig small { display: block; margin-bottom: 0.2em; font-size: 0.86em; color: #374151; }
+  .ap-fig .fc-plot { width: min(100%, 19em); margin: 0; }
+  .ap-cap { margin: 0.2em 0 0; font-size: 0.68em; color: #6B7280; }
+  .ap-rows { margin: 0; display: grid; gap: 0.4em; }
+  .ap-rows > div { display: grid; grid-template-columns: 9.5em minmax(0, 1fr); gap: 0.6em; align-items: start; }
+  .ap-rows dt { padding-top: 0.3em; color: #374151; }
+  .ap-rows dd { margin: 0; }
+  .ap ol { list-style: none; }
+  .ap-sig { margin-top: 1.5em; display: flex; justify-content: space-between; align-items: flex-end; gap: 2em; color: #4B5563; }
+  .ap-sig > div:first-child { display: grid; gap: 0.1em; }
+  .ap-sig svg { display: block; width: 11em; height: 2.6em; }
+  .ap-sig svg[hidden] { display: none; }
+  .ap-sig b { display: block; width: 14em; padding-top: 0.35em; border-top: 1px solid #9CA3AF; color: #1F2937; }
+  .ap-sig span { font-size: 0.9em; }
+  .ap-foot { font-size: 0.85em; color: #9CA3AF; white-space: nowrap; }
   .pv-rail { min-width: 0; display: grid; gap: 0.6em; align-content: start; }
   .pv-card { background: #fff; border: 1px solid #E5E7EB; border-radius: 0.5em; padding: 0.65em 0.75em; font-size: 0.72em; line-height: 1.4; color: #374151; }
   .pv-src b { display: block; margin-bottom: 0.3em; font-size: 0.85em; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #6B7280; }
@@ -307,6 +332,7 @@
   .fold-cert b { font-weight: 800; font-size: clamp(1.45rem, 1.05rem + 1.6vw, 2.1rem); line-height: 1.1; letter-spacing: -0.02em; }
   .fold-cert sup { font-size: 0.55em; }
   .fold-cert span { color: var(--night-soft); font-size: 0.98rem; line-height: 1.4; }
+  .fold-cert strong { color: var(--night-ink); font-weight: 800; }   /* the profession pages' own words in the band */
   /* The opening that was the top of the page follows the fold now: the copy column (the promise, the lede,
      the highlights, the ask); the preview that stood beside it is the fold's screen. Since SITE-FOLD-3 the
      column runs the full width: one grid column at every width, the lede's measure widened, the highlights
@@ -326,10 +352,17 @@
     :is(.fold, .as-fold) .pv-src { display: none; }
     :is(.fold, .as-fold) .pv-verbs { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5em; }
     :is(.fold, .as-fold) .pv-sign { width: auto; }
-    :is(.fold, .as-fold) .pv-paper .sh-brand { font-size: 1.25em; letter-spacing: 0.12em; }
-    :is(.fold, .as-fold) .pv-paper .sh-tag { display: none; }
-    :is(.fold, .as-fold) .pv-paper .sh-res { grid-template-columns: minmax(0, 1fr); }
-    :is(.fold, .as-fold) .pv-paper .fc-plot { max-width: 17rem; margin: 0 auto; }
+    .fold .pv-paper .sh-brand { font-size: 1.25em; letter-spacing: 0.12em; }
+    .fold .pv-paper .sh-head { flex-wrap: wrap; gap: 0.2em 1em; }
+    .fold .pv-paper .sh-who { margin-left: 0; white-space: normal; }
+    .fold .pv-paper .sh-cols3 { grid-template-columns: minmax(0, 1fr); gap: 0.5em 0; }
+    .fold .pv-paper .sh-tbl { font-size: 0.8em; }
+    .fold .pv-paper .sh-tymp { width: 100%; }
+    .fold .pv-paper .sh-cal { flex-wrap: wrap; }
+    .fold .ap-pt { grid-template-columns: 1fr 1fr; }
+    .fold .ap-rows > div { grid-template-columns: minmax(0, 1fr); gap: 0.1em; }
+    .fold .ap-rows dt { padding-top: 0; font-size: 0.86em; }
+    .fold .ap-sig { flex-wrap: wrap; }
   }
   @container stage (max-width: 27rem) {
     :is(.fold, .as-fold) .n-list { display: none; }
