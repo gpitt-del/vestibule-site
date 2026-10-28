@@ -171,20 +171,18 @@
   .bigname { margin: 0 0 1.1rem; line-height: 0; }
   /* The file carries a little air on its left; the shift lines the seal up with the text below. */
   .bigname img { display: block; width: min(100%, 30.3rem); height: auto; transform: translateX(-3.4%); }
-  /* ── The fold (HERO-2, 2026-10-27; SITE-CLICK-2, 2026-10-28): one headline line that fills
-     the content width on one line from 40rem (site.js measures and sizes it; a phone wraps it);
-     on the left the two notes and the fly-in rail; on the right the demo practice's screen,
-     which is the site's click-through for every scene: the preview's own markup (.stage >
-     .phone > .screen > .app, run by site.js) at the column's width. The desk screens take
-     their own height, the chart drawn large; the kiosk and the phone keep their shapes. The
-     Noah ES certification band runs under both columns. ── */
+  /* ── The fold (HERO-2, 2026-10-27; SITE-CLICK-2 and SITE-FOLD-3, 2026-10-28): one headline
+     line that fills the content width on one line from 40rem (site.js measures and sizes it; a
+     phone wraps it); on the left the fly-in rail, from the top of its column; on the right the
+     demo practice's screen, which is the site's click-through for every scene: the preview's
+     own markup (.stage > .phone > .screen > .app, run by site.js) at the column's width. The
+     desk screens take their own height, the chart drawn large; the kiosk and the phone keep
+     their shapes. Under the screen: the lead-in and the scene chips, the Noah ES certification
+     band directly under them, then the phone line and the sample-patients line. ── */
   .fold { background: var(--night); background-image: radial-gradient(52rem 30rem at 88% 12%, rgba(179, 151, 140, 0.2), transparent 62%); color: var(--night-ink); padding-block: 1.5rem 2rem; }
   .fold-line { margin: 0 0 1.1rem; font-family: var(--font-body); font-weight: 600; font-size: 0.95rem; line-height: 1.3; letter-spacing: 0.005em; color: var(--night-ink); text-wrap: pretty; }
   .fold-grid { display: grid; gap: 1.25rem; align-items: start; }
   .fold-side { display: grid; gap: 1.1rem; align-content: start; }
-  .fold-notes { display: grid; gap: 0.9rem; align-content: start; }
-  .fold-notes p { margin: 0; font-size: 0.92rem; line-height: 1.45; color: var(--night-soft); }
-  .fold-notes b { color: var(--night-ink); font-weight: 800; }
   /* The rail: the fly-ins. The current one is a light card; the earlier ones fold to their bold line. */
   .fold-rail { display: grid; gap: 0.6rem; }
   .fly-stack { display: grid; gap: 0.5rem; }
@@ -204,8 +202,24 @@
   .fly-count b { margin: 0 0.15em; font-size: 1.4rem; line-height: 1; color: var(--night-ink); font-variant-numeric: tabular-nums; }
   .fly-foot .go { font: inherit; font-size: 0.92rem; font-weight: 700; background: var(--night-tan); color: #222D40; border: 0; border-radius: 999px; padding: 0.35rem 0.9rem; cursor: pointer; }
   .fly-foot .again { font: inherit; font-size: 0.88rem; color: var(--night-soft); background: none; border: 0; padding: 0.2rem 0; cursor: pointer; text-decoration: underline; text-underline-offset: 0.2em; }
-  /* The screen column: the stage, the chips and the two lines under them */
+  /* The screen column: the stage, the lead-in and the chips, the certification band, the two lines */
   .fold-screen { min-width: 0; display: grid; gap: 0.9rem; justify-items: center; }
+  /* The lead-in and the chips (SITE-FOLD-3): one row, the lead-in's two lines ("Our Favorite
+     Features" over "click these 4 options" and the arrow, ranged right) left of the first chip,
+     the arrow pointing right. Where the row would not fit on one line (the column under
+     54rem: a phone, a tablet, the two-column fold under about 1190px) the lead-in sits
+     above the chips, centered, with the arrow turned down. The chips row is the shared
+     .scene-chips, unchanged. */
+  .chips-row { justify-self: stretch; container-type: inline-size; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.7rem 0.9rem; }
+  .chips-row > .scene-chips { min-width: 0; max-width: 100%; }
+  .chips-lead { margin: 0; display: grid; justify-items: end; gap: 0.1rem; text-align: right; line-height: 1.2; white-space: nowrap; }
+  .chips-lead b { font-weight: 800; font-size: 0.95rem; letter-spacing: -0.01em; color: var(--night-ink); }
+  .chips-lead span { display: inline-flex; align-items: center; gap: 0.45rem; font-size: 0.88rem; font-weight: 700; color: var(--night-tan); }
+  .chips-lead svg { flex: none; width: 1.5rem; height: 0.75rem; }
+  @container (max-width: 54rem) {
+    .chips-lead { flex-basis: 100%; justify-items: center; text-align: center; }
+    .chips-lead svg { margin: 0 -0.375rem; transform: rotate(90deg); }
+  }
   .fold .stage.desk { width: 100%; }
   .fold .stage.kiosk { width: min(24rem, 100%); }
   .fold .stage.desk .phone { border-radius: 0.9rem; padding: 0.45rem; }
@@ -284,15 +298,20 @@
     .fly, .fly.in { transition: none; transform: none; }
     .fly.nudge { animation: none; }
   }
-  /* The certification band, full width under the two columns */
-  .fold-cert { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; margin-top: 1.6rem; padding-top: 1.4rem; border-top: 1px solid var(--night-rule); }
+  /* The certification band: directly under the chips, the width of the screen's column (SITE-FOLD-3; it ran under both columns before) */
+  .fold-cert { justify-self: stretch; display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; margin-top: 0.5rem; padding-top: 1.3rem; border-top: 1px solid var(--night-rule); }
   .fold-cert .cert-seal { flex: none; display: block; width: 120px; height: 120px; border-radius: 50%; background: #fff; box-shadow: 0 0.4rem 1.2rem rgba(0, 0, 0, 0.3); }
   .fold-cert p { margin: 0; flex: 1 1 18rem; min-width: 0; display: grid; gap: 0.3rem; }
   .fold-cert b { font-weight: 800; font-size: clamp(1.45rem, 1.05rem + 1.6vw, 2.1rem); line-height: 1.1; letter-spacing: -0.02em; }
   .fold-cert sup { font-size: 0.55em; }
   .fold-cert span { color: var(--night-soft); font-size: 0.98rem; line-height: 1.4; }
-  /* The opening that was the top of the page follows the fold now: the copy column (the promise, the lede, the highlights, the ask); the preview that stood beside it is the fold's screen. */
+  /* The opening that was the top of the page follows the fold now: the copy column (the promise, the lede,
+     the highlights, the ask); the preview that stood beside it is the fold's screen. Since SITE-FOLD-3 the
+     column runs the full width: one grid column at every width, the lede's measure widened, the highlights
+     in two columns from 56rem (below that there is no room for two). */
   .hero.after-fold { border-top: 1px solid var(--night-rule); }
+  .hero.after-fold .hero-grid { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; }
+  .hero.after-fold .lede { max-width: 44rem; }
   /* A narrow screen: the preview's verbs sit over the page (so Sign & send is in reach), the sources
      step aside, the page's letterhead and figures narrow; Noah's patient list steps aside and its
      panels stack, so the audiogram module stays legible; the chart's chip may wrap. */
@@ -320,7 +339,8 @@
     .fold { padding-block: 1.6rem 2.25rem; }
     .fold-line { font-size: calc((min(100vw, 72rem) - 4rem) / 46.5); }
     .fold-grid { grid-template-columns: 14.375rem minmax(0, 1fr); gap: 2rem; }
-    .hero.after-fold .hero-copy { grid-row: 1 / span 2; }
+    .hero.after-fold .hero-copy { grid-column: 1; grid-row: 1; }
+    .hero.after-fold .hits { grid-template-columns: 1fr 1fr; max-width: 58rem; }
   }
   @media (min-width: 80rem) {
     .fold-line { font-size: calc((min(100vw, 78rem) - 4rem) / 46.5); }
