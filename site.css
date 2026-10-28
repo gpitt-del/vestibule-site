@@ -236,7 +236,7 @@
   .fold-cert b { font-weight: 800; font-size: clamp(1.45rem, 1.05rem + 1.6vw, 2.1rem); line-height: 1.1; letter-spacing: -0.02em; }
   .fold-cert sup { font-size: 0.55em; }
   .fold-cert span { color: var(--night-soft); font-size: 0.98rem; line-height: 1.4; }
-  /* The opening that was the top of the page follows the fold now: the preview and the copy column, without the display headline. The price box sits after the highlights, so no price is in the first view. */
+  /* The opening that was the top of the page follows the fold now: the preview and the copy column, without the display headline or the offer box (the one offer is the band after how a visit runs). */
   .hero.after-fold { border-top: 1px solid var(--night-rule); }
   @media (min-width: 40rem) {
     .fc .d-nav { display: flex; }
@@ -250,7 +250,6 @@
     .fold-grid { grid-template-columns: 14.375rem minmax(0, 1fr); gap: 2rem; }
     .fold-chart { --hand-dx: -330px; --hand-dy: 170px; }
     .hero.after-fold .hero-copy { grid-row: 1 / span 2; }
-    .hero.after-fold .hero-offer { order: 0; margin: 0 0 1.5rem; }
   }
 
     /* The numbers that greet you: sample month-to-date cards under the tagline */
@@ -738,7 +737,7 @@
     .d-top > b { margin-right: auto; }
     .d-top { padding-inline: 0.9em; }
     .d-page { padding-inline: 0.9em; }
-    .d-row .d-btn:nth-child(2) { display: none; }   /* one row of buttons: Quick-Book steps aside */
+    .d-row .d-btn:nth-child(2) { display: none; }   /* one row of buttons: Book now steps aside */
     .d-res { grid-template-rows: auto auto; grid-template-areas: "plot txt" "from from"; column-gap: 0.8em; }
     .d-plot { width: 8.2em; }
     .d-txt p { font-size: 0.86em; }
@@ -875,10 +874,6 @@
   .trio { display: grid; gap: 2.25rem; }
   .trio article { min-width: 0; }
   .trio p { color: var(--ink-soft); }
-  /* The fourth card is a door to the speech-language pathology page */
-  .trio .door { display: block; min-width: 0; text-decoration: none; }
-  .trio .door h3 { text-decoration: underline; text-underline-offset: 0.2em; text-decoration-color: var(--tan); }
-  .trio .door:hover h3 { text-decoration-color: currentColor; }
 
   /* How a visit runs */
   .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; counter-reset: step; }
@@ -902,6 +897,13 @@
   .sec .offer a { white-space: nowrap; }
   .sec .offer .offer-after { margin-top: 0.45rem; font-size: 0.9rem; }
   .sec .offer a { font-weight: 700; color: var(--ink); text-decoration: underline; text-underline-offset: 0.2em; text-decoration-color: var(--tan); text-decoration-thickness: 2px; }
+
+  /* The one offer on the page (HERO-2 Part B): a band between how a visit runs and everything else, drawn like the sample-numbers band */
+  .offer-band .wrap { display: grid; gap: 0.7rem; }
+  .ob-head { margin: 0; font-weight: 800; font-size: clamp(1.5rem, 1.1rem + 1.9vw, 2.2rem); line-height: 1.1; letter-spacing: -0.03em; color: var(--night-tan); text-wrap: balance; }
+  .ob-line { margin: 0; font-size: 1.2rem; line-height: 1.5; max-width: 40rem; }
+  .ob-after { margin: 0; color: var(--night-soft); font-size: 0.98rem; line-height: 1.4; }
+  .offer-band a { color: var(--night-ink); font-weight: 700; text-decoration: underline; text-underline-offset: 0.2em; text-decoration-color: var(--night-tan); text-decoration-thickness: 2px; white-space: nowrap; }
 
   /* Fits + story */
   .pair { display: grid; gap: 2.25rem; }
@@ -983,7 +985,7 @@
     .ticks { grid-template-columns: repeat(3, 1fr); }
     .sec { padding-block: 5rem; }
     .feature { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 3.5rem; }
-    .trio { gap: 3rem; }
+    .trio { grid-template-columns: repeat(3, 1fr); gap: 3rem; }
     .steps { grid-template-columns: 1fr 1fr; column-gap: 3.5rem; }
     .features { grid-template-columns: 1fr 1fr; column-gap: 3.5rem; }
     .pair { grid-template-columns: 1fr 1fr; gap: 3.5rem; }
@@ -994,7 +996,6 @@
   }
   @media (min-width: 80rem) {
     .wrap { max-width: 78rem; }
-    .trio { grid-template-columns: repeat(4, 1fr); }
     .hero { padding-block: 2.75rem 3.25rem; }
     .hero-grid { grid-template-columns: minmax(0, 1fr) auto; }
     .hits { grid-template-columns: 1fr 1fr; max-width: 36rem; }
