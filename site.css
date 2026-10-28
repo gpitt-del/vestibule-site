@@ -171,6 +171,88 @@
   .bigname { margin: 0 0 1.1rem; line-height: 0; }
   /* The file carries a little air on its left; the shift lines the seal up with the text below. */
   .bigname img { display: block; width: min(100%, 30.3rem); height: auto; transform: translateX(-3.4%); }
+  /* ── The fold (HERO-2, 2026-10-27): one small headline line, two notes beside the demo
+     practice's chart drawn large, and the Noah ES certification band under both. The chart
+     is the preview's own chart (.d-top, .d-head, .d-row …) at page scale, so it stays the
+     same drawing. A hand comes to the yellow verb from the screen's middle every 4 s and
+     presses it; the verb flashes and throws a ring. With reduced motion the hand rests on
+     the verb and the verb keeps a soft static ring. ── */
+  .fold { background: var(--night); background-image: radial-gradient(52rem 30rem at 88% 12%, rgba(179, 151, 140, 0.2), transparent 62%); color: var(--night-ink); padding-block: 1.5rem 2rem; }
+  .fold-line { margin: 0 0 1.1rem; font-family: var(--font-body); font-weight: 600; font-size: 0.95rem; line-height: 1.4; letter-spacing: 0.005em; color: var(--night-ink); text-wrap: pretty; }
+  .fold-grid { display: grid; gap: 1.25rem; align-items: start; }
+  .fold-notes { display: grid; gap: 0.9rem; align-content: start; }
+  .fold-notes p { margin: 0; font-size: 0.92rem; line-height: 1.45; color: var(--night-soft); }
+  .fold-notes b { color: var(--night-ink); font-weight: 800; }
+  /* the hand's starting point, relative to the verb: about the screen's middle at each width */
+  .fold-chart { min-width: 0; --hand-dx: -140px; --hand-dy: 120px; }
+  .fc-bezel { background: #0E141D; border-radius: 0.9rem; padding: 0.45rem; box-shadow: 0 1.6rem 3.2rem rgba(0, 0, 0, 0.38), inset 0 0 0 1px rgba(255, 255, 255, 0.09); }
+  .fc { display: flex; flex-direction: column; overflow: hidden; border-radius: 0.4rem; background: #F8FAFC; color: #111827; font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; font-size: clamp(14px, 0.9rem + 0.4vw, 18px); line-height: 1.38; text-align: left; }
+  .fc .d-page { flex: none; padding: 0.8em 1.1em 0.9em; gap: 0.7em; }
+  .fc .d-nav { display: none; }
+  .fc .d-top > b { margin-right: auto; }
+  .fc-row { gap: 0.5em; }
+  /* The yellow verb: "Click here" over "Open in Noah", at the row's end */
+  .fc-verb { position: relative; margin-left: auto; display: inline-grid; justify-items: center; gap: 0.05em; padding: 0.45em 1em 0.5em; border-radius: 0.55em; background: #F59E0B; color: #111827; text-decoration: none; line-height: 1.1; box-shadow: 0 0 0 0.13em #fff, 0 0.45em 1.1em rgba(15, 23, 42, 0.4); animation: fold-flash 4s ease-in-out infinite; }
+  .fc-verb:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+  .fc-verb b { font-size: 1.35em; font-weight: 800; letter-spacing: -0.01em; white-space: nowrap; }
+  .fc-verb small { font-size: 0.74em; font-weight: 600; white-space: nowrap; }
+  .fc-verb::after { content: ""; position: absolute; inset: -0.3em; border-radius: 0.8em; border: 2px solid #FDE68A; opacity: 0; pointer-events: none; animation: fold-ring 4s ease-out infinite; }
+  .fc-hand { position: absolute; left: 76%; top: 60%; z-index: 2; width: 2.1em; height: 2.45em; margin: -0.05em 0 0 -0.9em; pointer-events: none; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.35)); transform-origin: 43% 2%; animation: fold-hand 4s infinite; }
+  @keyframes fold-hand {
+    0% { transform: translate(var(--hand-dx), var(--hand-dy)) scale(1); opacity: 0; animation-timing-function: cubic-bezier(0.3, 0.6, 0.2, 1); }
+    8% { opacity: 1; }
+    44% { transform: translate(0, 0) scale(1); animation-timing-function: ease-in; }
+    50% { transform: translate(0, 0) scale(0.82); animation-timing-function: ease-out; }
+    57%, 88% { transform: translate(0, 0) scale(1); opacity: 1; }
+    96%, 100% { transform: translate(0, 0) scale(1); opacity: 0; }
+  }
+  @keyframes fold-flash {
+    0%, 46% { background-color: #F59E0B; box-shadow: 0 0 0 0.13em #fff, 0 0.45em 1.1em rgba(15, 23, 42, 0.4); }
+    51% { background-color: #FDE68A; box-shadow: 0 0 0 0.13em #fff, 0 0 1.4em 0.35em rgba(253, 230, 138, 0.9); }
+    64%, 100% { background-color: #F59E0B; box-shadow: 0 0 0 0.13em #fff, 0 0.45em 1.1em rgba(15, 23, 42, 0.4); }
+  }
+  @keyframes fold-ring {
+    0%, 48% { opacity: 0; transform: scale(1); }
+    52% { opacity: 0.95; transform: scale(1); }
+    82%, 100% { opacity: 0; transform: scale(1.5); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .fc-verb, .fc-verb::after, .fc-hand { animation: none; }
+    .fc-hand { transform: none; opacity: 1; }
+    .fc-verb::after { opacity: 0.7; transform: scale(1.12); }
+  }
+  /* The results on the chart: the audiogram beside the Diagnostics panel */
+  .fc-card { flex: none; padding: 0.8em 0.9em; justify-content: flex-start; }
+  .fc-res { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.8em 1.4em; align-items: center; }
+  .fc-plot { display: block; width: 100%; max-width: 17rem; height: auto; margin: 0 auto; }
+  .fc-txt { min-width: 0; }
+  .fc-txt p { margin: 0; font-size: 0.95em; line-height: 1.5; color: #374151; }
+  .fc-txt .res-h { font-size: 1em; }
+  .fc-txt .d-due { vertical-align: 0.05em; }
+  /* The certification band, full width under the two columns */
+  .fold-cert { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; margin-top: 1.6rem; padding-top: 1.4rem; border-top: 1px solid var(--night-rule); }
+  .fold-cert .cert-seal { flex: none; display: block; width: 120px; height: 120px; border-radius: 50%; background: #fff; box-shadow: 0 0.4rem 1.2rem rgba(0, 0, 0, 0.3); }
+  .fold-cert p { margin: 0; flex: 1 1 18rem; min-width: 0; display: grid; gap: 0.3rem; }
+  .fold-cert b { font-weight: 800; font-size: clamp(1.45rem, 1.05rem + 1.6vw, 2.1rem); line-height: 1.1; letter-spacing: -0.02em; }
+  .fold-cert sup { font-size: 0.55em; }
+  .fold-cert span { color: var(--night-soft); font-size: 0.98rem; line-height: 1.4; }
+  /* The opening that was the top of the page follows the fold now: the preview and the copy column, without the display headline. The price box sits after the highlights, so no price is in the first view. */
+  .hero.after-fold { border-top: 1px solid var(--night-rule); }
+  @media (min-width: 40rem) {
+    .fc .d-nav { display: flex; }
+    .fc .d-top > b { margin-right: 0; }
+    .fc-res { grid-template-columns: minmax(11rem, 17rem) minmax(0, 1fr); }
+    .fc-plot { margin: 0; }
+    .fold-chart { --hand-dx: -220px; --hand-dy: 150px; }
+  }
+  @media (min-width: 56rem) {
+    .fold { padding-block: 1.6rem 2.25rem; }
+    .fold-grid { grid-template-columns: 14.375rem minmax(0, 1fr); gap: 2rem; }
+    .fold-chart { --hand-dx: -330px; --hand-dy: 170px; }
+    .hero.after-fold .hero-copy { grid-row: 1 / span 2; }
+    .hero.after-fold .hero-offer { order: 0; margin: 0 0 1.5rem; }
+  }
+
     /* The numbers that greet you: sample month-to-date cards under the tagline */
   .night-band { background: var(--night); color: var(--night-ink); padding-block: 3rem 3.25rem; }
   .kpi { margin: 0; }
