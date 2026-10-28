@@ -171,33 +171,106 @@
   .bigname { margin: 0 0 1.1rem; line-height: 0; }
   /* The file carries a little air on its left; the shift lines the seal up with the text below. */
   .bigname img { display: block; width: min(100%, 30.3rem); height: auto; transform: translateX(-3.4%); }
-  /* ── The fold (HERO-2, 2026-10-27): one small headline line, two notes beside the demo
-     practice's chart drawn large, and the Noah ES certification band under both. The chart
-     is the preview's own chart (.d-top, .d-head, .d-row …) at page scale, so it stays the
-     same drawing. A hand comes to the yellow verb from the screen's middle every 4 s and
-     presses it; the verb flashes and throws a ring. With reduced motion the hand rests on
-     the verb and the verb keeps a soft static ring. ── */
+  /* ── The fold (HERO-2, 2026-10-27; SITE-CLICK-2, 2026-10-28): one headline line that fills
+     the content width on one line from 40rem (site.js measures and sizes it; a phone wraps it);
+     on the left the two notes and the fly-in rail; on the right the demo practice's screen,
+     which is the site's click-through for every scene: the preview's own markup (.stage >
+     .phone > .screen > .app, run by site.js) at the column's width. The desk screens take
+     their own height, the chart drawn large; the kiosk and the phone keep their shapes. The
+     Noah ES certification band runs under both columns. ── */
   .fold { background: var(--night); background-image: radial-gradient(52rem 30rem at 88% 12%, rgba(179, 151, 140, 0.2), transparent 62%); color: var(--night-ink); padding-block: 1.5rem 2rem; }
-  .fold-line { margin: 0 0 1.1rem; font-family: var(--font-body); font-weight: 600; font-size: 0.95rem; line-height: 1.4; letter-spacing: 0.005em; color: var(--night-ink); text-wrap: pretty; }
+  .fold-line { margin: 0 0 1.1rem; font-family: var(--font-body); font-weight: 600; font-size: 0.95rem; line-height: 1.3; letter-spacing: 0.005em; color: var(--night-ink); text-wrap: pretty; }
   .fold-grid { display: grid; gap: 1.25rem; align-items: start; }
+  .fold-side { display: grid; gap: 1.1rem; align-content: start; }
   .fold-notes { display: grid; gap: 0.9rem; align-content: start; }
   .fold-notes p { margin: 0; font-size: 0.92rem; line-height: 1.45; color: var(--night-soft); }
   .fold-notes b { color: var(--night-ink); font-weight: 800; }
-  /* the hand's starting point, relative to the verb: about the screen's middle at each width */
-  .fold-chart { min-width: 0; --hand-dx: -140px; --hand-dy: 120px; }
-  .fc-bezel { background: #0E141D; border-radius: 0.9rem; padding: 0.45rem; box-shadow: 0 1.6rem 3.2rem rgba(0, 0, 0, 0.38), inset 0 0 0 1px rgba(255, 255, 255, 0.09); }
-  .fc { display: flex; flex-direction: column; overflow: hidden; border-radius: 0.4rem; background: #F8FAFC; color: #111827; font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; font-size: clamp(14px, 0.9rem + 0.4vw, 18px); line-height: 1.38; text-align: left; }
-  .fc .d-page { flex: none; padding: 0.8em 1.1em 0.9em; gap: 0.7em; }
-  .fc .d-nav { display: none; }
-  .fc .d-top > b { margin-right: auto; }
+  /* The rail: the fly-ins. The current one is a light card; the earlier ones fold to their bold line. */
+  .fold-rail { display: grid; gap: 0.6rem; }
+  .fly-stack { display: grid; gap: 0.5rem; }
+  .fly { margin: 0; padding: 0.6rem 0.8rem 0.65rem; border-left: 4px solid rgba(205, 180, 169, 0.55); border-radius: 0 0.55rem 0.55rem 0; background: rgba(251, 250, 248, 0.06); color: var(--night-soft); font-size: 0.9rem; line-height: 1.4; opacity: 0.5; transform: translateX(-14px); transition: opacity 0.25s ease, transform 0.25s ease, background-color 0.25s ease; }
+  .fly.in { opacity: 0.85; transform: none; }
+  .fly.now { opacity: 1; background: #FBFAF8; color: #2B3950; border-left-color: #F59E0B; box-shadow: 0 0.6rem 1.4rem rgba(0, 0, 0, 0.3); }
+  .fly-t { display: block; font-weight: 800; font-size: 0.95rem; line-height: 1.25; letter-spacing: -0.01em; }
+  .fly.now .fly-t { margin-bottom: 0.3rem; color: #222D40; }
+  .fly.big.now .fly-t { font-size: 1.4rem; line-height: 1.12; letter-spacing: -0.02em; margin-bottom: 0.4rem; }
+  .fly-b { display: block; margin: 0; }
+  .fly:not(.now) .fly-b { display: none; }
+  .fly.now .fly-b b { color: #7D6359; }
+  .fly.nudge { animation: fly-nudge 0.6s ease-out; }
+  @keyframes fly-nudge { 0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.9); } 100% { box-shadow: 0 0 0 0.6rem rgba(245, 158, 11, 0); } }
+  .fly-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 1rem; }
+  .fly-count { margin: 0 auto 0 0; font-size: 0.85rem; color: var(--night-soft); white-space: nowrap; }
+  .fly-count b { margin: 0 0.15em; font-size: 1.4rem; line-height: 1; color: var(--night-ink); font-variant-numeric: tabular-nums; }
+  .fly-foot .go { font: inherit; font-size: 0.92rem; font-weight: 700; background: var(--night-tan); color: #222D40; border: 0; border-radius: 999px; padding: 0.35rem 0.9rem; cursor: pointer; }
+  .fly-foot .again { font: inherit; font-size: 0.88rem; color: var(--night-soft); background: none; border: 0; padding: 0.2rem 0; cursor: pointer; text-decoration: underline; text-underline-offset: 0.2em; }
+  /* The screen column: the stage, the chips and the two lines under them */
+  .fold-screen { min-width: 0; display: grid; gap: 0.9rem; justify-items: center; }
+  .fold .stage.desk { width: 100%; }
+  .fold .stage.kiosk { width: min(24rem, 100%); }
+  .fold .stage.desk .phone { border-radius: 0.9rem; padding: 0.45rem; }
+  .fold .stage.desk .screen { aspect-ratio: auto; border-radius: 0.4rem; }
+  .fold .stage.desk .app { position: relative; inset: auto; font-size: clamp(14px, 3cqw, 18px); }
+  .fold .stage.desk .scr { position: relative; inset: auto; }
+  .fold .stage.desk .scr.sp { aspect-ratio: 16 / 10; }
+  /* The chart, drawn large: the plot beside the Diagnostics panel */
+  .fold [data-screen="d-chart"] .d-page { flex: none; padding: 0.8em 1.1em 0.9em; gap: 0.7em; }
+  .fc-chip { margin-left: auto; align-self: flex-start; padding: 0.3em 0.75em; border-radius: 99em; background: #EEF2FF; color: #3730A3; font-size: 0.7em; font-weight: 600; white-space: nowrap; }
+  .fc-chip.sent { background: #DCFCE7; color: #14532D; }
   .fc-row { gap: 0.5em; }
-  /* The yellow verb: "Click here" over "Open in Noah", at the row's end */
-  .fc-verb { position: relative; margin-left: auto; display: inline-grid; justify-items: center; gap: 0.05em; padding: 0.45em 1em 0.5em; border-radius: 0.55em; background: #F59E0B; color: #111827; text-decoration: none; line-height: 1.1; box-shadow: 0 0 0 0.13em #fff, 0 0.45em 1.1em rgba(15, 23, 42, 0.4); animation: fold-flash 4s ease-in-out infinite; }
-  .fc-verb:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
-  .fc-verb b { font-size: 1.35em; font-weight: 800; letter-spacing: -0.01em; white-space: nowrap; }
-  .fc-verb small { font-size: 0.74em; font-weight: 600; white-space: nowrap; }
-  .fc-verb::after { content: ""; position: absolute; inset: -0.3em; border-radius: 0.8em; border: 2px solid #FDE68A; opacity: 0; pointer-events: none; animation: fold-ring 4s ease-out infinite; }
-  .fc-hand { position: absolute; left: 76%; top: 60%; z-index: 2; width: 2.1em; height: 2.45em; margin: -0.05em 0 0 -0.9em; pointer-events: none; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.35)); transform-origin: 43% 2%; animation: fold-hand 4s infinite; }
+  .fc-due { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.45em; padding: 0.28em 0.45em 0.28em 0.65em; border: 1px solid #FCD34D; border-radius: 0.45em; background: #FEF3C7; color: #78350F; font-size: 0.8em; font-weight: 600; line-height: 1.3; }
+  .fc-due svg { width: 1.1em; height: 1.1em; flex: none; }
+  .fc-due.in { animation: due-pop 0.6s ease-out; }
+  .fc-due-btn { position: relative; border: 1px solid #D1D5DB; background: #fff; color: #374151; border-radius: 0.35em; padding: 0.28em 0.65em; font: inherit; font-weight: 500; line-height: 1.3; white-space: nowrap; cursor: pointer; }
+  .fc-due-btn.pri { font-weight: 700; color: #111827; border-color: #9CA3AF; }
+  .fc-due-btn::before { content: ""; position: absolute; inset: -0.6em -0.35em; }
+  .fc-card { flex: none; padding: 0.8em 0.9em; justify-content: flex-start; }
+  .fc-res { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.8em 1.4em; align-items: center; border-radius: 0.4em; }
+  .fc-res.in { animation: d-land 1.3s ease-out; }
+  .fc-fig { min-width: 0; }
+  .fc-plot { display: block; width: 100%; max-width: 21rem; height: auto; margin: 0 auto; }
+  .fc-cap { margin: 0.2em 0 0; font-size: 0.72em; color: #6B7280; text-align: center; }
+  .fc-txt { min-width: 0; }
+  .fc-txt p { margin: 0 0 0.45em; font-size: 0.95em; line-height: 1.5; color: #374151; }
+  .fc-txt p:last-child { margin-bottom: 0; }
+  .fc-txt .res-h { font-size: 1em; }
+  .fc-txt .d-due { vertical-align: 0.05em; }
+  /* Noah's window in the fold: the two sessions and the module drawn large */
+  .fold .n-plot { width: min(100%, 24em); }
+  .fold .n-sess > i.old { animation: none; }
+  .fold .n-sess > i.on { background: #C7DAF0; border-radius: 0.2em; }
+  .fold .n-sess em { font-style: normal; font-weight: 700; color: #1B6FB5; }
+  /* The preview screen (click 1): the report's page one as the app shows it, the sources rail and the verbs */
+  .fc-prev { position: absolute; inset: 0; z-index: 5; display: flex; flex-direction: column; background: #F3F4F6; color: #111827; }
+  .fc-signed { flex: none; margin: 0; padding: 0.45em 1.2em 0.5em; background: #DCFCE7; color: #14532D; border-bottom: 1px solid #86EFAC; font-size: 0.78em; line-height: 1.35; }
+  .fc-signed b { color: #14532D; }
+  .pv-body { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) 11.5em; gap: 0.7em; padding: 0.7em 1.2em 0.8em; }
+  .pv-scroll { min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; border-radius: 0.3em; }
+  .pv-scroll:focus-visible { outline: 2px solid #1D4ED8; outline-offset: -2px; }
+  .pv-paper.sh { height: auto; padding: 1.8em 2.2em 1.6em; font-size: clamp(11px, 0.72em, 13.5px); background: #fff; border-radius: 0.25em; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.2); }
+  .pv-paper .sh-res { grid-template-columns: 44% minmax(0, 1fr); gap: 0 1.6em; align-items: start; }
+  .pv-paper .fc-plot { max-width: none; margin: 0; }
+  .pv-paper .sh-note { margin-top: 0.4em; }
+  .pv-kv { margin-top: 0.6em; font-size: 1.02em; }
+  .pv-kv dt { white-space: nowrap; }
+  .pv-was { color: #6B7280; }
+  .pv-tbl { width: auto; min-width: 60%; margin: 0.35em 0; }
+  .pv-tbl th, .pv-tbl td { padding: 0.18em 0.9em; }
+  .pv-paper .sh-sig svg[hidden] { display: none; }
+  .pv-rail { min-width: 0; display: grid; gap: 0.6em; align-content: start; }
+  .pv-card { background: #fff; border: 1px solid #E5E7EB; border-radius: 0.5em; padding: 0.65em 0.75em; font-size: 0.72em; line-height: 1.4; color: #374151; }
+  .pv-src b { display: block; margin-bottom: 0.3em; font-size: 0.85em; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #6B7280; }
+  .pv-src ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.25em; }
+  .pv-src li span { font-weight: 600; color: #111827; }
+  .pv-verbs { display: grid; gap: 0.5em; justify-items: start; }
+  .pv-sign { position: relative; font-size: 1em; padding: 0.7em; }
+  .pv-note { font-size: 0.95em; color: #4B5563; text-decoration: underline; }
+  .pv-row { display: flex; gap: 0.5em; }
+  .pv-btn { border: 1px solid #D1D5DB; background: #fff; color: #374151; border-radius: 0.4em; padding: 0.5em 0.8em; font: inherit; font-weight: 500; cursor: pointer; }
+  .pv-verbs.signed .pv-sign, .pv-verbs.signed .pv-note, .pv-verbs.signed .pv-edit { display: none; }
+  /* HERO-2's hand: aimed by the page's script at the next thing to click in the report scene; it comes
+     from about the screen's middle every 4 s and presses. With reduced motion it rests on its target. */
+  .app .fc-hand { position: absolute; left: 0; top: 0; z-index: 9; width: 2.1em; height: 2.45em; margin: -0.05em 0 0 -0.9em; pointer-events: none; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.35)); transform-origin: 43% 2%; animation: fold-hand 4s infinite; }
   @keyframes fold-hand {
     0% { transform: translate(var(--hand-dx), var(--hand-dy)) scale(1); opacity: 0; animation-timing-function: cubic-bezier(0.3, 0.6, 0.2, 1); }
     8% { opacity: 1; }
@@ -206,29 +279,11 @@
     57%, 88% { transform: translate(0, 0) scale(1); opacity: 1; }
     96%, 100% { transform: translate(0, 0) scale(1); opacity: 0; }
   }
-  @keyframes fold-flash {
-    0%, 46% { background-color: #F59E0B; box-shadow: 0 0 0 0.13em #fff, 0 0.45em 1.1em rgba(15, 23, 42, 0.4); }
-    51% { background-color: #FDE68A; box-shadow: 0 0 0 0.13em #fff, 0 0 1.4em 0.35em rgba(253, 230, 138, 0.9); }
-    64%, 100% { background-color: #F59E0B; box-shadow: 0 0 0 0.13em #fff, 0 0.45em 1.1em rgba(15, 23, 42, 0.4); }
-  }
-  @keyframes fold-ring {
-    0%, 48% { opacity: 0; transform: scale(1); }
-    52% { opacity: 0.95; transform: scale(1); }
-    82%, 100% { opacity: 0; transform: scale(1.5); }
-  }
   @media (prefers-reduced-motion: reduce) {
-    .fc-verb, .fc-verb::after, .fc-hand { animation: none; }
-    .fc-hand { transform: none; opacity: 1; }
-    .fc-verb::after { opacity: 0.7; transform: scale(1.12); }
+    .app .fc-hand { animation: none; transform: none; opacity: 1; }
+    .fly, .fly.in { transition: none; transform: none; }
+    .fly.nudge { animation: none; }
   }
-  /* The results on the chart: the audiogram beside the Diagnostics panel */
-  .fc-card { flex: none; padding: 0.8em 0.9em; justify-content: flex-start; }
-  .fc-res { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.8em 1.4em; align-items: center; }
-  .fc-plot { display: block; width: 100%; max-width: 17rem; height: auto; margin: 0 auto; }
-  .fc-txt { min-width: 0; }
-  .fc-txt p { margin: 0; font-size: 0.95em; line-height: 1.5; color: #374151; }
-  .fc-txt .res-h { font-size: 1em; }
-  .fc-txt .d-due { vertical-align: 0.05em; }
   /* The certification band, full width under the two columns */
   .fold-cert { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; margin-top: 1.6rem; padding-top: 1.4rem; border-top: 1px solid var(--night-rule); }
   .fold-cert .cert-seal { flex: none; display: block; width: 120px; height: 120px; border-radius: 50%; background: #fff; box-shadow: 0 0.4rem 1.2rem rgba(0, 0, 0, 0.3); }
@@ -236,20 +291,39 @@
   .fold-cert b { font-weight: 800; font-size: clamp(1.45rem, 1.05rem + 1.6vw, 2.1rem); line-height: 1.1; letter-spacing: -0.02em; }
   .fold-cert sup { font-size: 0.55em; }
   .fold-cert span { color: var(--night-soft); font-size: 0.98rem; line-height: 1.4; }
-  /* The opening that was the top of the page follows the fold now: the preview and the copy column, without the display headline or the offer box (the one offer is the band after how a visit runs). */
+  /* The opening that was the top of the page follows the fold now: the copy column (the promise, the lede, the highlights, the ask); the preview that stood beside it is the fold's screen. */
   .hero.after-fold { border-top: 1px solid var(--night-rule); }
+  /* A narrow screen: the preview's verbs sit over the page (so Sign & send is in reach), the sources
+     step aside, the page's letterhead and figures narrow; Noah's patient list steps aside and its
+     panels stack, so the audiogram module stays legible; the chart's chip may wrap. */
+  @container stage (max-width: 27rem) {
+    .fold .pv-body { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); padding: 0.6em 0.7em 0.7em; }
+    .fold .pv-rail { order: -1; }
+    .fold .pv-src { display: none; }
+    .fold .pv-verbs { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5em; }
+    .fold .pv-sign { width: auto; }
+    .fold .pv-paper .sh-brand { font-size: 1.25em; letter-spacing: 0.12em; }
+    .fold .pv-paper .sh-tag { display: none; }
+    .fold .pv-paper .sh-res { grid-template-columns: minmax(0, 1fr); }
+    .fold .pv-paper .fc-plot { max-width: 17rem; margin: 0 auto; }
+    .fold .n-list { display: none; }
+    .fold .n-panels { flex-direction: column; }
+    .fold .n-plot { width: min(100%, 20em); }
+    .fold .fc-chip { white-space: normal; max-width: 9em; text-align: right; font-size: 0.64em; }
+  }
   @media (min-width: 40rem) {
-    .fc .d-nav { display: flex; }
-    .fc .d-top > b { margin-right: 0; }
-    .fc-res { grid-template-columns: minmax(11rem, 17rem) minmax(0, 1fr); }
+    .fold-line { white-space: nowrap; text-wrap: nowrap; font-size: calc((100vw - 2.5rem) / 46.5); }
+    .fc-res { grid-template-columns: minmax(12rem, 21rem) minmax(0, 1fr); }
     .fc-plot { margin: 0; }
-    .fold-chart { --hand-dx: -220px; --hand-dy: 150px; }
   }
   @media (min-width: 56rem) {
     .fold { padding-block: 1.6rem 2.25rem; }
+    .fold-line { font-size: calc((min(100vw, 72rem) - 4rem) / 46.5); }
     .fold-grid { grid-template-columns: 14.375rem minmax(0, 1fr); gap: 2rem; }
-    .fold-chart { --hand-dx: -330px; --hand-dy: 170px; }
     .hero.after-fold .hero-copy { grid-row: 1 / span 2; }
+  }
+  @media (min-width: 80rem) {
+    .fold-line { font-size: calc((min(100vw, 78rem) - 4rem) / 46.5); }
   }
 
     /* The numbers that greet you: sample month-to-date cards under the tagline */
@@ -322,7 +396,7 @@
   .demo-actions { min-height: 2.1rem; }
   .demo-claim { margin: 0; font-weight: 800; font-size: 1.1rem; line-height: 1.22; letter-spacing: -0.015em; text-wrap: balance; }
   .demo-claim b { color: var(--night-tan); white-space: nowrap; }
-  /* Noah first, then the three clicks that count */
+  /* Noah first, then the two clicks that count */
   .demo-steps { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem; font-size: 0.82rem; line-height: 1.2; color: var(--night-soft); }
   .demo-steps li { display: inline-flex; align-items: center; gap: 0.4em; padding: 0.2rem 0.7rem 0.2rem 0.26rem; border: 1px solid var(--night-rule); border-radius: 999px; white-space: nowrap; }
   .demo-steps li b { flex: none; width: 1.55em; height: 1.55em; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 0.92em; line-height: 1; font-variant-numeric: tabular-nums; background: rgba(205, 180, 169, 0.2); color: var(--night-tan); }

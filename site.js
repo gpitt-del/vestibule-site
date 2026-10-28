@@ -1,4 +1,5 @@
-  // The click-through preview in the device, shared by every page of the site. Every
+  // The click-through preview (the fold's screen on the first page, the device on the
+  // others), shared by every page of the site. Every
   // screen is plain markup in the page; this decides which one shows and puts a mark on
   // the next thing to click. Nothing plays by itself: the viewer does every click.
   // Each page hands over its own scenes as window.PREVIEW_PAGE (the states of the
@@ -24,7 +25,7 @@
     var overlays = all(phone, "[data-overlay]");
     var tabs = all(phone, "[data-tab]");
     var panes = all(phone, "[data-pane]");
-    var stepItems = all(stepsEl, "li");
+    var stepItems = stepsEl ? all(stepsEl, "li") : [];
     var still = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
     var timers = [];
     var current = "report-desk", noahDrawn = false;
@@ -48,6 +49,11 @@
       all(document, "[data-dl]").forEach(function (el) {
         var d = shift(parseInt(el.getAttribute("data-dl"), 10) || 0);
         el.textContent = months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
+      });
+      // The sample patient's last test: about two years ago (today less two years and 23 days).
+      var old = new Date(); old.setFullYear(old.getFullYear() - 2); old.setDate(old.getDate() - 23);
+      all(document, "[data-old]").forEach(function (el) {
+        el.textContent = (old.getMonth() + 1) + "/" + old.getDate() + "/" + old.getFullYear();
       });
     })();
 
@@ -175,7 +181,7 @@
       overlays.forEach(function (el) { el.hidden = el.getAttribute("data-overlay") !== s.overlay; });
       if (nAsk) nAsk.hidden = !s.ask;
       if (cap) cap.textContent = kiosk ? "The kiosk in your lobby" : !desk ? "On your phone"
-        : "On your computer" + (s.clicks === 3 ? " · 3 clicks. Done!" : s.n ? " · click " + s.n + " of 3" : "");
+        : "On your computer" + (s.clicks === 2 ? " · 2 clicks. Done!" : s.n ? " · click " + s.n + " of 2" : "");
       if (foot) foot.textContent = FOOT[s.scene] || FOOT.report;
       if (also) also.hidden = s.scene !== "report";
       return changed;
@@ -210,8 +216,8 @@
     var TIPS = {
       hx: "Already written, from your <b>recorded or dictated history</b> with the patient.",
       results: "Results are in the app <b>from Noah, instantly.</b>",
-      interp: "<b>Reports scripted in your own words. Three clicks.</b> Edit as needed.",
-      recs: "<b>Reports scripted in your own words. Three clicks.</b> Edit as needed.",
+      interp: "<b>Reports scripted in your own words. Two clicks.</b> Edit as needed.",
+      recs: "<b>Reports scripted in your own words. Two clicks.</b> Edit as needed.",
       summary: ""
     };
     var FOOT = {
@@ -244,7 +250,7 @@
     function selectTab(name) {
       tabs.forEach(function (b) { b.classList.toggle("on", b.getAttribute("data-tab") === name); });
       panes.forEach(function (p) { p.hidden = p.getAttribute("data-pane") !== name; });
-      tip.innerHTML = TIPS[name] || "";
+      if (tip) tip.innerHTML = TIPS[name] || "";
       if (name === "results" && resScroll) { resScroll.scrollTop = 0; syncThumb(); }
     }
 
@@ -298,12 +304,14 @@
       if (marked && markSpec && !flag.hidden) {
         var alt = markSpec.length > 3 && narrow();
         place(flag, marked, alt ? markSpec[3] : markSpec[1], alt ? markSpec[4] : markSpec[2]);
+        if (PAGE.onMark) PAGE.onMark(marked, STATES[current]);
       }
     }
     function clearMarks() {
       flag.hidden = true;
       flag.classList.remove("bob");
       marked = null; markSpec = null;
+      if (PAGE.onMark) PAGE.onMark(null, null);
     }
     // "[data-hot='play']" and the like are the counseling tool's own buttons, inside its frame.
     function findTarget(scope, sel) {
@@ -439,10 +447,10 @@
       chips.forEach(function (c) { c.setAttribute("aria-pressed", c.getAttribute("data-scene") === s.scene ? "true" : "false"); });
       clearPulse();
       clearMarks();
-      stepsEl.hidden = s.scene !== "report";
+      if (stepsEl) stepsEl.hidden = s.scene !== "report";
       if (claim) claim.hidden = s.scene !== "report";
       if (s.step) markStep(s.step);
-      hint.innerHTML = s.hint;
+      hint.innerHTML = s.hint || "";
       if (s.next) { nextBtn.textContent = s.next[0]; nextBtn.setAttribute("data-next", s.next[1]); nextBtn.hidden = false; }
       else { nextBtn.hidden = true; }
       againBtn.hidden = (PAGE.againHidden || ["report-desk", "checkin", "referral"]).indexOf(key) >= 0;
@@ -459,6 +467,7 @@
         later(placeMarks, 380);
       }
       if (changed) keepInView();
+      if (PAGE.onShow) PAGE.onShow(key, s);
     }
 
     function playReferral() {
@@ -538,8 +547,8 @@
       }
       if (e.target.closest("[data-live]") || e.target.closest("canvas") || e.target.closest(".a-scroll") || e.target.closest(".a-pdf")) return;
       // Anything else in the device is part of the picture. Point back at the next step.
-      guide.classList.add("nudge");
-      setTimeout(function () { guide.classList.remove("nudge"); }, 700);
+      if (guide) { guide.classList.add("nudge"); setTimeout(function () { guide.classList.remove("nudge"); }, 700); }
+      if (PAGE.onNudge) PAGE.onNudge();
     });
 
     function startScene(scene) { show(scene === "report" ? "report-desk" : scene); }
@@ -655,4 +664,27 @@
         say("done", text);
       }
     });
+  })();
+
+  // The fold's headline (SITE-CLICK-2): from 40rem it fills the content width on one line,
+  // measured in the page so the fit holds whichever font has loaded; a phone wraps it.
+  (function () {
+    var line = document.querySelector(".fold-line");
+    if (!line) return;
+    var mq = window.matchMedia ? window.matchMedia("(min-width: 40rem)") : null;
+    function fit() {
+      line.style.fontSize = "";
+      if (mq && !mq.matches) return;
+      var avail = line.clientWidth;
+      if (!avail) return;
+      var range;
+      try { range = document.createRange(); range.selectNodeContents(line); } catch (err) { return; }
+      var width = range.getBoundingClientRect().width;
+      var size = parseFloat(getComputedStyle(line).fontSize);
+      if (!width || !size) return;
+      line.style.fontSize = (size * avail / width * 0.995).toFixed(2) + "px";
+    }
+    fit();
+    window.addEventListener("resize", fit);
+    if (document.fonts && document.fonts.ready) { try { document.fonts.ready.then(fit); } catch (err) {} }
   })();
