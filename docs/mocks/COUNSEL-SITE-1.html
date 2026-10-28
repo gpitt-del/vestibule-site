@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Counseling scene — mock (COUNSEL-SITE-1)</title>
+<style>
+  :root {
+    color-scheme: light;
+    --paper: #F7F5F0; --ink: #1B222B; --ink-2: #5B6670; --rule: #DAD5CA; --card: #FFFFFF;
+    --navy: #16213A; --navy-2: #22304F; --tan: #C8A458; --flag: #FFE24D; --flag-ink: #2B2000;
+    --red: #FF7B7B; --blue: #8EB0FF; --canoe: rgba(200,164,88,.28);
+    box-sizing: border-box; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { color-scheme: dark; --paper: #121619; --ink: #E6E9EC; --ink-2: #A0AAB3; --rule: #2B343C; --card: #1A2026; } }
+  :root[data-theme="dark"] { color-scheme: dark; --paper: #121619; --ink: #E6E9EC; --ink-2: #A0AAB3; --rule: #2B343C; --card: #1A2026; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  *, *::before, *::after { box-sizing: inherit; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.45 "Segoe UI", -apple-system, system-ui, sans-serif; }
+  svg { max-width: 100%; }
+  button { font: inherit; cursor: pointer; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+  .nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
+  .word { font-weight: 600; letter-spacing: .22em; font-size: 13px; }
+  .nav ul { list-style: none; display: flex; gap: 18px; margin: 0; padding: 0; font-size: 13px; color: var(--ink-2); }
+  .nav .cta { background: var(--navy); color: #fff; padding: 6px 12px; border-radius: 999px; }
+  .fold-line { font-size: clamp(15px, 2.1vw, 28px); line-height: 1.2; font-weight: 500; margin: 4px 0 14px; }
+
+  .stage { display: grid; grid-template-columns: 272px 1fr; gap: 22px; align-items: start; }
+  @media (max-width: 860px) { .stage { grid-template-columns: 1fr; } }
+  .rail { position: sticky; top: 12px; display: flex; flex-direction: column; gap: 10px; }
+  @media (max-width: 860px) { .rail { position: static; } }
+  .fly { background: var(--card); border-left: 4px solid var(--tan); border-radius: 0 8px 8px 0; padding: 10px 12px; font-size: 14px; color: var(--ink-2); opacity: .55; transform: translateX(-14px); transition: opacity .25s, transform .25s; }
+  .fly.in { opacity: .72; transform: none; }
+  .fly.now { opacity: 1; color: var(--ink); border-left-color: var(--navy); box-shadow: 0 6px 18px rgba(0,0,0,.08); }
+  .fly.big.now b { font-size: 21px; line-height: 1.15; margin-bottom: 6px; }
+  .fly b { display: block; font-size: 15px; margin-bottom: 2px; }
+  .fly:not(.now) .b { display: none; }
+  .fly:not(.now) b { font-size: 13.5px; margin: 0; }
+  .again { background: none; border: 1px solid var(--rule); color: var(--ink-2); border-radius: 6px; padding: 4px 10px; font-size: 13px; align-self: flex-start; }
+
+  .screen-wrap { min-width: 0; }
+  .screen { position: relative; background: var(--navy); color: #EAEFF5; border-radius: 12px; box-shadow: 0 18px 50px rgba(0,0,0,.28); overflow: hidden; font-size: 13px; min-height: 560px; }
+  .appbar { display: flex; align-items: center; gap: 16px; padding: 10px 14px; background: var(--navy-2); font-size: 12.5px; }
+  .appbar .brand { font-weight: 600; margin-right: 8px; }
+  .appbar .sp { flex: 1; }
+  .appbar .pill { background: var(--tan); color: #1b1b1b; padding: 3px 10px; border-radius: 999px; font-weight: 600; }
+  .head { display: flex; align-items: flex-start; gap: 16px; padding: 12px 16px 0; }
+  .head .back { font-size: 11.5px; color: #B7C3D3; }
+  .head h2 { margin: 2px 0 0; font: 500 22px/1.15 Georgia, "Iowan Old Style", serif; }
+  .head .sub { color: #B7C3D3; font-size: 12px; margin-top: 2px; }
+  .sii { margin-left: auto; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 8px; padding: 8px 12px; min-width: 150px; }
+  .sii small { display: block; font-size: 9.5px; letter-spacing: .08em; color: #B7C3D3; }
+  .sii .n { display: inline-block; margin-right: 12px; font: 500 20px/1 Georgia, serif; }
+  .sii .n em { display: block; font: 10px/1.3 "Segoe UI", sans-serif; font-style: normal; color: #B7C3D3; }
+  .tabs { display: flex; flex-wrap: wrap; gap: 2px; padding: 14px 16px 0; border-bottom: 1px solid rgba(255,255,255,.12); margin: 0 16px; overflow: visible; }
+  .lock { font-size: 10px; color: #B7C3D3; margin-left: 4px; }
+  .locked { background: rgba(255,255,255,.05); border: 1px dashed rgba(255,255,255,.3); border-radius: 10px; padding: 18px 16px; text-align: center; color: #EAEFF5; }
+  .locked b { display: block; font: 500 18px/1.2 Georgia, serif; margin-bottom: 6px; }
+  .locked span { color: #B7C3D3; font-size: 12.5px; }
+  .src { font-size: 11px; color: #B7C3D3; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+  .src i { display: inline-grid; place-items: center; width: 16px; height: 16px; border-radius: 4px; background: #2B4ACB; color: #fff; font: 800 10px/1 "Segoe UI", sans-serif; font-style: normal; }
+  .tab { position: relative; background: none; border: 0; color: #C9D3DF; padding: 8px 10px; font-size: 13px; white-space: nowrap; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+  .tab.on { color: #fff; font-weight: 600; border-bottom-color: var(--tan); }
+  .pane { padding: 12px 16px 16px; }
+  .pane[hidden] { display: none; }
+  .seg { display: inline-flex; border: 1px solid rgba(255,255,255,.3); border-radius: 999px; overflow: hidden; margin: 0 10px 8px 0; }
+  .seg button { background: transparent; border: 0; color: #EAEFF5; padding: 5px 11px; font-size: 12px; }
+  .seg button.on { background: #EAEFF5; color: var(--navy); font-weight: 600; }
+  .row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .grid2 { display: grid; grid-template-columns: 1.4fr 1fr; gap: 14px; }
+  @media (max-width: 640px) { .grid2 { grid-template-columns: 1fr; } }
+  .panel { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); border-radius: 10px; padding: 10px 12px; }
+  .note { color: #B7C3D3; font-size: 11.5px; margin-top: 6px; }
+  .target { position: relative; display: inline-flex; align-items: flex-end; }
+  .flag { position: absolute; left: 50%; bottom: calc(100% + 6px); transform: translateX(-50%); background: var(--flag); color: var(--flag-ink); font-weight: 700; font-size: 12.5px; padding: 4px 10px; border-radius: 6px; white-space: nowrap; box-shadow: 0 4px 12px rgba(0,0,0,.25); z-index: 5; }
+  .flag::after { content: ""; position: absolute; left: 50%; top: 100%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--flag); }
+  .flag[hidden] { display: none; }
+  .btn { background: transparent; color: #EAEFF5; border: 1px solid rgba(255,255,255,.3); border-radius: 7px; padding: 6px 12px; font-size: 12.5px; }
+  .btn.primary { background: #EAEFF5; color: var(--navy); border-color: #EAEFF5; font-weight: 600; }
+  .btn.tan { background: var(--tan); color: #1b1b1b; border-color: var(--tan); font-weight: 700; }
+  .select { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.3); color: #EAEFF5; border-radius: 6px; padding: 5px 10px; font-size: 12.5px; }
+  .bar { height: 6px; background: rgba(255,255,255,.18); border-radius: 3px; width: 160px; position: relative; }
+  .bar i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: var(--tan); border-radius: 3px; transition: width 6s linear; }
+  .bar.go i { width: 100%; }
+  .thumbs { display: flex; gap: 8px; margin-top: 8px; align-items: center; }
+  .thumb { width: 92px; height: 60px; border-radius: 6px; border: 2px solid transparent; background: #2A3A5C; display: grid; place-items: center; font-size: 11px; color: #C9D3DF; }
+  .thumb.on { border-color: #fff; }
+  .pic { background: #2A3A5C; border-radius: 10px; min-height: 230px; display: grid; place-items: center; color: #C9D3DF; font-size: 12px; text-align: center; padding: 10px; }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  @media (max-width: 640px) { .cards { grid-template-columns: 1fr; } }
+  .card { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); border-radius: 10px; padding: 10px; }
+  .card h5 { margin: 0 0 6px; font: 500 15px/1.2 Georgia, serif; }
+  .card h5 small { font: 10px "Segoe UI", sans-serif; letter-spacing: .08em; margin-left: 6px; color: #B7C3D3; }
+  .card .pic { min-height: 90px; margin-bottom: 6px; }
+  .card p { margin: 0 0 8px; font-size: 11.5px; color: #C9D3DF; }
+  .card .btn { width: 100%; }
+  .steps { font-size: 10.5px; letter-spacing: .08em; color: #B7C3D3; margin-bottom: 8px; display: flex; justify-content: space-between; }
+  .steps a { color: #EAEFF5; }
+  .hand { position: absolute; left: 0; top: 0; width: 50px; height: 55px; pointer-events: none; z-index: 20; opacity: 0; transform: translate(var(--tx), var(--ty)); filter: drop-shadow(0 5px 7px rgba(0,0,0,.5)); }
+  .hand.run { animation: handgo 4s ease-in-out infinite; }
+  .hand.rest { opacity: 1; }
+  @keyframes handgo { 0% { opacity: 0; transform: translate(var(--sx), var(--sy)); } 8% { opacity: 1; } 45% { transform: translate(var(--tx), var(--ty)) scale(1); } 52% { transform: translate(var(--tx), var(--ty)) scale(.82); } 60% { transform: translate(var(--tx), var(--ty)) scale(1); } 85% { opacity: 1; transform: translate(var(--tx), var(--ty)); } 100% { opacity: 0; transform: translate(var(--tx), var(--ty)); } }
+  @media (prefers-reduced-motion: reduce) { .hand.run { animation: none; opacity: 1; } .fly, .fly.in { transition: none; transform: none; } .bar i { transition: none; } }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 4px; align-items: center; }
+  .lead { font-size: 12.5px; text-align: right; line-height: 1.15; margin-right: 6px; }
+  .lead b { display: block; font-size: 13.5px; }
+  .lead span { color: var(--tan); font-weight: 700; }
+  .chipbtn { border: 1px solid var(--rule); background: var(--card); color: var(--ink); border-radius: 999px; padding: 6px 12px; font-size: 13px; }
+  .chipbtn.on { background: var(--navy); color: #fff; border-color: var(--navy); }
+  .chipnote { font-size: 13px; color: var(--ink-2); margin: 4px 0 0; min-height: 1.4em; }
+  .band { margin: 10px 0 40px; display: flex; align-items: center; gap: 18px; padding: 16px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .seal { width: 92px; height: 92px; border-radius: 50%; border: 3px solid var(--tan); display: grid; place-items: center; text-align: center; font-size: 10px; line-height: 1.15; color: var(--ink-2); flex: none; }
+  .band h2 { margin: 0 0 4px; font-size: 20px; }
+  .band p { margin: 0; color: var(--ink-2); font-size: 14px; }
+  .footnote { font-size: 12.5px; color: var(--ink-2); margin: 10px 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="nav"><span class="word">VESTIBULE</span><ul><li>What it does</li><li>How a visit runs</li><li>Our story</li><li class="cta">Get your own demo</li></ul></header>
+  <h1 class="fold-line">Vestibule: your practice’s headquarters — everything audiology and hearing aids, in one place.</h1>
+
+  <section class="stage">
+    <aside class="rail" id="rail" aria-live="polite"><button class="again" id="again" type="button">Start over</button></aside>
+
+    <div class="screen-wrap">
+      <div class="screen" id="screen">
+        <div class="appbar"><span class="brand">Coastal Hearing</span><span>Today</span><span>Calendar</span><span>Patients</span><span>Billing</span><span class="sp"></span><span class="pill">Book now</span></div>
+        <div class="head">
+          <div><div class="back">← Roy Calloway’s visit</div><h2>Patient Review</h2><div class="sub" id="sub"></div></div>
+          <div class="sii"><small>SPEECH INTELLIGIBILITY INDEX</small><span class="n">52%<em>Right ear</em></span><span class="n">47%<em>Left ear</em></span></div>
+        </div>
+        <div class="tabs" id="tabs">
+          <button class="tab on" data-t="aud" type="button">Audiogram</button>
+          <span class="target"><span class="flag" id="f-ana" hidden>Click here</span><button class="tab" data-t="ana" type="button">Anatomy</button></span>
+          <button class="tab" data-t="coc" type="button">Cochlea <span class="lock">🔒</span></button>
+          <span class="target"><span class="flag" id="f-tym" hidden>Click here</span><button class="tab" data-t="tym" type="button">Tymp</button></span>
+          <span class="target"><span class="flag" id="f-oae" hidden>Click here</span><button class="tab" data-t="oae" type="button">OAE</button></span>
+          <button class="tab" data-t="sim" type="button">Hearing Loss Simulator <span class="lock">🔒</span></button>
+          <span class="target"><span class="flag" id="f-ha" hidden>Click here</span><button class="tab" data-t="ha" type="button">Hearing aids</button></span>
+        </div>
+
+        <div class="pane" id="p-aud">
+          <div class="row"><div class="seg"><button type="button">Normal hearing</button><button class="on" type="button">Roy’s hearing</button><button type="button">Example loss</button></div><div class="seg"><button type="button">Right ear</button><button type="button">Left ear</button><button class="on" type="button">Both ears</button></div></div>
+          <div class="panel"><svg id="canoe" viewBox="0 0 520 300" role="img" aria-label="Roy’s audiogram over the speech sounds"></svg></div>
+          <div class="note">The shaded shape is the speech sounds; what sits above Roy’s lines is what he misses. His Speech Intelligibility Index is in the header. Switch to Normal hearing or an Example loss to compare.</div>
+        </div>
+
+        <div class="pane" id="p-sim" hidden><div class="locked"><b>Subscribers only</b><span>Hear a railroad crossing, or a voice in a restaurant, through Roy’s loss — then through normal hearing. Part of Vestibule.</span></div></div>
+
+        <div class="pane" id="p-ana" hidden>
+          <div class="pic" id="earpic">The app’s ear illustration — the whole ear, labeled Outer · Middle · Inner.</div>
+          <div class="thumbs"><span class="thumb on">Whole</span><span class="thumb">Outer 🔒</span><span class="thumb">Middle 🔒</span><span class="target"><span class="flag" id="f-inner" hidden>Click here</span><span class="thumb" id="th-inner" role="button" tabindex="0">Inner 🔒</span></span></div>
+          <div class="locked" id="inner-list" hidden style="margin-top:8px"><b>Subscribers only</b><span>Each part zoomed, with its common conditions and a picture of each — presbycusis, noise-induced loss, and more.</span></div>
+        </div>
+
+        <div class="pane" id="p-coc" hidden><div class="locked"><b>Subscribers only</b><span>The cochlea unrolled into the audiogram — normal, presbycusis, the noise notch — with the hair-cell pictures.</span></div></div>
+        <div class="pane" id="p-tym" hidden><div class="src"><i>N</i>From Noah · <span class="d"></span></div><div class="pic">Roy’s tympanograms, both ears, Type A — drawn as the app draws them.</div></div>
+        <div class="pane" id="p-oae" hidden><div class="src">⎙ Auto-uploaded from the Titan printout · <span class="d"></span></div><div class="pic">Roy’s DPOAEs beside his audiogram — present through 1.5 kHz, absent above — as the app draws them.</div></div>
+
+        <div class="pane" id="p-ha" hidden>
+          <div id="ha-1">
+            <div class="steps"><span>HEARING AIDS · 1 OF 3 · THE STYLE</span><a>Know the make and model? Quick order →</a></div>
+            <div class="cards">
+              <div class="card"><h5>Behind the ear<small>BTE</small></h5><div class="pic">the app’s picture</div><p>The device sits behind the ear; a tube carries sound to a custom earmold.</p><button class="btn primary" type="button">Choose this style</button></div>
+              <div class="card"><h5>Receiver in the canal<small>RIC</small></h5><div class="pic">the app’s picture</div><p>A small piece behind the ear; a thin wire carries sound to a receiver in the canal.</p><span class="target" style="width:100%"><span class="flag" id="f-ric" hidden>Click here</span><button class="btn primary" id="ric" type="button" style="width:100%">Choose this style</button></span></div>
+              <div class="card"><h5>Completely in the canal<small>CIC</small></h5><div class="pic">the app’s picture</div><p>The whole device sits inside the ear canal.</p><button class="btn primary" type="button">Choose this style</button></div>
+            </div>
+            <div class="note">Artist’s renderings · not to scale · for instruction only.</div>
+          </div>
+          <div id="ha-2" hidden><div class="locked"><b>Subscribers only</b><span>The level drawn on Roy’s own audiogram, the device the practice fits, and Order hearing aids — the order card filled in, the purchase agreement on his phone.</span></div></div>
+        </div>
+
+        <svg class="hand" id="hand" viewBox="0 0 40 44" aria-hidden="true"><path d="M14 2c2 0 3.5 1.5 3.5 3.5V19l1.5-.5c2-.5 4 .5 4.5 2.5l.3 1 1.5-.3c2-.4 4 .8 4.5 2.8l.2 1 1.7-.2c2-.3 3.8 1.2 4 3.2l.3 3.3c.3 3.6-.3 6.3-2 8.4-1.6 2-4.2 3.3-7.5 3.3H18c-3 0-5.2-1-6.8-3.1L3.6 29.8c-1.1-1.4-.9-3.4.5-4.5 1.3-1 3.1-.9 4.2.3l2.2 2.3V5.5C10.5 3.5 12 2 14 2z" fill="#F7E2C7" stroke="#2B2000" stroke-width="1.6" stroke-linejoin="round"/></svg>
+      </div>
+
+      <div class="chips"><div class="lead"><b>Our Favorite Features</b><span>click these 4 options →</span></div><button class="chipbtn" type="button">Sign a report</button><button class="chipbtn on" type="button">Counseling tools</button><button class="chipbtn" type="button">Lobby kiosk check-in</button><button class="chipbtn" type="button">Automate referrals</button></div>
+      <p class="chipnote" id="chipnote"></p>
+      <section class="band"><div class="seal">Noah® ES<br>Certified<br>HIMSA</div><div><h2>Noah® ES Certified by HIMSA</h2><p>Certified October 6, 2026. Built by three generations of audiology and hearing aid care.</p></div></section>
+      <p class="footnote">The Counseling tools scene of the fold’s screen, drawn from the app’s Patient Review as it ships today and holding back what subscribers get: the zoomed anatomy, the cochlea, the simulator, and everything past the three styles. Grey boxes stand in for the app’s own pictures; the site copies those in.</p>
+    </div>
+  </section>
+</div>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var today = new Date(); function fmt(d) { return (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear(); }
+  $('sub').textContent = 'Roy Calloway · visit ' + fmt(today) + ' · audiogram ' + fmt(today);
+  var FREQ = [125, 250, 500, 1000, 2000, 4000, 8000];
+  var R = [null, 15, 15, 20, 55, 65, 75], L = [null, 15, 20, 20, 55, 70, 80];
+  var PH = [[1,42,'m'],[1.3,40,'d'],[1.5,38,'b'],[1.1,48,'n'],[2.1,48,'u'],[2.4,44,'i'],[1.8,30,'j'],[2.9,36,'o'],[3.1,32,'r'],[2.2,52,'e'],[2.6,50,'l'],[3.6,30,'a'],[4.0,24,'p'],[4.1,28,'h'],[4.2,33,'g'],[3.8,46,'ch'],[4.1,52,'sh'],[4.9,28,'k'],[5.0,22,'t'],[5.4,18,'f'],[5.5,24,'s'],[5.9,14,'th'],[1.2,22,'z'],[1.3,16,'v']];
+  function draw(svg, opts) {
+    var W = 520, H = 300, Lm = 54, T = 26, Rm = 70, B = 30, pw = W - Lm - Rm, ph = H - T - B;
+    var x = function (i) { return Lm + i * pw / (FREQ.length - 1); }, y = function (db) { return T + (db + 10) * ph / 120; };
+    var s = '';
+    for (var db = -10; db <= 110; db += 10) s += '<line x1="' + Lm + '" y1="' + y(db) + '" x2="' + (W - Rm) + '" y2="' + y(db) + '" stroke="rgba(255,255,255,.18)" stroke-width="' + (db === 0 ? 1.3 : .6) + '"/><text x="' + (Lm - 6) + '" y="' + (y(db) + 3.5) + '" font-size="9" text-anchor="end" fill="#B7C3D3">' + db + '</text>';
+    for (var i = 0; i < FREQ.length; i++) s += '<line x1="' + x(i) + '" y1="' + T + '" x2="' + x(i) + '" y2="' + (H - B) + '" stroke="rgba(255,255,255,.18)" stroke-width=".6"/><text x="' + x(i) + '" y="' + (H - B + 13) + '" font-size="9" text-anchor="middle" fill="#B7C3D3">' + (FREQ[i] >= 1000 ? FREQ[i] / 1000 + 'k' : FREQ[i]) + '</text>';
+    if (opts.bands) { var names = ['Essential', 'Advanced', 'Premium'], tops = [0, 25, 45], hts = [25, 20, 30]; for (var b = 0; b < 3; b++) s += '<rect x="' + Lm + '" y="' + y(tops[b]) + '" width="' + pw + '" height="' + (y(tops[b] + hts[b]) - y(tops[b])) + '" fill="rgba(200,164,88,' + (opts.level === b ? '.32' : '.12') + ')"/><text x="' + (W - Rm + 6) + '" y="' + (y(tops[b]) + 12) + '" font-size="9" fill="#C9D3DF">' + names[b] + '</text>'; }
+    if (opts.canoe) { var pts = [[1,20],[2,25],[3,28],[4,30],[5,35],[6,42],[6,20],[5,10],[4,8],[3,8],[2,12],[1,15]]; s += '<polygon points="' + pts.map(function (p) { return x(p[0]) + ',' + y(p[1] + 20); }).join(' ') + '" fill="var(--canoe)"/>'; PH.forEach(function (p) { s += '<text x="' + x(p[0]) + '" y="' + y(p[1] + 12) + '" font-size="10.5" text-anchor="middle" fill="#EAEFF5" font-family="Georgia,serif">' + p[2] + '</text>'; }); }
+    if (opts.degrees) { var deg = [['Normal', -10, 25], ['Mild', 25, 40], ['Moderate', 40, 55], ['Mod. severe', 55, 70], ['Severe', 70, 90], ['Profound', 90, 110]]; deg.forEach(function (d, i) { s += '<rect x="' + (W - Rm + 10) + '" y="' + y(d[1]) + '" width="22" height="' + (y(d[2]) - y(d[1])) + '" fill="rgba(200,164,88,' + (.08 + i * .07) + ')"/><text x="' + (W - Rm + 21) + '" y="' + ((y(d[1]) + y(d[2])) / 2) + '" font-size="7.5" fill="#EAEFF5" text-anchor="middle" transform="rotate(90 ' + (W - Rm + 21) + ' ' + ((y(d[1]) + y(d[2])) / 2) + ')">' + d[0] + '</text>'; }); }
+    function poly(arr) { return arr.map(function (v, i) { return v === null ? null : x(i) + ',' + y(v); }).filter(Boolean).join(' '); }
+    s += '<polyline points="' + poly(R) + '" fill="none" stroke="var(--red)" stroke-width="2"/><polyline points="' + poly(L) + '" fill="none" stroke="var(--blue)" stroke-width="2"/>';
+    for (var k = 1; k < FREQ.length; k++) { s += '<circle cx="' + x(k) + '" cy="' + y(R[k]) + '" r="5" fill="none" stroke="var(--red)" stroke-width="2"/><path d="M' + (x(k) - 5) + ' ' + (y(L[k]) - 5) + 'l10 10M' + (x(k) + 5) + ' ' + (y(L[k]) - 5) + 'l-10 10" stroke="var(--blue)" stroke-width="2"/>'; }
+    if (opts.handles) { [2, 4, 6].forEach(function (k) { s += '<circle cx="' + x(k) + '" cy="' + (y(R[k]) - 14) + '" r="6" fill="#FFE24D" stroke="#2B2000" stroke-width="1.2"/>'; }); }
+    if (opts.noah) s += '<rect x="6" y="6" width="16" height="16" rx="4" fill="#2B4ACB"/><text x="14" y="18" font-size="11" font-weight="800" text-anchor="middle" fill="#fff" font-family="Segoe UI,sans-serif">N</text><text x="26" y="17" font-size="9.5" fill="#B7C3D3">Noah · ' + fmt(today) + '</text>';
+    svg.innerHTML = s;
+  }
+
+  var FLY = [
+    { big: true, t: 'Counseling, on the screen the patient is looking at.', b: 'Patient Review opens from the visit card. Roy’s audiogram from Noah over the speech sounds; his Speech Intelligibility Index in the header. Normal hearing and an example loss one tap away. Click Anatomy.' },
+    { t: 'The ear, whole.', b: 'One picture, four views. The zoomed parts and their conditions are for subscribers. Click Tymp.' },
+    { t: 'Tymps from Noah, OAEs from the printer.', b: 'Nothing retyped: the tympanograms arrive with the audiogram, the OAE printout uploads itself from the Titan. Click OAE, then Hearing aids.' },
+    { t: 'Three styles, in pictures.', b: 'Behind the ear, receiver in the canal, completely in the canal — the patient sees each one on an ear. Choose RIC.' },
+    { big: true, t: 'The rest is for subscribers.', b: 'The level on Roy’s own audiogram, the device, and the order filled in — with the simulator and the cochlea. Get your own demo.' }
+  ];
+  var rail = $('rail'), again = $('again');
+  function fly(i) { var c = document.createElement('div'); c.className = 'fly' + (FLY[i].big ? ' big' : ''); c.innerHTML = '<b>' + FLY[i].t + '</b><span class="b">' + FLY[i].b + '</span>'; rail.querySelectorAll('.fly.now').forEach(function (n) { n.classList.remove('now'); n.classList.add('in'); }); rail.insertBefore(c, again); requestAnimationFrame(function () { c.classList.add('in'); c.classList.add('now'); }); }
+
+  var hand = $('hand'), screen = $('screen'), handTarget = null;
+  function aimHand(el) { handTarget = el; if (!el) { hand.className = 'hand'; return; } var s = screen.getBoundingClientRect(), r = el.getBoundingClientRect(); var tx = r.left - s.left + r.width * .45, ty = r.top - s.top + r.height * .55; hand.style.setProperty('--tx', tx + 'px'); hand.style.setProperty('--ty', ty + 'px'); hand.style.setProperty('--sx', Math.max(16, tx - 240) + 'px'); hand.style.setProperty('--sy', Math.min(ty + 110, s.height - 70) + 'px'); hand.className = 'hand'; void hand.offsetWidth; hand.className = 'hand run'; }
+  function restHand() { if (handTarget) hand.className = 'hand rest'; }
+
+  function show(t) { ['aud', 'sim', 'ana', 'coc', 'tym', 'oae', 'ha'].forEach(function (k) { $('p-' + k).hidden = (k !== t); }); document.querySelectorAll('.tab').forEach(function (b) { b.classList.toggle('on', b.dataset.t === t); }); }
+  function flagOnly(id) { ['f-ana', 'f-tym', 'f-oae', 'f-ha', 'f-inner', 'f-ric'].forEach(function (f) { $(f).hidden = (f !== id); }); }
+  var step = 0;
+  document.querySelectorAll('.tab').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var t = b.dataset.t; show(t);
+      if (t === 'ana' && step === 0) { step = 1; restHand(); fly(1); flagOnly('f-inner'); setTimeout(function () { aimHand($('th-inner')); }, 300); }
+      if (t === 'tym' && step === 2) { step = 3; restHand(); fly(2); flagOnly('f-oae'); setTimeout(function () { aimHand(document.querySelector('[data-t="oae"]')); }, 300); }
+      if (t === 'oae' && step === 3) { step = 4; restHand(); flagOnly('f-ha'); setTimeout(function () { aimHand(document.querySelector('[data-t="ha"]')); }, 300); }
+      if (t === 'ha' && step === 4) { step = 5; restHand(); fly(3); flagOnly('f-ric'); setTimeout(function () { aimHand($('ric')); }, 300); }
+      if (t === 'coc' || t === 'sim') $('chipnote').textContent = 'Locked on the site: a subscriber’s screen.';
+    });
+  });
+  function innerView() { $('inner-list').hidden = false; if (step === 1) { step = 2; restHand(); flagOnly('f-tym'); setTimeout(function () { aimHand(document.querySelector('[data-t="tym"]')); }, 400); } }
+  $('th-inner').addEventListener('click', innerView); $('th-inner').addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') innerView(); });
+  $('ric').addEventListener('click', function () { $('ha-1').hidden = true; $('ha-2').hidden = false; aimHand(null); flagOnly(''); fly(4); $('chipnote').textContent = 'Next on the site: the lobby kiosk check-in.'; });
+  function reset() {
+    step = 0; rail.querySelectorAll('.fly').forEach(function (n) { n.remove(); }); show('aud'); draw($('canoe'), { canoe: true, degrees: true, noah: true });
+    document.querySelectorAll('.src .d').forEach(function (d) { d.textContent = fmt(today); });
+    $('inner-list').hidden = true; $('ha-1').hidden = false; $('ha-2').hidden = true; $('chipnote').textContent = '';
+    fly(0); flagOnly('f-ana'); setTimeout(function () { aimHand(document.querySelector('[data-t="ana"]')); }, 300);
+  }
+  again.addEventListener('click', reset);
+  document.querySelectorAll('.chipbtn').forEach(function (b) { b.addEventListener('click', function () { document.querySelectorAll('.chipbtn').forEach(function (o) { o.classList.remove('on'); }); b.classList.add('on'); $('chipnote').textContent = b.textContent === 'Counseling tools' ? '' : 'Unchanged — plays in this screen as the site has it today.'; if (b.textContent === 'Counseling tools') reset(); }); });
+  reset();
+})();
+</script>
+</body>
+</html>
