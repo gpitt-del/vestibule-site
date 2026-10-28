@@ -228,7 +228,7 @@
   :is(.fold, .as-fold) .stage.desk .screen { aspect-ratio: auto; border-radius: 0.4rem; }
   :is(.fold, .as-fold) .stage.desk .app { position: relative; inset: auto; font-size: clamp(14px, 3cqw, 18px); }
   :is(.fold, .as-fold) .stage.desk .scr { position: relative; inset: auto; }
-  :is(.fold, .as-fold) .stage.desk .scr.sp { aspect-ratio: 16 / 10; }
+  :is(.fold, .as-fold) .stage.desk .scr.prv { aspect-ratio: 16 / 10; }   /* the counseling screen keeps the app's shape on a wide stage (COUNSEL-SITE-1) */
   /* The chart, drawn large: the plot beside the Diagnostics panel */
   :is(.fold, .as-fold) [data-screen="d-chart"] .d-page { flex: none; padding: 0.8em 1.1em 0.9em; gap: 0.7em; }
   .fc-chip { margin-left: auto; align-self: flex-start; padding: 0.3em 0.75em; border-radius: 99em; background: #EEF2FF; color: #3730A3; font-size: 0.7em; font-weight: 600; white-space: nowrap; }
@@ -363,6 +363,21 @@
     .fold .ap-rows > div { grid-template-columns: minmax(0, 1fr); gap: 0.1em; }
     .fold .ap-rows dt { padding-top: 0; font-size: 0.86em; }
     .fold .ap-sig { flex-wrap: wrap; }
+    /* The counseling screen on a narrow stage (COUNSEL-SITE-1): the screen grows with its content and
+       everything stacks — the chart over its choices, the ear over its thumbnails, one figure under
+       the other, one style card under the other; site.js stops sizing the figures (--prv-narrow). */
+    :is(.fold, .as-fold) .stage.desk .scr.prv { aspect-ratio: auto; --prv-narrow: 1; }
+    .fold .prv .prv-page { font-size: 0.8em; }
+    .fold .prv .prv-head { flex-wrap: wrap; }
+    .fold .prv .prv-aud { grid-template-columns: minmax(0, 1fr); }
+    .fold .prv .prv-chart { width: 100% !important; height: auto !important; }
+    .fold .prv .prv-pic { width: 100% !important; height: auto !important; }
+    .fold .prv .prv-thumb i { width: 6.4em; }
+    .fold .prv .prv-locked.part { display: none; }
+    .fold .prv .prv-locked.part.on { display: block; visibility: visible; }
+    .fold .prv .prv-fig { grid-template-columns: minmax(0, 1fr); }
+    .fold .prv .prv-fig svg { width: 100% !important; height: auto !important; }
+    .fold .prv .prv-cards { grid-template-columns: minmax(0, 1fr); }
   }
   @container stage (max-width: 27rem) {
     :is(.fold, .as-fold) .n-list { display: none; }
@@ -1146,16 +1161,87 @@
     .hero-demo:not(.is-desk) .demo-guide { width: auto; min-height: 8.5rem; align-content: start; }
   }
 
-  /* ── The counseling tools scene: the app's dark top bar over the live Speech
-     Intelligibility Audiogram, which runs in its own frame inside the device and
-     is scaled to fit the screen (site.js does the fitting). ── */
-  .sp { background: #1B2537; color: #E6EAF2; font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
-  .sp .sp-top { display: flex; align-items: center; gap: 0.7em; padding: 0.35em 0.9em; background: #1E2A40; border-bottom: 1px solid #2B3A55; font-size: 0.72em; white-space: nowrap; overflow: hidden; }
-  .sp .sp-seal { width: 1.9em; height: 1.9em; border-radius: 50%; border: 2px solid #B3978C; display: grid; place-items: center; font-weight: 700; color: #FBFAF8; background: #2B3950; flex: none; }
-  .sp .sp-brand b { display: block; font-size: 1em; white-space: nowrap; } .sp .sp-brand i { display: none; }
-  .sp .sp-ctx { margin-left: 1em; color: #C9D2E3; }
-  .sp .sp-btn { display: inline-flex; align-items: center; gap: 0.3em; border: 1px solid #3A4A66; background: #1E2A40; color: #E6EAF2; border-radius: 0.35em; padding: 0.3em 0.7em; white-space: nowrap; font: inherit; cursor: default; }
-  .sp .sp-back { margin-left: auto; font-size: 0.9em; cursor: pointer; }
-  .sp .sp-cwrap { flex: 1; min-height: 0; background: #FBFAF8; position: relative; overflow: hidden; }
-  .sp .sia-frame { position: absolute; left: 0; top: 0; width: 1000px; height: 1100px; border: 0; background: #FBFAF8; transform-origin: 0 0; }
+  /* ── The counseling screen: the app's Patient Review in the fold's screen (COUNSEL-SITE-1), under the
+     fold's own app bar. The app's dark look: its navy, warm-white panels for the chart and the figures,
+     the app's serif for the title, the index and the card names. On a wide stage the screen keeps the
+     app's 16:10 and site.js sizes the chart, the ear and the figures to its height; on a narrow stage
+     (under 40rem) the screen grows with its content and everything stacks. ── */
+  .prv { background: #222D40; color: #FBFAF8; }
+  .prv .prv-page { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 0.45em; padding: 0.7em 1.5em 0.8em; font-size: 0.72em; }
+  .prv .prv-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1.5em; }
+  .prv .prv-head > div { min-width: 0; }
+  .prv .prv-crumb { display: block; margin: 0 0 0.15em; padding: 0; border: 0; background: none; color: #AEB6C4; font-size: 0.9em; line-height: 1.3; cursor: pointer; text-align: left; }
+  .prv .prv-crumb:hover { text-decoration: underline; }
+  .prv h2 { margin: 0; font: 600 2.1em/1.1 "Cormorant Garamond", Georgia, "Times New Roman", serif; letter-spacing: 0.01em; color: #FBFAF8; text-wrap: initial; }
+  .prv .prv-who { margin: 0.15em 0 0; font-size: 0.92em; line-height: 1.3; color: #AEB6C4; }
+  .prv .prv-sii { flex: none; background: #20293E; border: 1px solid #3A4A6E; border-radius: 0.7em; padding: 0.55em 1.1em 0.6em; }
+  .prv .prv-sii .t { margin: 0 0 0.25em; font-size: 0.72em; letter-spacing: 0.06em; text-transform: uppercase; color: #AEB6C4; white-space: nowrap; }
+  .prv .prv-sii .v { display: flex; gap: 1.5em; font: 600 2em/1 "Cormorant Garamond", Georgia, serif; }
+  .prv .prv-sii .v small { display: block; margin-top: 0.15em; font: 400 0.36em/1.2 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; color: #AEB6C4; }
+  .prv .prv-tabs { display: flex; flex-wrap: wrap; gap: 0.3em; border-bottom: 1.5px solid #3B4760; }
+  .prv .prv-tab { display: inline-flex; align-items: center; gap: 0.35em; margin: 0 0 -1.5px; padding: 0.65em 0.85em; border: 0; border-bottom: 3px solid transparent; background: none; color: #AEB6C4; font-size: 0.92em; font-weight: 600; line-height: 1; white-space: nowrap; cursor: pointer; }
+  .prv .prv-tab[aria-selected="true"] { color: #FBFAF8; border-bottom-color: #B3978C; }
+  .prv .prv-lock { width: 0.85em; height: 0.85em; flex: none; color: #AEB6C4; }
+  .prv .prv-pane { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+  .prv .prv-pane[hidden] { display: none; }
+  /* Audiogram: the app's chart on its warm-white panel, the three choices and the ear beside it */
+  .prv .prv-aud { flex: 1; min-height: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 1.2em; align-items: start; }
+  .prv .prv-panel { position: relative; background: #FBFAF8; border-radius: 1em; padding: 0.45em 0.4em 0.15em; box-shadow: 0 1px 0 #3B4760; }
+  .prv .prv-chart { display: block; width: 100%; height: auto; }
+  .prv .prv-chart .ax { font: 400 16px system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; fill: #6B7585; }
+  .prv .prv-chart .ax-title { font: 500 16px system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; fill: #35455F; }
+  .prv .prv-chart .deg { font: 500 14px system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; fill: #35455F; }
+  .prv .prv-chart .phon { font: 500 21px system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; fill: #2B3950; paint-order: stroke; stroke: #fff; stroke-width: 3px; stroke-linejoin: round; }
+  .prv .prv-chart .phon.miss { fill: #B8B2AC; }
+  .prv .prv-noah { position: absolute; left: 0.7em; top: 0.5em; display: inline-flex; align-items: center; gap: 0.3em; font-size: 0.72em; font-weight: 500; color: #35455F; white-space: nowrap; }
+  .prv .prv-noah img { display: block; width: 1.35em; height: 1.35em; }
+  .prv .prv-noah img:not([src]) { display: none; }
+  .prv .prv-ctl { display: flex; flex-direction: column; align-items: flex-start; gap: 0.7em; min-width: 0; }
+  .prv .prv-seg { display: inline-flex; max-width: 100%; border: 1.5px solid #E6E1DC; border-radius: 999px; overflow: hidden; }
+  .prv .prv-seg button { padding: 0.65em 0.95em; border: 0; background: transparent; color: #FBFAF8; font-size: 0.85em; font-weight: 500; line-height: 1; white-space: nowrap; cursor: pointer; }
+  .prv .prv-seg button[aria-pressed="true"] { background: #E6E1DC; color: #222D40; }
+  .prv .prv-note { margin: 0; max-width: 34em; font-size: 0.85em; line-height: 1.45; color: #AEB6C4; }
+  /* Anatomy: the whole ear with the app's three labels, the four thumbnails, the locked parts' words */
+  .prv .prv-ana { flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: center; gap: 0.5em; }
+  .prv .prv-pic { position: relative; flex: none; margin: 0; width: 100%; aspect-ratio: 16 / 9; border: 1.5px solid #B3978C; border-radius: 0.9em; overflow: hidden; background: #F4F1EC; }
+  .prv .prv-pic img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .prv .prv-pic svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .prv .prv-pic .rlabel { font: 600 46px "Cormorant Garamond", Georgia, serif; fill: #2B3950; paint-order: stroke; stroke: #fff; stroke-width: 10px; stroke-linejoin: round; }
+  .prv .prv-thumbs { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.7em; }
+  .prv .prv-thumb { display: flex; flex-direction: column; align-items: center; gap: 0.2em; padding: 0; border: 0; background: none; color: #AEB6C4; font-size: 0.8em; cursor: pointer; }
+  .prv .prv-thumb i { display: block; width: 8.2em; aspect-ratio: 16 / 9; border: 1.5px solid #B3978C; border-radius: 0.6em; background: #F4F1EC url("pictures/counseling/ear.webp") no-repeat; }
+  .prv .prv-thumb[aria-pressed="true"] i { border: 2px solid #E6E1DC; }
+  .prv .prv-thumb span { display: inline-flex; align-items: center; gap: 0.3em; }
+  .prv .prv-locked { max-width: 40em; padding: 1.1em 1.3em 1.2em; background: rgba(255, 255, 255, 0.05); border: 1px dashed rgba(255, 255, 255, 0.3); border-radius: 0.9em; text-align: center; }
+  .prv .prv-locked b { display: block; margin: 0 0 0.25em; font: 600 1.5em/1.2 "Cormorant Garamond", Georgia, serif; }
+  .prv .prv-locked span { font-size: 0.92em; line-height: 1.4; color: #AEB6C4; }
+  .prv .prv-locked.part { visibility: hidden; }
+  .prv .prv-locked.part.on { visibility: visible; }
+  .prv .prv-locked.solo { margin: auto; }
+  .prv .prv-locked[hidden] { display: none; }
+  /* Tymp and OAE: the source line, then the app's figures on a warm-white panel */
+  .prv .prv-src { display: inline-flex; align-items: center; gap: 0.45em; margin: 0 0 0.35em; font-size: 0.85em; color: #AEB6C4; }
+  .prv .prv-src img, .prv .prv-src svg { width: 1.3em; height: 1.3em; flex: none; }
+  .prv .prv-src img:not([src]) { display: none; }
+  .prv .prv-fig { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0.6em 1.2em; align-content: start; padding: 0.8em 1em; background: #FBFAF8; border: 1.5px solid #3B4760; border-radius: 0.9em; color: #2B3950; overflow: hidden; }
+  .prv .prv-fig figure { margin: 0; min-width: 0; display: flex; flex-direction: column; gap: 0.2em; }
+  .prv .prv-fig figure b { font-size: 0.85em; font-weight: 600; }
+  .prv .prv-fig figure small { font-size: 0.72em; color: #6B7280; }
+  .prv .prv-fig svg { display: block; width: 100%; height: auto; }
+  .prv .prv-fig .fine { grid-column: 1 / -1; margin: 0; font-size: 0.68em; color: #9AA0AA; }
+  /* Hearing aids: the step line, the three style cards with the app's pictures, then the locked words */
+  .prv .prv-ha { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+  .prv .prv-ha[hidden] { display: none; }
+  .prv .prv-ha-head { display: flex; justify-content: space-between; align-items: center; gap: 1em; flex-wrap: wrap; margin: 0 0 0.5em; }
+  .prv .prv-ha-line { margin: 0; font-size: 0.72em; letter-spacing: 0.06em; text-transform: uppercase; color: #AEB6C4; }
+  .prv .prv-ha-link { font-size: 0.8em; font-weight: 500; color: #9FC1FF; }
+  .prv .prv-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.9em; flex: 1; min-height: 0; }
+  .prv .prv-card { display: flex; flex-direction: column; gap: 0.45em; min-width: 0; min-height: 0; padding: 0.75em; background: #20293E; border: 1px solid #3A4A6E; border-radius: 0.9em; }
+  .prv .prv-card .nm { font: 600 1.4em/1.1 "Cormorant Garamond", Georgia, serif; }
+  .prv .prv-card .acr { margin-left: 0.35em; font: 700 0.5em/1 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; letter-spacing: 0.06em; color: #AEB6C4; vertical-align: middle; }
+  .prv .prv-card img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 0.6em; background: #172033; }
+  .prv .prv-card .ln { font-size: 0.8em; line-height: 1.4; color: #E6E1DC; }
+  .prv .prv-choose { margin-top: auto; width: 100%; padding: 0.65em 0.9em; border: 1px solid #E9EDF5; border-radius: 0.55em; background: #E9EDF5; color: #1B2436; font-size: 0.85em; font-weight: 600; cursor: pointer; }
+  .prv .prv-choose:hover { opacity: 0.92; }
+  .prv .prv-fine { margin: 0.5em 0 0; font-size: 0.68em; letter-spacing: 0.02em; color: #AEB6C4; }
   .ho-pct { color: #FBFAF8; font-weight: 800; }

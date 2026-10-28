@@ -16,7 +16,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Schibsted+Grotesk:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Oswald:wght@500;600&family=Schibsted+Grotesk:wght@400;500;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="site.css">
 </head>
 <body>
@@ -47,7 +47,7 @@
       <div class="fold-grid">
         <div class="fold-side">
           <!-- The rail, first in its column: the report scene's fly-ins land here, one per step, the earlier
-               ones folded to their bold line; the other scenes show their hint here instead. -->
+               ones folded to their bold line; the counseling scene's land here too (COUNSEL-SITE-1); the other two scenes show their hint here instead. -->
           <aside class="fold-rail" id="fold-rail" aria-live="polite">
             <div class="fly-stack" id="fly-stack">
               <div class="fly now" id="fly-hint" hidden><p class="fly-b" id="demo-hint"></p></div>
@@ -67,11 +67,91 @@
               <div class="app">
                 <button type="button" class="a-flag" id="flag" tabindex="-1" aria-hidden="true" hidden></button>
 
-                <!-- Counseling tools: the live Speech Intelligibility Audiogram, in the app's dark look -->
-                <div class="scr d sp" data-screen="ha-counsel" hidden>
-                  <div class="sp-top"><span class="sp-seal">V</span><span class="sp-brand"><b>Coastal Hearing</b><i></i></span><span class="sp-ctx">Counseling tools · Roy Calloway</span><button type="button" class="sp-btn sp-back" data-go="report-desk">← Back to the chart</button></div>
-                  <div class="sp-cwrap"><iframe class="sia-frame" src="tools/speech-intelligibility-audiogram.html?embed" title="Speech Intelligibility Audiogram, the counseling tool"></iframe></div>
+              <!-- Counseling tools: the app's Patient Review (COUNSEL-SITE-1), holding back what subscribers get.
+                   The audiogram with the speech canoe, the tympanograms and the DP-grams are drawn by site.js (the
+                   app's own drawings with Roy's numbers, the report scene's); the ear and the three style pictures
+                   are the app's own files under pictures/counseling/. Cochlea, the Hearing Loss Simulator, the
+                   zoomed parts of the ear and everything past the three styles are locked, in the mock's words. -->
+              <div class="scr d prv" data-screen="ha-counsel" data-live hidden>
+                <div class="d-top">
+                <span class="a-logo"><svg viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 12c2.5-4 5.5-4 8 0"/><path d="M2 8.5c4-6 10-6 14 0"/><circle cx="8" cy="15" r="1" fill="#fff"/></svg></span>
+                <b>Coastal Hearing</b>
+                <span class="d-nav" aria-hidden="true"><span>Today</span><span>Calendar</span><span>Patients</span><span>Billing</span></span>
+                <span class="a-pill">Book now</span>
+                <span class="a-burger"><i>2</i></span>
+                <span class="a-me">JA</span>
                 </div>
+                <div class="prv-page">
+                  <div class="prv-head">
+                    <div>
+                      <button type="button" class="prv-crumb" data-go="report-desk">← Roy Calloway</button>
+                      <h2>Patient Review</h2>
+                      <p class="prv-who">Roy Calloway · visit <span data-d="0">10/28/2026</span> · audiogram <span data-d="0">10/28/2026</span></p>
+                    </div>
+                    <div class="prv-sii"><p class="t">Speech Intelligibility Index</p><div class="v"><div>52%<small>Right ear</small></div><div>47%<small>Left ear</small></div></div></div>
+                  </div>
+                  <div class="prv-tabs" role="tablist" aria-label="Patient Review">
+                    <button type="button" class="prv-tab" role="tab" data-pr-tab="aud" aria-selected="true">Audiogram</button>
+                    <button type="button" class="prv-tab" role="tab" data-pr-tab="ana" aria-selected="false">Anatomy</button>
+                    <button type="button" class="prv-tab" role="tab" data-pr-tab="coc" aria-selected="false">Cochlea <svg class="prv-lock" viewBox="0 0 16 16" role="img" aria-label="locked"><rect x="3" y="7" width="10" height="7.5" rx="1.5" fill="currentColor"/><path d="M5 7V5a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>
+                    <button type="button" class="prv-tab" role="tab" data-pr-tab="tym" aria-selected="false">Tymp</button>
+                    <button type="button" class="prv-tab" role="tab" data-pr-tab="oae" aria-selected="false">OAE</button>
+                    <button type="button" class="prv-tab" role="tab" data-pr-tab="sim" aria-selected="false">Hearing Loss Simulator <svg class="prv-lock" viewBox="0 0 16 16" role="img" aria-label="locked"><rect x="3" y="7" width="10" height="7.5" rx="1.5" fill="currentColor"/><path d="M5 7V5a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>
+                    <button type="button" class="prv-tab" role="tab" data-pr-tab="ha" aria-selected="false">Hearing aids</button>
+                  </div>
+                  <div class="prv-pane" data-pr-pane="aud">
+                    <div class="prv-aud">
+                      <div class="prv-panel"><span class="prv-noah"><img data-seal alt="" width="20" height="20">Noah · <span data-d="0">10/28/2026</span></span><svg class="prv-chart" viewBox="0 0 790 735" role="img" aria-label="Roy’s audiogram over the speech sounds"></svg></div>
+                      <div class="prv-ctl">
+                        <div class="prv-seg" role="group" aria-label="Whose hearing to show"><button type="button" data-pr-who="normal" aria-pressed="false">Normal hearing</button><button type="button" data-pr-who="theirs" aria-pressed="true">Roy’s hearing</button><button type="button" data-pr-who="example" aria-pressed="false">Example loss</button></div>
+                        <div class="prv-seg" role="group" aria-label="Which ear"><button type="button" data-pr-ear="R" aria-pressed="false">Right ear</button><button type="button" data-pr-ear="L" aria-pressed="false">Left ear</button><button type="button" data-pr-ear="B" aria-pressed="true">Both ears</button></div>
+                        <p class="prv-note">The shaded shape is the speech sounds; what sits above Roy’s lines is what he misses. His Speech Intelligibility Index is in the header. Switch to Normal hearing or an Example loss to compare.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="prv-pane" data-pr-pane="ana" hidden>
+                    <div class="prv-ana">
+                      <figure class="prv-pic"><img src="pictures/counseling/ear.webp" alt="Cross-section of the ear: pinna and canal, eardrum and the three bones, cochlea and balance canals, the nerve" loading="lazy" draggable="false"><svg viewBox="0 0 2048 1152" aria-hidden="true"><text class="rlabel" x="110" y="1090">Outer ear</text><text class="rlabel" x="1250" y="1090">Middle ear</text><text class="rlabel" x="1560" y="110">Inner ear</text></svg></figure>
+                      <div class="prv-thumbs" role="group" aria-label="Focus on a part">
+                        <button type="button" class="prv-thumb" data-pr-thumb="whole" aria-pressed="true"><i style="background-size: 100% 100%; background-position: 0 0;"></i><span>Whole</span></button>
+                        <button type="button" class="prv-thumb" data-pr-thumb="outer" aria-pressed="false"><i style="background-size: 163.93% 163.93%; background-position: 0% 48.72%;"></i><span>Outer <svg class="prv-lock" viewBox="0 0 16 16" role="img" aria-label="locked"><rect x="3" y="7" width="10" height="7.5" rx="1.5" fill="currentColor"/><path d="M5 7V5a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></span></button>
+                        <button type="button" class="prv-thumb" data-pr-thumb="middle" aria-pressed="false"><i style="background-size: 416.67% 416.67%; background-position: 71.84% 51.58%;"></i><span>Middle <svg class="prv-lock" viewBox="0 0 16 16" role="img" aria-label="locked"><rect x="3" y="7" width="10" height="7.5" rx="1.5" fill="currentColor"/><path d="M5 7V5a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></span></button>
+                        <button type="button" class="prv-thumb" data-pr-thumb="inner" aria-pressed="false"><i style="background-size: 316.46% 316.46%; background-position: 100% 33.04%;"></i><span>Inner <svg class="prv-lock" viewBox="0 0 16 16" role="img" aria-label="locked"><rect x="3" y="7" width="10" height="7.5" rx="1.5" fill="currentColor"/><path d="M5 7V5a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></span></button>
+                      </div>
+                      <div class="prv-locked part" data-pr-lock="part"><b>Subscribers only</b><span>Each part zoomed, with its common conditions and a picture of each — presbycusis, noise-induced loss, and more.</span></div>
+                    </div>
+                  </div>
+                  <div class="prv-pane" data-pr-pane="coc" hidden><div class="prv-locked solo"><b>Subscribers only</b><span>The cochlea unrolled into the audiogram — normal, presbycusis, the noise notch — with the hair-cell pictures.</span></div></div>
+                  <div class="prv-pane" data-pr-pane="tym" hidden>
+                    <p class="prv-src"><img data-seal alt="" width="20" height="20">From Noah · <span data-d="0">10/28/2026</span></p>
+                    <div class="prv-fig" data-pr-fig="tymp">
+                      <figure><b style="color: #b91c1c;">Tymp Right</b><svg viewBox="0 0 300 250" role="img" aria-label="Tymp Right — modeled from values" data-pr-tymp="right"></svg><small>modeled from values</small></figure>
+                      <figure><b style="color: #1d4ed8;">Tymp Left</b><svg viewBox="0 0 300 250" role="img" aria-label="Tymp Left — modeled from values" data-pr-tymp="left"></svg><small>modeled from values</small></figure>
+                    </div>
+                  </div>
+                  <div class="prv-pane" data-pr-pane="oae" hidden>
+                    <p class="prv-src"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 6V2.5h7V6"/><path d="M3 6h10a1 1 0 0 1 1 1v4h-2.5v2.5h-7V11H2V7a1 1 0 0 1 1-1z"/><path d="M6 11h4" stroke-linecap="round"/></svg>Auto-uploaded from the Titan printout · <span data-d="0">10/28/2026</span></p>
+                    <div class="prv-fig" data-pr-fig="oae">
+                      <figure><svg viewBox="0 0 380 260" role="img" aria-label="Right ear DP-gram" data-pr-dp="right"></svg></figure>
+                      <figure><svg viewBox="0 0 380 260" role="img" aria-label="Left ear DP-gram" data-pr-dp="left"></svg></figure>
+                      <p class="fine">Shaded band: 5th–95th percentile normal range, Ramos, Kristensen &amp; Beck, Hearing Review 2013;20(11):30-33, Table 3 (N=39; 65/55 dB SPL, f2/f1 1.22).</p>
+                    </div>
+                  </div>
+                  <div class="prv-pane" data-pr-pane="sim" hidden><div class="prv-locked solo"><b>Subscribers only</b><span>Hear a railroad crossing, or a voice in a restaurant, through Roy’s loss — then through normal hearing. Part of Vestibule.</span></div></div>
+                  <div class="prv-pane" data-pr-pane="ha" hidden>
+                    <div class="prv-ha" data-pr-ha="style">
+                      <div class="prv-ha-head"><p class="prv-ha-line">Hearing aids · 1 of 3 · The style</p><span class="prv-ha-link">Know the make and model? Quick order →</span></div>
+                      <div class="prv-cards">
+                        <div class="prv-card"><span class="nm">Behind the ear <span class="acr">BTE</span></span><img src="pictures/counseling/ha-bte-section@1x.webp" alt="Cross-section: behind the ear device in the ear" loading="lazy" draggable="false"><span class="ln">The device sits behind the ear; a tube carries sound to a custom earmold.</span><button type="button" class="prv-choose" data-pr-choose="BTE">Choose this style</button></div>
+                        <div class="prv-card"><span class="nm">Receiver in the canal <span class="acr">RIC</span></span><img src="pictures/counseling/ha-ric-section@1x.webp" alt="Cross-section: receiver in the canal device in the ear" loading="lazy" draggable="false"><span class="ln">A small piece behind the ear; a thin wire carries sound to a receiver in the canal.</span><button type="button" class="prv-choose" data-pr-choose="RIC">Choose this style</button></div>
+                        <div class="prv-card"><span class="nm">Completely in the canal <span class="acr">CIC</span></span><img src="pictures/counseling/ha-cic-section@1x.webp" alt="Cross-section: completely in the canal device in the ear" loading="lazy" draggable="false"><span class="ln">The whole device sits inside the ear canal.</span><button type="button" class="prv-choose" data-pr-choose="CIC">Choose this style</button></div>
+                      </div>
+                      <p class="prv-fine">Artist’s renderings · not to scale · for instruction only.</p>
+                    </div>
+                    <div class="prv-locked solo" data-pr-ha="locked" hidden><b>Subscribers only</b><span>The level drawn on Roy’s own audiogram, the device the practice fits, and Order hearing aids — the order card filled in, the purchase agreement on his phone.</span></div>
+                  </div>
+                </div>
+              </div>
                   <!-- Report, the chart: the last test on it, then today's, then the report (SITE-CLICK-2) -->
                   <div class="scr d" data-screen="d-chart">
                 <div class="d-top">
@@ -702,11 +782,11 @@
 <script>
   // This page's own scenes for the click-through in the fold's screen (PROF-PAGES-2): the report scene
   // (the two-click report, SITE-CLICK-2) with its fly-in rail and the hand that comes to the next thing
-  // to click, and the three other scenes as they played in the device. site.js, shared by every page,
+  // to click, and the counseling scene (COUNSEL-SITE-1: the app's Patient Review, its own five fly-ins and the hand) and the two other scenes as they played in the device. site.js, shared by every page,
   // runs them: it shows the screens, places the marks and calls back here.
   window.PREVIEW_PAGE = function (c) {
     var $ = c.$, all = c.all, app = c.app, later = c.later, still = c.still;
-    var drawInNoah = c.drawInNoah, resetDesk = c.resetDesk, clearSig = c.clearSig, playReferral = c.playReferral, hotTo = c.hotTo;
+    var drawInNoah = c.drawInNoah, resetDesk = c.resetDesk, clearSig = c.clearSig, playReferral = c.playReferral, hotTo = c.hotTo, counsel = c.counsel;
 
     // ── The chart: the last test on it, then today's over it, then the report ──
     var plotB = $("fc-plot-before"), plotA = $("fc-plot-after"), capB = $("fc-cap-before"), capA = $("fc-cap-after");
@@ -778,23 +858,39 @@
         next: ["Next: the lobby kiosk", "checkin"]
       },
       "counsel": {
-        scene: "counsel", device: "desk", screen: "ha-counsel", tool: "theirs",
-        hint: "<b>Counseling tools.</b> The patient's audiogram over the speech canoe: the sounds above their lines fall outside their range of hearing, and their Speech Intelligibility Index is right there. Click <b>Play</b>.",
-        target: "[data-hot='play']", flag: ["Click here", "top", "end"],
-        enter: function () { hotTo("play", "counsel-hear"); }
+        scene: "counsel", device: "desk", screen: "ha-counsel", fly: 1,
+        target: "[data-pr-tab='ana']", flag: ["Click here", "top", "center", "bottom", "start"],
+        enter: function () { counsel.reset(); hotTo("tab:ana", "counsel-anatomy"); }
       },
-      "counsel-hear": {
-        scene: "counsel", device: "desk", screen: "ha-counsel",
-        hint: "A voice in a restaurant, played through their hearing loss: the filter follows the chart, each ear its own. Click <b>Normal hearing</b> to compare.",
-        target: "[data-hot='normal']", flag: ["Click here next", "bottom", "start"],
-        enter: function () { hotTo("normal", "counsel-normal"); }
+      "counsel-anatomy": {
+        scene: "counsel", device: "desk", screen: "ha-counsel", fly: 2,
+        target: "[data-pr-thumb='inner']", flag: ["Click here next", "top", "center"],
+        enter: function () { counsel.tab("ana"); hotTo("thumb:outer", "counsel-inner"); hotTo("thumb:middle", "counsel-inner"); hotTo("thumb:inner", "counsel-inner"); }
       },
-      "counsel-normal": {
-        scene: "counsel", device: "desk", screen: "ha-counsel",
-        hint: "The same sound as a normal ear hears it, SII 100%. Switch back and forth while it plays; the family hears the difference without a word of explanation.",
-        target: "[data-hot='their']", flag: ["Switch back", "bottom", "start"],
-        next: ["Next: sign a report", "report-desk"],
-        enter: function () { hotTo("their", "counsel-hear"); }
+      "counsel-inner": {
+        scene: "counsel", device: "desk", screen: "ha-counsel", fly: 2,
+        target: "[data-pr-tab='tym']", flag: ["Click here next", "top", "center", "bottom", "start"],
+        enter: function () { counsel.tab("ana"); hotTo("tab:tym", "counsel-tymp"); }
+      },
+      "counsel-tymp": {
+        scene: "counsel", device: "desk", screen: "ha-counsel", fly: 3,
+        target: "[data-pr-tab='oae']", flag: ["Click here next", "top", "center", "bottom", "start"],
+        enter: function () { counsel.tab("tym"); hotTo("tab:oae", "counsel-oae"); }
+      },
+      "counsel-oae": {
+        scene: "counsel", device: "desk", screen: "ha-counsel", fly: 3,
+        target: "[data-pr-tab='ha']", flag: ["Click here next", "top", "center", "bottom", "start"],
+        enter: function () { counsel.tab("oae"); hotTo("tab:ha", "counsel-aids"); }
+      },
+      "counsel-aids": {
+        scene: "counsel", device: "desk", screen: "ha-counsel", fly: 4,
+        target: "[data-pr-choose='RIC']", flag: ["Click here next", "top", "center"],
+        enter: function () { counsel.tab("ha"); hotTo("choose:BTE", "counsel-locked"); hotTo("choose:RIC", "counsel-locked"); hotTo("choose:CIC", "counsel-locked"); }
+      },
+      "counsel-locked": {
+        scene: "counsel", device: "desk", screen: "ha-counsel", fly: 5,
+        next: ["Next: the lobby kiosk", "checkin"],
+        enter: function () { counsel.tab("ha"); counsel.lockAids(); }
       },
       "checkin": {
         scene: "checkin", screen: "k-grid",
@@ -831,28 +927,36 @@
 
     var FOOT = {
       report: "A click-through preview with sample patients. Noah's screen is drawn here in simple form.",
-      counsel: "The counseling tools, with a sample patient. On the live app the sounds play through the patient's own audiogram.",
+      counsel: "The counseling screen, with a sample patient. The locked tabs are part of Vestibule.",
       checkin: "The kiosk is a tablet in your lobby. Patients check themselves in and sign their consent forms on it.",
       referral: "A preview with sample patients. Your own demo is the whole app."
     };
 
-    // ── The fly-in rail: five cards for the report scene, one per step; the earlier ones fold to
-    // their bold line. The other scenes show their hint in the rail's one card instead. ──
-    var FLY = [
+    // ── The fly-in rail: five cards for the report scene and five for the counseling scene, one per
+    // step; the earlier ones fold to their bold line. The other two scenes show their hint in the rail's
+    // one card instead. ──
+    var FLY_REPORT = [
       { big: true, t: "2-Click Reports", b: "Medical reports, written in your voice, in 2 clicks after testing is saved. Start by opening Noah — click here first →" },
       { t: "Today's audiogram, entered in Noah the way you always do.", b: "Example: about 25 dB poorer than two years ago from 2 kHz up; 250–1000 Hz unchanged." },
       { t: "Save the results in Noah.", b: "Noah closes, you are in the app, and your new results are in the app immediately!" },
       { t: "This is the report the physician receives.", b: "Written in your own words from today's results and the history on file. Click 2: Sign & send." },
       { big: true, t: "Two Clicks, That's All Folks!", b: "Signed, and faxed to the referring physician. Automatic!" }
     ];
+    var FLY_COUNSEL = [
+      { big: true, t: "Counseling, on the screen the patient is looking at.", b: "Patient Review opens from the visit card. Roy’s audiogram from Noah over the speech sounds; his Speech Intelligibility Index in the header. Normal hearing and an example loss one tap away. Click Anatomy." },
+      { t: "The ear, whole.", b: "One picture, four views. The zoomed parts and their conditions are for subscribers. Click Tymp." },
+      { t: "Tymps from Noah, OAEs from the printer.", b: "Nothing retyped: the tympanograms arrive with the audiogram, the OAE printout uploads itself from the Titan. Click OAE, then Hearing aids." },
+      { t: "Three styles, in pictures.", b: "Behind the ear, receiver in the canal, completely in the canal — the patient sees each one on an ear. Choose RIC." },
+      { big: true, t: "The rest is for subscribers.", b: "The level on Roy’s own audiogram, the device, and the order filled in — with the simulator and the cochlea. Get your own demo." }
+    ];
     var stack = $("fly-stack"), hintCard = $("fly-hint"), count = $("fly-count"), clicksEl = $("fly-clicks");
-    var flown = 0;
+    var flown = 0, flyScene = "";
     function clearFlies() {
       all(stack, ".fly").forEach(function (n) { if (n !== hintCard) stack.removeChild(n); });
       flown = 0;
     }
     function fly(i) {
-      var f = FLY[i - 1], card = document.createElement("div");
+      var f = (flyScene === "counsel" ? FLY_COUNSEL : FLY_REPORT)[i - 1], card = document.createElement("div");
       card.className = "fly" + (f.big ? " big" : "");
       card.innerHTML = "<b class=\"fly-t\">" + f.t + "</b><span class=\"fly-b\">" + f.b + "</span>";
       all(stack, ".fly.now").forEach(function (n) { if (n !== hintCard) { n.classList.remove("now"); n.classList.add("in"); } });
@@ -862,12 +966,13 @@
       flown = i;
     }
     function onShow(key, s) {
-      var report = s.scene === "report";
-      hintCard.hidden = report;
-      count.hidden = !report;
-      if (!report) { if (flown) clearFlies(); hintCard.className = "fly now"; return; }
-      clicksEl.textContent = String(s.clicks || 0);
-      if (key === "report-desk") { clearFlies(); fly(1); }
+      var rail = s.scene === "report" || s.scene === "counsel";
+      hintCard.hidden = rail;
+      count.hidden = s.scene !== "report";
+      if (!rail) { if (flown) clearFlies(); hintCard.className = "fly now"; flyScene = ""; return; }
+      if (s.scene !== flyScene) { clearFlies(); flyScene = s.scene; }
+      if (s.scene === "report") clicksEl.textContent = String(s.clicks || 0);
+      if (key === "report-desk" || key === "counsel") { clearFlies(); fly(1); }
       else if (s.fly && s.fly > flown) fly(s.fly);
     }
     // A click on something that is only part of the picture: the current card answers.
@@ -877,10 +982,10 @@
     }
 
     // ── HERO-2's hand: it comes from about the screen's middle to the next thing to click in
-    // the report scene every 4 s and presses it; with reduced motion it rests on it. ──
+    // the report scene and the counseling scene every 4 s and presses it; with reduced motion it rests on it. ──
     var hand = $("fc-hand"), handAt = "";
     function onMark(t, s) {
-      if (!t || !s || s.scene !== "report") { hide(hand, true); handAt = ""; return; }
+      if (!t || !s || (s.scene !== "report" && s.scene !== "counsel")) { hide(hand, true); handAt = ""; return; }
       var a = app.getBoundingClientRect(), r = t.getBoundingClientRect();
       if (!a.width || !r.width) return;
       var x = r.left - a.left + r.width * 0.5, y = r.top - a.top + r.height * 0.55;

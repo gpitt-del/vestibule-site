@@ -41,3 +41,21 @@ is not listed.
 
 The railroad crossing is synthesized in the page itself and is the
 company's own work, not a third-party asset.
+
+## The counseling screen's pictures and serif (COUNSEL-SITE-1, 2026-10-28)
+
+**Files:** `pictures/counseling/ear.webp` · `pictures/counseling/ha-bte-section@1x.webp` ·
+`pictures/counseling/ha-ric-section@1x.webp` · `pictures/counseling/ha-cic-section@1x.webp`
+
+- **What it is:** the app's own pictures, copied unchanged from its Patient Review:
+  the ear's cross-section (Gabe's render of 2026-10-21 at 2048 px) and the three
+  hearing-aid style cross-sections (made 2026-10-24 with Grok on Gabe's prompts;
+  "Artist's renderings · not to scale · for instruction only" prints under the cards).
+- **Where it is used:** the Counseling tools scene of the fold's screen on the home,
+  audiologists and hearing-aid-specialists pages (the Anatomy tab and the Hearing aids
+  tab).
+- **Source and license:** the company's own work, listed here for provenance; not a
+  third-party asset.
+- **The serif:** the scene's title, index and card names are set in Cormorant Garamond
+  (weight 600), the app's own serif, linked from Google Fonts like the site's Oswald and
+  Schibsted Grotesk — SIL Open Font License 1.1 (https://fonts.google.com/specimen/Cormorant+Garamond).
