@@ -4,11 +4,11 @@ Rewritten at every close-out. The newest change is the commit that carries this 
 
 ## Live
 
-`main`, classic GitHub Pages, CNAME vestibulehq.com. Live commit: the one headed "HERO-2 Part B + SITE-AUD-1" (2026-10-28); the one before it is 4ca005c (HERO-2).
+`main`, classic GitHub Pages, CNAME vestibulehq.com. Live commit: the one headed "STATUS.md: never a secret, a credential, a customer's or prospect's name, or anything about Hearing-Doctors' patients" (2026-10-28); the one before it is 0e6d358 (HERO-2 Part B + SITE-AUD-1).
 
 ## Changes, newest first
 
-- HERO-2 Part B + SITE-AUD-1 (2026-10-28): one offer on the page, a night band between "Here's how a visit runs." and "Everything else, in the same place"; the copy column's offer box and the offer inside #more are gone. "Book now" replaces "Quick-Book" in every drawn app bar and verb (index and the three profession pages). The fold's Diagnostics line reads WRS R 88% · L 92%. The h1 is "Vestibule: your practice's headquarters — audiology and hearing aids, in one place." and the title and og:title equal it; the descriptions name audiology and hearing aid practices. The speech-language pathology door is off and the row is three cards again; speech-pathology.html stays at its URL, unlinked. This file begins.
+- HERO-2 Part B + SITE-AUD-1 (2026-10-28, 0e6d358): one offer on the page, a night band between "Here's how a visit runs." and "Everything else, in the same place"; the copy column's offer box and the offer inside #more are gone. "Book now" replaces "Quick-Book" in every drawn app bar and verb (index and the three profession pages). The fold's Diagnostics line reads WRS R 88% · L 92%. The h1 is "Vestibule: your practice's headquarters — audiology and hearing aids, in one place." and the title and og:title equal it; the descriptions name audiology and hearing aid practices. The speech-language pathology door is off and the row is three cards again; speech-pathology.html stays at its URL, unlinked. This file begins.
 - HERO-2 (2026-10-27, 4ca005c): the top fold: one small headline line, two notes beside the demo practice's chart drawn large, the yellow "Click here" with the pressing hand, and the Noah ES Certified by HIMSA band; the preview and the copy column follow the fold.
 - SITE-HLS-VOLUME-1 (2026-10-19, 2822d24): a Volume slider on the "Hear it their way" player's Loop row.
 - SITE-PROMISE-2 (2026-10-18, 4e27e0a): the headline named all three professions, the promise returned as the subline, a fourth card opened the speech-language pathology page (the first and the third undone by SITE-AUD-1).
@@ -31,4 +31,5 @@ Rewritten at every close-out. The newest change is the commit that carries this 
 - The drawings say "Book now" where the app does (BOOK-NOW-1, 2026-10-19); only the Calendar menu's row keeps "Quick-Book", and no drawing shows that row.
 - The preview's practice and patients are invented; never a real name.
 - A session that adds a third-party sound, image, font or icon appends to docs/CREDITS.md in the same commit.
+- This file stays readable at vestibulehq.com/docs/STATUS.md, like CREDITS.md: never a secret, a credential, a customer's or prospect's name, or anything about Hearing-Doctors' patients. Nothing links to it.
 - Briefs are small and auditable: do only what the brief names, record it in the commit body headed by the brief's ID, rewrite this file, report before/after and the live check (cache-busted URL, then the bare URL).
