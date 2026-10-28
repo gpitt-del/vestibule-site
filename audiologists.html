@@ -42,7 +42,7 @@
         <h1>The Head-Quarters for your Audiology Practice</h1>
       </div>
 
-      <div class="hero-demo is-desk" id="try" aria-label="A click-through preview of Vestibule">
+      <div class="hero-demo is-desk as-fold" id="try" aria-label="A click-through preview of Vestibule">
         <p class="device-cap" id="device-cap">On your computer</p>
         <div class="stage desk" id="stage">
         <div class="phone" id="phone">
@@ -55,46 +55,55 @@
                 <div class="sp-top"><span class="sp-seal">V</span><span class="sp-brand"><b>Coastal Hearing</b><i></i></span><span class="sp-ctx">Counseling tools · Roy Calloway</span><button type="button" class="sp-btn sp-back" data-go="report-desk">← Back to the chart</button></div>
                 <div class="sp-cwrap"><iframe class="sia-frame" src="tools/speech-intelligibility-audiogram.html?embed" title="Speech Intelligibility Audiogram, the counseling tool"></iframe></div>
               </div>
-              <!-- Report, the first screens: a patient's chart on a computer -->
-              <div class="scr d" data-screen="d-chart">
-                <div class="d-top">
-                  <span class="a-logo"><svg viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 12c2.5-4 5.5-4 8 0"/><path d="M2 8.5c4-6 10-6 14 0"/><circle cx="8" cy="15" r="1" fill="#fff"/></svg></span>
-                  <b>Coastal Hearing</b>
-                  <span class="d-nav" aria-hidden="true"><span>Today</span><span>Calendar</span><span>Patients</span><span>Billing</span></span>
-                  <span class="a-pill">Book now</span>
-                  <span class="a-burger"><i>2</i></span>
-                  <span class="a-me">JA</span>
-                </div>
-                <div class="d-page">
-                  <div class="d-head">
-                    <span class="d-av" aria-hidden="true">RC</span>
-                    <div><b class="d-name">Roy Calloway</b><span class="d-sub">3/14/1952 · Seabrook</span></div>
-                  </div>
-                  <div class="d-row">
-                    <span class="d-btn pri">Contact</span>
-                    <span class="d-btn">Book now</span>
-                    <button type="button" class="d-due" id="d-due" data-go="report-preview" hidden>Report due</button>
-                    <span class="d-ok">Noah ✓</span>
-                    <button type="button" class="d-btn d-noah" data-go="report-noah"><img data-seal alt="" width="28" height="28">Open in Noah</button>
-                  </div>
-                  <div class="d-card">
-                    <p class="d-empty" id="d-empty"><b>Diagnostics</b>No audiogram on file.</p>
-                    <div class="d-res" id="d-res" hidden>
-                      <div class="d-plot" data-aud></div>
-                      <div class="d-txt">
-                        <p class="res-h">Audiogram <em>NOAH</em></p>
-                        <p>Mild to moderate sloping sensorineural hearing loss bilaterally. SRT 35 and 40 dB HL. Word recognition 88% and 92%.</p>
-                        <div class="d-more" id="d-more" hidden>
-                          <p><b>Tympanometry</b> <em>NOAH</em><span>Type A bilaterally · ECV 1.1 and 1.2 mL</span></p>
-                          <p><b>Otoacoustic emissions</b> <em>NOAH</em><span>DPOAEs present through 2 kHz, absent above, both ears</span></p>
-                          <p><b>Real-ear measurement</b> <em>NOAH</em><span>Aided response within ±5 dB of NAL-NL2 targets, 500–4000 Hz, both ears</span></p>
-                          <p><b>Hearing aids</b> <em>NOAH</em><span>RIC pair · R 2411-0932 · L 2411-0931 · fit <i data-d="0">10/8/2026</i></span></p>
+                <!-- Report, the chart: the last test on it, then today's, then the report (SITE-CLICK-2) -->
+                <div class="scr d" data-screen="d-chart">
+              <div class="d-top">
+                <span class="a-logo"><svg viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 12c2.5-4 5.5-4 8 0"/><path d="M2 8.5c4-6 10-6 14 0"/><circle cx="8" cy="15" r="1" fill="#fff"/></svg></span>
+                <b>Coastal Hearing</b>
+                <span class="d-nav" aria-hidden="true"><span>Today</span><span>Calendar</span><span>Patients</span><span>Billing</span></span>
+                <span class="a-pill">Book now</span>
+                <span class="a-burger"><i>2</i></span>
+                <span class="a-me">JA</span>
+              </div>
+                  <div class="d-page">
+                    <div class="d-head">
+                      <span class="d-av" aria-hidden="true">RC</span>
+                      <div><b class="d-name">Roy Calloway</b><span class="d-sub">3/14/1952 · Seabrook · referred by Dr. Whitfield</span></div>
+                      <span class="fc-chip" id="fc-chip">Audiological assessment today</span>
+                    </div>
+                    <div class="d-row fc-row">
+                      <span class="d-btn pri">Contact</span>
+                      <span class="d-btn">Book now</span>
+                      <span class="d-ok">Noah ✓</span>
+                      <button type="button" class="d-btn d-noah" data-go="report-noah"><img data-seal alt="" width="28" height="28">Open in Noah</button>
+                      <!-- Report due, as the app draws it: an amber band in the verb row, Preview now (click 1) and Edit -->
+                      <span class="fc-due" id="fc-due" hidden><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 1.5h6l3 3v10h-9z"/><path d="M9.5 1.5v3h3M5.5 8h5M5.5 11h5"/></svg><b>Report due:</b><button type="button" class="fc-due-btn pri" id="fc-preview" data-go="report-preview">Preview now</button><button type="button" class="fc-due-btn" id="fc-edit">Edit</button></span>
+                    </div>
+                    <div class="d-card fc-card">
+                      <div class="fc-res" id="fc-res">
+                        <div class="fc-fig">
+                          <svg class="fc-plot" id="fc-plot-before" viewBox="0 0 300 250" role="img" aria-label="Audiogram of the sample patient from the last test, about two years ago: a mild high-frequency sensorineural hearing loss in both ears. Right ear in red circles, left ear in blue crosses, and a dashed line at the limit of normal hearing."><rect x="40" y="24" width="250" height="208" fill="#fff"/><path d="M40 24H290M40 40H290M40 56H290M40 72H290M40 88H290M40 104H290M40 120H290M40 136H290M40 152H290M40 168H290M40 184H290M40 200H290M40 216H290M40 232H290M60 24V232M105 24V232M150 24V232M195 24V232M240 24V232M285 24V232" fill="none" stroke="#E5E7EB" stroke-width="0.8"/><path d="M217.5 24V232M262.5 24V232" fill="none" stroke="#D1D5DB" stroke-width="0.8" stroke-dasharray="3 3"/><path d="M40 40H290" stroke="#9CA3AF" stroke-width="1"/><rect x="40" y="24" width="250" height="208" fill="none" stroke="#9CA3AF" stroke-width="0.9"/><path d="M40 80H290" fill="none" stroke="#4B5563" stroke-width="1.1" stroke-dasharray="5 4"/><text x="287" y="77" font-family="Helvetica, Arial, sans-serif" font-size="8" fill="#4B5563" text-anchor="end">normal</text><g font-family="Helvetica, Arial, sans-serif" font-size="8.5" fill="#737373" text-anchor="middle"><text x="60" y="17">250</text><text x="105" y="17">500</text><text x="150" y="17">1k</text><text x="195" y="17">2k</text><text x="240" y="17">4k</text><text x="285" y="17">8k</text></g><g font-family="Helvetica, Arial, sans-serif" font-size="8.5" fill="#737373" text-anchor="end"><text x="35" y="43">0</text><text x="35" y="75">20</text><text x="35" y="107">40</text><text x="35" y="139">60</text><text x="35" y="171">80</text><text x="35" y="203">100</text><text x="35" y="235">120</text></g><polyline points="60,64 105,64 150,72 195,88 240,104 285,112" fill="none" stroke="#C81E1E" stroke-width="1.5"/><polyline points="60,64 105,72 150,72 195,88 240,112 285,120" fill="none" stroke="#1D4ED8" stroke-width="1.5"/><g fill="#fff" stroke="#C81E1E" stroke-width="1.8"><circle cx="60" cy="64" r="4.5"/><circle cx="105" cy="64" r="4.5"/><circle cx="150" cy="72" r="4.5"/><circle cx="195" cy="88" r="4.5"/><circle cx="240" cy="104" r="4.5"/><circle cx="285" cy="112" r="4.5"/></g><g fill="none" stroke="#1D4ED8" stroke-width="1.9" stroke-linecap="round"><path d="M56 60l8 8M64 60l-8 8"/><path d="M101 68l8 8M109 68l-8 8"/><path d="M146 68l8 8M154 68l-8 8"/><path d="M191 84l8 8M199 84l-8 8"/><path d="M236 108l8 8M244 108l-8 8"/><path d="M281 116l8 8M289 116l-8 8"/></g><g font-family="Helvetica, Arial, sans-serif" font-size="8.5" fill="#4B5563"><text x="40" y="246"><tspan fill="#C81E1E" font-weight="700">O</tspan> right</text><text x="82" y="246"><tspan fill="#1D4ED8" font-weight="700">X</tspan> left</text><text x="120" y="246">– – normal</text><text x="290" y="246" text-anchor="end">dB HL by Hz</text></g></svg>
+                          <svg class="fc-plot" id="fc-plot-after" hidden viewBox="0 0 300 250" role="img" aria-label="Today's audiogram of the sample patient over the last test, dashed: thresholds at 2 kHz and above are 20 to 30 dB poorer than two years ago, 250 to 1000 Hz unchanged. Right ear in red circles, left ear in blue crosses."><rect x="40" y="24" width="250" height="208" fill="#fff"/><path d="M40 24H290M40 40H290M40 56H290M40 72H290M40 88H290M40 104H290M40 120H290M40 136H290M40 152H290M40 168H290M40 184H290M40 200H290M40 216H290M40 232H290M60 24V232M105 24V232M150 24V232M195 24V232M240 24V232M285 24V232" fill="none" stroke="#E5E7EB" stroke-width="0.8"/><path d="M217.5 24V232M262.5 24V232" fill="none" stroke="#D1D5DB" stroke-width="0.8" stroke-dasharray="3 3"/><path d="M40 40H290" stroke="#9CA3AF" stroke-width="1"/><rect x="40" y="24" width="250" height="208" fill="none" stroke="#9CA3AF" stroke-width="0.9"/><path d="M40 80H290" fill="none" stroke="#4B5563" stroke-width="1.1" stroke-dasharray="5 4"/><text x="287" y="77" font-family="Helvetica, Arial, sans-serif" font-size="8" fill="#4B5563" text-anchor="end">normal</text><g font-family="Helvetica, Arial, sans-serif" font-size="8.5" fill="#737373" text-anchor="middle"><text x="60" y="17">250</text><text x="105" y="17">500</text><text x="150" y="17">1k</text><text x="195" y="17">2k</text><text x="240" y="17">4k</text><text x="285" y="17">8k</text></g><g font-family="Helvetica, Arial, sans-serif" font-size="8.5" fill="#737373" text-anchor="end"><text x="35" y="43">0</text><text x="35" y="75">20</text><text x="35" y="107">40</text><text x="35" y="139">60</text><text x="35" y="171">80</text><text x="35" y="203">100</text><text x="35" y="235">120</text></g><polyline points="60,64 105,64 150,72 195,88 240,104 285,112" fill="none" stroke="#C81E1E" stroke-width="1.3" stroke-dasharray="4 3" opacity="0.6"/><polyline points="60,64 105,72 150,72 195,88 240,112 285,120" fill="none" stroke="#1D4ED8" stroke-width="1.3" stroke-dasharray="4 3" opacity="0.6"/><text x="287" y="132" font-family="Helvetica, Arial, sans-serif" font-size="7.5" fill="#6B7280" text-anchor="end" data-old>10/5/2024</text><polyline points="60,64 105,64 150,72 195,128 240,144 285,160" fill="none" stroke="#C81E1E" stroke-width="1.5"/><polyline points="60,64 105,72 150,72 195,128 240,152 285,168" fill="none" stroke="#1D4ED8" stroke-width="1.5"/><g fill="#fff" stroke="#C81E1E" stroke-width="1.8"><circle cx="60" cy="64" r="4.5"/><circle cx="105" cy="64" r="4.5"/><circle cx="150" cy="72" r="4.5"/><circle cx="195" cy="128" r="4.5"/><circle cx="240" cy="144" r="4.5"/><circle cx="285" cy="160" r="4.5"/></g><g fill="none" stroke="#1D4ED8" stroke-width="1.9" stroke-linecap="round"><path d="M56 60l8 8M64 60l-8 8"/><path d="M101 68l8 8M109 68l-8 8"/><path d="M146 68l8 8M154 68l-8 8"/><path d="M191 124l8 8M199 124l-8 8"/><path d="M236 148l8 8M244 148l-8 8"/><path d="M281 164l8 8M289 164l-8 8"/></g><g font-family="Helvetica, Arial, sans-serif" font-size="8.5" fill="#4B5563"><text x="40" y="246"><tspan fill="#C81E1E" font-weight="700">O</tspan> right</text><text x="82" y="246"><tspan fill="#1D4ED8" font-weight="700">X</tspan> left</text><text x="120" y="246">– – normal</text><text x="170" y="246">– – <tspan data-old>10/5/2024</tspan></text><text x="290" y="246" text-anchor="end">dB HL by Hz</text></g></svg>
+                          <p class="fc-cap" id="fc-cap-before">Audiogram <span data-old>10/5/2024</span> — last test</p>
+                          <p class="fc-cap" id="fc-cap-after" hidden>Audiogram <span data-d="0">10/28/2026</span> (previous test dashed)</p>
+                        </div>
+                        <div class="fc-txt">
+                          <p class="res-h">Diagnostics</p>
+                          <div id="fc-diag-before">
+                            <p>Last audiogram <span data-old>10/5/2024</span> · mild high-frequency sensorineural loss both ears · tympanometry Type A both ears.</p>
+                            <p>WRS R 92% · L 88% · SRT 20 / 20 dB HL.</p>
+                            <p>Today: audiological assessment, booked from Dr. Whitfield's referral. Reports hearing worse in noise since the last test; constant tinnitus both ears.</p>
+                          </div>
+                          <div id="fc-diag-after" hidden>
+                            <p>Audiogram <span data-d="0">10/28/2026</span> · 20–30 dB poorer than <span data-old>10/5/2024</span> at 2 kHz and above, sensorineural · tympanometry Type A both ears.</p>
+                            <p>DPOAE present through 1.5 kHz, absent 2–6 kHz · WRS R 76% · L 72% · SRT 30 / 30 dB HL.</p>
+                            <p id="fc-diag-due"><span class="d-due">Report due</span> — written the moment Noah handed the results back.</p>
+                            <p id="fc-diag-sent" hidden>Report signed and sent <span data-d="0">10/28/2026</span> · fax delivered, 4 pages.</p>
+                          </div>
                         </div>
                       </div>
-                      <p class="d-from">In from Noah <b>as soon as it was saved.</b></p>
                     </div>
                   </div>
-                </div>
 
                 <!-- Noah's main screen, redrawn in simple form. Every patient name in it is invented. -->
                 <div class="a-modal n-back" data-overlay="d-noah" hidden>
@@ -114,11 +123,11 @@
                         <div class="n-panels">
                           <div class="n-pan n-aud">
                             <p class="n-h">Latest Audiogram</p>
-                            <div class="n-in"><p class="n-when" id="n-when" style="visibility: hidden"><span data-d="0">10/8/2026</span> : Maestro</p><div class="n-plot" data-aud></div></div>
+                            <div class="n-in"><p class="n-when" id="n-when" style="visibility: hidden"><span data-d="0">10/8/2026</span> : Maestro</p><div class="n-plot"><svg class="aud" viewBox="0 0 300 250" role="img" aria-label="Today's audiogram in Noah, drawn over the last session, dashed."><rect x="40" y="24" width="250" height="208" fill="#fff"/><path d="M40 24H290M40 40H290M40 56H290M40 72H290M40 88H290M40 104H290M40 120H290M40 136H290M40 152H290M40 168H290M40 184H290M40 200H290M40 216H290M40 232H290M60 24V232M105 24V232M150 24V232M195 24V232M240 24V232M285 24V232" fill="none" stroke="#E5E7EB" stroke-width="0.8"/><path d="M217.5 24V232M262.5 24V232" fill="none" stroke="#D1D5DB" stroke-width="0.8" stroke-dasharray="3 3"/><path d="M40 40H290" stroke="#9CA3AF" stroke-width="1"/><rect x="40" y="24" width="250" height="208" fill="none" stroke="#9CA3AF" stroke-width="0.9"/><path d="M40 80H290" fill="none" stroke="#4B5563" stroke-width="1.1" stroke-dasharray="5 4"/><text x="287" y="77" font-family="Helvetica, Arial, sans-serif" font-size="8" fill="#4B5563" text-anchor="end">normal</text><g font-family="Helvetica, Arial, sans-serif" font-size="8.5" fill="#737373" text-anchor="middle"><text x="60" y="17">250</text><text x="105" y="17">500</text><text x="150" y="17">1k</text><text x="195" y="17">2k</text><text x="240" y="17">4k</text><text x="285" y="17">8k</text></g><g font-family="Helvetica, Arial, sans-serif" font-size="8.5" fill="#737373" text-anchor="end"><text x="35" y="43">0</text><text x="35" y="75">20</text><text x="35" y="107">40</text><text x="35" y="139">60</text><text x="35" y="171">80</text><text x="35" y="203">100</text><text x="35" y="235">120</text></g><polyline points="60,64 105,64 150,72 195,88 240,104 285,112" fill="none" stroke="#C81E1E" stroke-width="1.3" stroke-dasharray="4 3" opacity="0.6"/><polyline points="60,64 105,72 150,72 195,88 240,112 285,120" fill="none" stroke="#1D4ED8" stroke-width="1.3" stroke-dasharray="4 3" opacity="0.6"/><text x="287" y="132" font-family="Helvetica, Arial, sans-serif" font-size="7.5" fill="#6B7280" text-anchor="end" data-old>10/5/2024</text><polyline points="60,64 105,64 150,72 195,128 240,144 285,160" fill="none" stroke="#C81E1E" stroke-width="1.5" class="aud-line" pathLength="1"/><polyline points="60,64 105,72 150,72 195,128 240,152 285,168" fill="none" stroke="#1D4ED8" stroke-width="1.5" class="aud-line" pathLength="1"/><g fill="#fff" stroke="#C81E1E" stroke-width="1.8"><circle cx="60" cy="64" r="4.5" class="aud-mark" style="animation-delay: 0.45s"/><circle cx="105" cy="64" r="4.5" class="aud-mark" style="animation-delay: 0.62s"/><circle cx="150" cy="72" r="4.5" class="aud-mark" style="animation-delay: 0.79s"/><circle cx="195" cy="128" r="4.5" class="aud-mark" style="animation-delay: 0.96s"/><circle cx="240" cy="144" r="4.5" class="aud-mark" style="animation-delay: 1.13s"/><circle cx="285" cy="160" r="4.5" class="aud-mark" style="animation-delay: 1.30s"/></g><g fill="none" stroke="#1D4ED8" stroke-width="1.9" stroke-linecap="round"><path d="M56 60l8 8M64 60l-8 8" class="aud-mark" style="animation-delay: 0.45s"/><path d="M101 68l8 8M109 68l-8 8" class="aud-mark" style="animation-delay: 0.62s"/><path d="M146 68l8 8M154 68l-8 8" class="aud-mark" style="animation-delay: 0.79s"/><path d="M191 124l8 8M199 124l-8 8" class="aud-mark" style="animation-delay: 0.96s"/><path d="M236 148l8 8M244 148l-8 8" class="aud-mark" style="animation-delay: 1.13s"/><path d="M281 164l8 8M289 164l-8 8" class="aud-mark" style="animation-delay: 1.30s"/></g><g font-family="Helvetica, Arial, sans-serif" font-size="8.5" fill="#4B5563"><text x="40" y="246"><tspan fill="#C81E1E" font-weight="700">O</tspan> right</text><text x="82" y="246"><tspan fill="#1D4ED8" font-weight="700">X</tspan> left</text><text x="120" y="246">– – normal</text><text x="170" y="246">– – <tspan data-old>10/5/2024</tspan></text><text x="290" y="246" text-anchor="end">dB HL by Hz</text></g></svg></div></div>
                           </div>
                           <div class="n-side">
-                            <div class="n-pan"><p class="n-h">Sessions</p><div class="n-in n-sess"><b id="n-date" style="visibility: hidden"><span data-d="0">10/8/2026</span> :</b><i class="n-s" hidden>JA Pure tone audiometry, Speech audiometry</i><i class="n-s" hidden>JA Tympanometry</i><i class="n-s" hidden>JA Otoacoustic emissions</i><i class="n-s" hidden>JA Hearing instrument fitting</i><i class="n-s" hidden>JA Real ear measurement</i></div></div>
-                            <div class="n-pan"><p class="n-h">Devices</p><div class="n-in n-dev" aria-hidden="true"><span>Right ear:<i class="n-sn" hidden> RIC · SN 2411-0932</i></span><span>Left ear:<i class="n-sn" hidden> RIC · SN 2411-0931</i></span></div></div>
+                            <div class="n-pan"><p class="n-h">Sessions</p><div class="n-in n-sess"><b><span data-old>10/5/2024</span> :</b><i class="old">JA Pure tone audiometry, Speech audiometry</i><b id="n-date" style="visibility: hidden"><span data-d="0">10/28/2026</span> :</b><i class="n-s on" hidden>JA Pure tone audiometry, Speech audiometry <em>new</em></i></div></div>
+                            <div class="n-pan"><p class="n-h">Devices</p><div class="n-in n-dev" aria-hidden="true"><span>Right ear:</span><span>Left ear:</span></div></div>
                           </div>
                         </div>
                       </div>
@@ -126,141 +135,92 @@
                     <div class="n-ask" id="n-ask" hidden><b>Noah 4</b><p>Save new patient data?</p><div><button type="button" data-go="report-landed">Yes</button><span aria-hidden="true">No</span></div></div>
                   </div>
                 </div>
-              </div>
 
-              <!-- Report: the room, on the same computer. The report is already written; every section can be opened, and none has to be. -->
-              <div class="scr d" data-screen="r-room" hidden>
-                <div class="d-top">
-                  <span class="a-logo"><svg viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 12c2.5-4 5.5-4 8 0"/><path d="M2 8.5c4-6 10-6 14 0"/><circle cx="8" cy="15" r="1" fill="#fff"/></svg></span>
-                  <b>Coastal Hearing</b>
-                  <span class="d-nav" aria-hidden="true"><span>Today</span><span>Calendar</span><span>Patients</span><span>Billing</span></span>
-                  <span class="a-pill">Book now</span>
-                  <span class="a-burger"><i>2</i></span>
-                  <span class="a-me">JA</span>
-                </div>
-                <p class="d-crumb"><span><b>Roy Calloway</b> · <i>Chart</i> › <i><span data-d="0">10/7/2026</span> visit</i> › Report<span class="x-wide"> · Audiological Assessment</span></span><span> · → Dr. Whitfield (fax)</span></p>
-                <div class="r-body">
-                  <div class="a-tabs r-tabs">
-                    <button type="button" data-tab="hx" class="on">Hx</button>
-                    <button type="button" data-tab="results">Results</button>
-                    <button type="button" data-tab="interp">Interpretation</button>
-                    <button type="button" data-tab="recs">Recommendations</button>
-                    <button type="button" data-tab="summary">Summary</button>
-                  </div>
-                  <p class="r-optline"><button type="button" class="r-opt" id="r-opt">Optional: click any section for more detail</button></p>
-                  <div class="r-panes">
-                    <div class="a-box" data-pane="hx">
-                    <p>Onset was gradual. The patient reports a family history of hearing loss. The patient has never worn hearing aids.</p>
-                    <p>The patient reports constant ringing tinnitus in both ears, 2 years. The tinnitus is bothersome, rated 6 of 10, and affects sleep.</p>
-                    </div>
-                    <div class="a-box has-scroll" data-pane="results" hidden>
-                      <div class="a-scroll" id="res-scroll" tabindex="0" aria-label="Test results">
-                        <div class="res-blk">
-                          <p class="res-h">Audiogram <em>NOAH</em></p>
-                      <svg viewBox="0 0 222 197" class="res-audio" role="img" aria-label="Audiogram: mild to moderate sloping hearing loss in both ears"><path d="M52 13V182M78 13V182M104 13V182M130 13V182M156 13V182M182 13V182M26 39H208M26 52H208M26 65H208M26 78H208M26 91H208M26 104H208M26 117H208M26 130H208M26 143H208M26 156H208M26 169H208" fill="none" stroke="#DDDDDD" stroke-width="0.6"/><path d="M93.21 13V182M119.21 13V182M145.21 13V182M171.21 13V182" fill="none" stroke="#9E9E9E" stroke-width="0.33" stroke-dasharray="1.8 1.8" opacity="0.55"/><path d="M26 26H208" stroke="#8C8C8C" stroke-width="1.14"/><rect x="26" y="13" width="182" height="169" fill="none" stroke="#737373" stroke-width="0.84"/><g font-family="Helvetica, Arial, sans-serif" font-size="5.6" fill="#737373" text-anchor="middle"><text x="26" y="9.64">125</text><text x="52" y="9.64">250</text><text x="78" y="9.64">500</text><text x="104" y="9.64">1000</text><text x="130" y="9.64">2000</text><text x="156" y="9.64">4000</text><text x="182" y="9.64">8000</text><text x="208" y="9.64">16000</text></g><g font-family="Helvetica, Arial, sans-serif" font-size="5.6" fill="#737373" text-anchor="end"><text x="21.8" y="27.96">0</text><text x="21.8" y="53.96">20</text><text x="21.8" y="79.96">40</text><text x="21.8" y="105.96">60</text><text x="21.8" y="131.96">80</text><text x="21.8" y="157.96">100</text><text x="21.8" y="183.96">120</text></g><polyline points="52,52 78,65 104,71.5 130,84.5 145.21,91 156,97.5 171.21,97.5 182,91" fill="none" stroke="#C81E1E" stroke-width="1.05"/><polyline points="52,58.5 78,71.5 104,78 130,84.5 145.21,97.5 156,97.5 171.21,91 182,97.5" fill="none" stroke="#1D4ED8" stroke-width="1.05"/><g fill="#fff" stroke="#C81E1E" stroke-width="1.16"><circle cx="52" cy="52" r="3"/><circle cx="78" cy="65" r="3"/><circle cx="104" cy="71.5" r="3"/><circle cx="130" cy="84.5" r="3"/><circle cx="145.21" cy="91" r="3"/><circle cx="156" cy="97.5" r="3"/><circle cx="171.21" cy="97.5" r="3"/><circle cx="182" cy="91" r="3"/></g><g fill="none" stroke="#1D4ED8" stroke-width="1.21" stroke-linecap="round"><path d="M49.24 55.74l5.52 5.52M54.76 55.74l-5.52 5.52"/><path d="M75.24 68.74l5.52 5.52M80.76 68.74l-5.52 5.52"/><path d="M101.24 75.24l5.52 5.52M106.76 75.24l-5.52 5.52"/><path d="M127.24 81.74l5.52 5.52M132.76 81.74l-5.52 5.52"/><path d="M142.45 94.74l5.52 5.52M147.97 94.74l-5.52 5.52"/><path d="M153.24 94.74l5.52 5.52M158.76 94.74l-5.52 5.52"/><path d="M168.45 88.24l5.52 5.52M173.97 88.24l-5.52 5.52"/><path d="M179.24 94.74l5.52 5.52M184.76 94.74l-5.52 5.52"/></g><g fill="none" stroke="#C81E1E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M72.75 61.85l-3.6 3.15 3.6 3.15"/><path d="M98.75 68.35l-3.6 3.15 3.6 3.15"/><path d="M124.75 81.35l-3.6 3.15 3.6 3.15"/><path d="M150.75 94.35l-3.6 3.15 3.6 3.15"/></g><g font-family="Helvetica, Arial, sans-serif" font-size="5.8" fill="#4B5563"><text x="26" y="193.5"><tspan fill="#C81E1E">O</tspan> right</text><text x="62" y="193.5"><tspan fill="#1D4ED8">X</tspan> left</text><text x="92" y="193.5"><tspan fill="#C81E1E">&lt;</tspan> bone</text><text x="208" y="193.5" text-anchor="end">dB HL by Hz</text></g></svg>
-                          <p class="res-line">Mild to moderate sloping sensorineural hearing loss bilaterally. SRT 35 and 40 dB HL. Word recognition 88% and 92%.</p>
-                        </div>
-                        <div class="res-blk">
-                          <p class="res-h">Tympanometry <em>NOAH</em></p>
-                          <div class="res-pair">
-                            <figure>
-                          <svg viewBox="0 0 160 73" role="img" aria-label="Right tympanogram, type A"><rect x="50.6" y="25" width="44.8" height="24" fill="#EAFBF0" stroke="#9ED1AD" stroke-width="0.5"/><path d="M17 45H129M17 35H129M17 25H129M17 15H129M39.4 5V55M61.8 5V55M106.6 5V55" fill="none" stroke="#DDDDDD" stroke-width="0.5"/><path d="M84.2 5V55" stroke="#999999" stroke-width="0.9"/><rect x="17" y="5" width="112" height="50" fill="none" stroke="#737373" stroke-width="0.8"/><g font-family="Helvetica, Arial, sans-serif" font-size="5.4" fill="#737373" text-anchor="end"><text x="13.22" y="56.89">0.0</text><text x="13.22" y="46.89">0.5</text><text x="13.22" y="36.89">1.0</text><text x="13.22" y="26.89">1.5</text><text x="13.22" y="16.89">2.0</text><text x="13.22" y="6.89">2.5</text></g><g font-family="Helvetica, Arial, sans-serif" font-size="5.4" fill="#737373" text-anchor="middle"><text x="17" y="62.83">-300</text><text x="61.8" y="62.83">-100</text><text x="84.2" y="62.83">0</text><text x="129" y="62.83">+200</text></g><polyline points="17,55 19.24,55 21.48,55 23.72,55 25.96,55 28.2,55 30.44,55 32.68,55 34.92,55 37.16,55 39.4,55 41.64,54.99 43.88,54.98 46.12,54.95 48.36,54.9 50.6,54.8 52.84,54.63 55.08,54.19 57.32,53.68 59.56,53.01 61.8,52.14 64.04,51.01 66.28,49.6 68.52,47.93 70.76,46.06 73,44.15 75.24,42.41 77.48,41.03 79.72,40.23 81.96,40.2 84.2,41.18 86.44,43.09 88.68,45.53 90.92,48.07 93.16,50.36 95.4,51.87 97.64,53.16 99.88,53.96 102.12,54.36 104.36,54.45 106.6,54.58 108.84,54.64 111.08,54.67 113.32,54.67 115.56,54.68 117.8,54.68 120.04,54.68 122.28,54.68 124.52,54.68 126.76,54.68 129,54.68" fill="none" stroke="#C81E1E" stroke-width="1.15" stroke-linejoin="round"/><path d="M132 55H144" stroke="#737373" stroke-width="0.8"/><rect x="134" y="33" width="8" height="22" fill="#C81E1E"/><text x="138" y="31" font-family="Helvetica, Arial, sans-serif" font-size="5" fill="#C81E1E" text-anchor="middle">1.10</text><text x="17" y="69.85" font-family="Helvetica, Arial, sans-serif" font-size="5.2" fill="#6B7280">measured</text><text x="144" y="69.85" font-family="Helvetica, Arial, sans-serif" font-size="5" fill="#737373" text-anchor="end">Volume</text></svg>
-                              <figcaption class="r">Right · type A</figcaption>
-                            </figure>
-                            <figure>
-                          <svg viewBox="0 0 160 73" role="img" aria-label="Left tympanogram, type A"><rect x="50.6" y="25" width="44.8" height="24" fill="#EAFBF0" stroke="#9ED1AD" stroke-width="0.5"/><path d="M17 45H129M17 35H129M17 25H129M17 15H129M39.4 5V55M61.8 5V55M106.6 5V55" fill="none" stroke="#DDDDDD" stroke-width="0.5"/><path d="M84.2 5V55" stroke="#999999" stroke-width="0.9"/><rect x="17" y="5" width="112" height="50" fill="none" stroke="#737373" stroke-width="0.8"/><g font-family="Helvetica, Arial, sans-serif" font-size="5.4" fill="#737373" text-anchor="end"><text x="13.22" y="56.89">0.0</text><text x="13.22" y="46.89">0.5</text><text x="13.22" y="36.89">1.0</text><text x="13.22" y="26.89">1.5</text><text x="13.22" y="16.89">2.0</text><text x="13.22" y="6.89">2.5</text></g><g font-family="Helvetica, Arial, sans-serif" font-size="5.4" fill="#737373" text-anchor="middle"><text x="17" y="62.83">-300</text><text x="61.8" y="62.83">-100</text><text x="84.2" y="62.83">0</text><text x="129" y="62.83">+200</text></g><polyline points="17,55 19.24,55 21.48,55 23.72,55 25.96,55 28.2,55 30.44,55 32.68,55 34.92,55 37.16,55 39.4,54.99 41.64,54.98 43.88,54.96 46.12,54.93 48.36,54.87 50.6,54.77 52.84,54.6 55.08,54.12 57.32,53.82 59.56,53.38 61.8,52.74 64.04,51.84 66.28,50.66 68.52,49.21 70.76,47.55 73,45.82 75.24,44.16 77.48,42.74 79.72,41.74 81.96,41.4 84.2,41.4 86.44,42.31 88.68,43.92 90.92,45.91 93.16,47.99 95.4,49.89 97.64,51.14 99.88,52.31 102.12,53.12 104.36,53.65 106.6,54 108.84,54.46 111.08,54.57 113.32,54.63 115.56,54.66 117.8,54.67 120.04,54.68 122.28,54.68 124.52,54.68 126.76,54.68 129,54.68" fill="none" stroke="#1D4ED8" stroke-width="1.15" stroke-linejoin="round"/><path d="M132 55H144" stroke="#737373" stroke-width="0.8"/><rect x="134" y="31" width="8" height="24" fill="#1D4ED8"/><text x="138" y="29" font-family="Helvetica, Arial, sans-serif" font-size="5" fill="#1D4ED8" text-anchor="middle">1.20</text><text x="17" y="69.85" font-family="Helvetica, Arial, sans-serif" font-size="5.2" fill="#6B7280">measured</text><text x="144" y="69.85" font-family="Helvetica, Arial, sans-serif" font-size="5" fill="#737373" text-anchor="end">Volume</text></svg>
-                              <figcaption class="l">Left · type A</figcaption>
-                            </figure>
+                  <!-- Report, the preview screen (click 1): the report's page one as the app shows it, the
+                       sources rail and the verbs. Sign & send is click 2. -->
+                  <div class="fc-prev" data-overlay="r-preview" hidden aria-label="The report preview">
+              <div class="d-top">
+                <span class="a-logo"><svg viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 12c2.5-4 5.5-4 8 0"/><path d="M2 8.5c4-6 10-6 14 0"/><circle cx="8" cy="15" r="1" fill="#fff"/></svg></span>
+                <b>Coastal Hearing</b>
+                <span class="d-nav" aria-hidden="true"><span>Today</span><span>Calendar</span><span>Patients</span><span>Billing</span></span>
+                <span class="a-pill">Book now</span>
+                <span class="a-burger"><i>2</i></span>
+                <span class="a-me">JA</span>
+              </div>
+                    <p class="fc-signed" id="fc-signed" hidden><b>✓ Signed <span data-d="0">10/28/2026</span></b> · Dr. Jordan Avery, Au.D. · Faxed to Dr. Whitfield · 4 pages · delivered</p>
+                    <div class="pv-body">
+                      <div class="pv-scroll" id="pv-scroll" tabindex="0" aria-label="The report, page one">
+                        <div class="pv-paper sh">
+                          <div class="sh-head"><span class="sh-brand">Coastal Hearing Associates</span><span class="sh-tag">Seabrook · Marshview · Cedar Point</span></div>
+                          <div class="sh-title">Audiological Assessment</div>
+                          <div class="sh-pt">
+                            <div><small>Patient</small><b>Roy Calloway</b></div>
+                            <div><small>DOB</small>3/14/1952</div>
+                            <div><small>Date of service</small><span data-d="0">10/28/2026</span></div>
+                            <div><small>Location</small>Coastal Hearing Seabrook</div>
+                            <div><small>Referral</small>Dr. Whitfield</div>
+                            <div><small>Provider</small>Jordan Avery, Au.D.</div>
                           </div>
-                          <p class="res-line">Normal type 'A' tympanograms bilaterally with 1.1 and 1.2 mL ECV.</p>
-                        </div>
-                        <div class="res-blk">
-                          <p class="res-h">DPOAE · 12 frequencies <em>NOAH</em></p>
-                          <div class="res-pair">
-                            <figure>
-                          <svg viewBox="0 0 160 67" role="img" aria-label="Right ear DP-gram: emissions present at 500 and 1000 hertz only"><path d="M17 48.75H153M17 42.5H153M17 36.25H153M17 23.75H153M17 17.5H153M17 11.25H153M17 5H153" fill="none" stroke="#DDDDDD" stroke-width="0.4"/><path d="M17 30H153" stroke="#737373" stroke-width="0.7"/><path d="M17 5V55H153" fill="none" stroke="#737373" stroke-width="0.8"/><g font-family="Helvetica, Arial, sans-serif" font-size="5.4" fill="#737373" text-anchor="end"><text x="13.4" y="56.9">-40</text><text x="13.4" y="44.4">-20</text><text x="13.4" y="31.9">0</text><text x="13.4" y="19.4">20</text><text x="13.4" y="6.9">40</text></g><g font-family="Helvetica, Arial, sans-serif" font-size="5.4" fill="#737373" text-anchor="middle"><text x="17" y="62.8">500</text><text x="48.47" y="62.8">1k</text><text x="79.93" y="62.8">2k</text><text x="111.4" y="62.8">4k</text><text x="153" y="62.8">10k</text></g><polyline points="17,26.12 48.47,24.75 66.87,32.56 79.93,35.81 98.34,38 111.4,39.5 121.53,40.25 129.81,40.69 136.81,40.19 142.87,41.38 148.22,41.88 153,42.69" fill="none" stroke="#C81E1E" stroke-width="1"/><circle cx="17" cy="26.12" r="2.1" fill="#C81E1E" stroke="#C81E1E" stroke-width="0.95"/><path d="M14.96 19.39L16.49 20.93L19.38 17.19" fill="none" stroke="#15803D" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="48.47" cy="24.75" r="2.1" fill="#C81E1E" stroke="#C81E1E" stroke-width="0.95"/><path d="M46.43 18.02L47.96 19.55L50.85 15.81" fill="none" stroke="#15803D" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="66.87" cy="32.56" r="2.1" fill="#fff" stroke="#C81E1E" stroke-width="0.95"/><circle cx="79.93" cy="35.81" r="2.1" fill="#fff" stroke="#C81E1E" stroke-width="0.95"/><circle cx="98.34" cy="38" r="2.1" fill="#fff" stroke="#C81E1E" stroke-width="0.95"/><circle cx="111.4" cy="39.5" r="2.1" fill="#fff" stroke="#C81E1E" stroke-width="0.95"/><circle cx="121.53" cy="40.25" r="2.1" fill="#fff" stroke="#C81E1E" stroke-width="0.95"/><circle cx="129.81" cy="40.69" r="2.1" fill="#fff" stroke="#C81E1E" stroke-width="0.95"/><circle cx="136.81" cy="40.19" r="2.1" fill="#fff" stroke="#C81E1E" stroke-width="0.95"/><circle cx="142.87" cy="41.38" r="2.1" fill="#fff" stroke="#C81E1E" stroke-width="0.95"/><circle cx="148.22" cy="41.88" r="2.1" fill="#fff" stroke="#C81E1E" stroke-width="0.95"/><circle cx="153" cy="42.69" r="2.1" fill="#fff" stroke="#C81E1E" stroke-width="0.95"/></svg>
-                              <figcaption class="r">Right · dB SPL</figcaption>
-                            </figure>
-                            <figure>
-                          <svg viewBox="0 0 160 67" role="img" aria-label="Left ear DP-gram: emissions present at 500 and 1000 hertz only"><path d="M17 48.75H153M17 42.5H153M17 36.25H153M17 23.75H153M17 17.5H153M17 11.25H153M17 5H153" fill="none" stroke="#DDDDDD" stroke-width="0.4"/><path d="M17 30H153" stroke="#737373" stroke-width="0.7"/><path d="M17 5V55H153" fill="none" stroke="#737373" stroke-width="0.8"/><g font-family="Helvetica, Arial, sans-serif" font-size="5.4" fill="#737373" text-anchor="end"><text x="13.4" y="56.9">-40</text><text x="13.4" y="44.4">-20</text><text x="13.4" y="31.9">0</text><text x="13.4" y="19.4">20</text><text x="13.4" y="6.9">40</text></g><g font-family="Helvetica, Arial, sans-serif" font-size="5.4" fill="#737373" text-anchor="middle"><text x="17" y="62.8">500</text><text x="48.47" y="62.8">1k</text><text x="79.93" y="62.8">2k</text><text x="111.4" y="62.8">4k</text><text x="153" y="62.8">10k</text></g><polyline points="17,26.81 48.47,26.06 66.87,33.88 79.93,36.31 98.34,38.75 111.4,40.12 121.53,40.56 129.81,41.31 136.81,41 142.87,42 148.22,41.81 153,42.56" fill="none" stroke="#1D4ED8" stroke-width="1"/><circle cx="17" cy="26.81" r="2.1" fill="#1D4ED8" stroke="#1D4ED8" stroke-width="0.95"/><path d="M14.96 20.08L16.49 21.61L19.38 17.87" fill="none" stroke="#15803D" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="48.47" cy="26.06" r="2.1" fill="#1D4ED8" stroke="#1D4ED8" stroke-width="0.95"/><path d="M46.43 19.33L47.96 20.86L50.85 17.12" fill="none" stroke="#15803D" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="66.87" cy="33.88" r="2.1" fill="#fff" stroke="#1D4ED8" stroke-width="0.95"/><circle cx="79.93" cy="36.31" r="2.1" fill="#fff" stroke="#1D4ED8" stroke-width="0.95"/><circle cx="98.34" cy="38.75" r="2.1" fill="#fff" stroke="#1D4ED8" stroke-width="0.95"/><circle cx="111.4" cy="40.12" r="2.1" fill="#fff" stroke="#1D4ED8" stroke-width="0.95"/><circle cx="121.53" cy="40.56" r="2.1" fill="#fff" stroke="#1D4ED8" stroke-width="0.95"/><circle cx="129.81" cy="41.31" r="2.1" fill="#fff" stroke="#1D4ED8" stroke-width="0.95"/><circle cx="136.81" cy="41" r="2.1" fill="#fff" stroke="#1D4ED8" stroke-width="0.95"/><circle cx="142.87" cy="42" r="2.1" fill="#fff" stroke="#1D4ED8" stroke-width="0.95"/><circle cx="148.22" cy="41.81" r="2.1" fill="#fff" stroke="#1D4ED8" stroke-width="0.95"/><circle cx="153" cy="42.56" r="2.1" fill="#fff" stroke="#1D4ED8" stroke-width="0.95"/></svg>
-                              <figcaption class="l">Left · dB SPL</figcaption>
-                            </figure>
+                          <div class="sh-sum">
+                            <small>Summary</small>
+                            <b>The patient presents with known bilateral sensorineural hearing loss, last tested <span data-old>10/5/2024</span>, worse since, most in noise, and constant bilateral tinnitus.</b>
+                            <b>Results revealed a progression of the bilateral sensorineural hearing loss, 20–30 dB poorer at 2 kHz and above; cochlear in origin, nothing surgical.</b>
                           </div>
-                      <p class="res-line">Right ear: present in the low frequencies, absent in the mid and high frequency bands. Left ear: present in the low frequencies, absent in the mid and high frequency bands.</p>
-                        </div>
-                        <div class="res-blk txt">
-                          <p class="res-h">Tinnitus</p>
-                      <p class="res-line">Tinnitus matched to a 6 kHz tone at 8 dB SL. Tinnitus was maskable at 12 dB SL and positive for partial residual inhibition.</p>
-                        </div>
-                        <div class="res-blk txt">
-                          <p class="res-h">Otoscopy</p>
-                          <p class="res-line">Unremarkable bilaterally.</p>
+                          <div class="sh-res pv-res">
+                            <div><svg class="fc-plot" viewBox="0 0 300 250" role="img" aria-label="The audiogram on the report: today's thresholds over the last test, dashed."><rect x="40" y="24" width="250" height="208" fill="#fff"/><path d="M40 24H290M40 40H290M40 56H290M40 72H290M40 88H290M40 104H290M40 120H290M40 136H290M40 152H290M40 168H290M40 184H290M40 200H290M40 216H290M40 232H290M60 24V232M105 24V232M150 24V232M195 24V232M240 24V232M285 24V232" fill="none" stroke="#E5E7EB" stroke-width="0.8"/><path d="M217.5 24V232M262.5 24V232" fill="none" stroke="#D1D5DB" stroke-width="0.8" stroke-dasharray="3 3"/><path d="M40 40H290" stroke="#9CA3AF" stroke-width="1"/><rect x="40" y="24" width="250" height="208" fill="none" stroke="#9CA3AF" stroke-width="0.9"/><path d="M40 80H290" fill="none" stroke="#4B5563" stroke-width="1.1" stroke-dasharray="5 4"/><text x="287" y="77" font-family="Helvetica, Arial, sans-serif" font-size="8" fill="#4B5563" text-anchor="end">normal</text><g font-family="Helvetica, Arial, sans-serif" font-size="8.5" fill="#737373" text-anchor="middle"><text x="60" y="17">250</text><text x="105" y="17">500</text><text x="150" y="17">1k</text><text x="195" y="17">2k</text><text x="240" y="17">4k</text><text x="285" y="17">8k</text></g><g font-family="Helvetica, Arial, sans-serif" font-size="8.5" fill="#737373" text-anchor="end"><text x="35" y="43">0</text><text x="35" y="75">20</text><text x="35" y="107">40</text><text x="35" y="139">60</text><text x="35" y="171">80</text><text x="35" y="203">100</text><text x="35" y="235">120</text></g><polyline points="60,64 105,64 150,72 195,88 240,104 285,112" fill="none" stroke="#C81E1E" stroke-width="1.3" stroke-dasharray="4 3" opacity="0.6"/><polyline points="60,64 105,72 150,72 195,88 240,112 285,120" fill="none" stroke="#1D4ED8" stroke-width="1.3" stroke-dasharray="4 3" opacity="0.6"/><text x="287" y="132" font-family="Helvetica, Arial, sans-serif" font-size="7.5" fill="#6B7280" text-anchor="end" data-old>10/5/2024</text><polyline points="60,64 105,64 150,72 195,128 240,144 285,160" fill="none" stroke="#C81E1E" stroke-width="1.5"/><polyline points="60,64 105,72 150,72 195,128 240,152 285,168" fill="none" stroke="#1D4ED8" stroke-width="1.5"/><g fill="#fff" stroke="#C81E1E" stroke-width="1.8"><circle cx="60" cy="64" r="4.5"/><circle cx="105" cy="64" r="4.5"/><circle cx="150" cy="72" r="4.5"/><circle cx="195" cy="128" r="4.5"/><circle cx="240" cy="144" r="4.5"/><circle cx="285" cy="160" r="4.5"/></g><g fill="none" stroke="#1D4ED8" stroke-width="1.9" stroke-linecap="round"><path d="M56 60l8 8M64 60l-8 8"/><path d="M101 68l8 8M109 68l-8 8"/><path d="M146 68l8 8M154 68l-8 8"/><path d="M191 124l8 8M199 124l-8 8"/><path d="M236 148l8 8M244 148l-8 8"/><path d="M281 164l8 8M289 164l-8 8"/></g><g font-family="Helvetica, Arial, sans-serif" font-size="8.5" fill="#4B5563"><text x="40" y="246"><tspan fill="#C81E1E" font-weight="700">O</tspan> right</text><text x="82" y="246"><tspan fill="#1D4ED8" font-weight="700">X</tspan> left</text><text x="120" y="246">– – normal</text><text x="170" y="246">– – <tspan data-old>10/5/2024</tspan></text><text x="290" y="246" text-anchor="end">dB HL by Hz</text></g></svg><p class="sh-note">Air conduction = bone conduction both ears · no air-bone gap · the last test, <span data-old>10/5/2024</span>, dashed</p></div>
+                            <dl class="sh-kv pv-kv">
+                              <dt>SRT</dt><dd>30 / 30 dB HL <span class="pv-was">(was 20 / 20)</span></dd>
+                              <dt>WRS</dt><dd>R 76% · L 72% <span class="pv-was">(was 92% / 88%)</span></dd>
+                              <dt>Tympanometry</dt><dd>Type A both ears · reflexes present</dd>
+                              <dt>DPOAE</dt><dd>present 1000–1500 Hz · absent 2000–6000 Hz</dd>
+                            </dl>
+                          </div>
+                          <h4>History</h4>
+                          <p>Known bilateral sensorineural hearing loss, last tested here on <span data-old>10/5/2024</span>. The patient reports hearing worse since, most in noise. Constant bilateral tinnitus.</p>
+                          <h4>Tests performed and results</h4>
+                          <dl class="sh-rows">
+                            <div><dt>Audiometry</dt><dd>thresholds 20–30 dB poorer than <span data-old>10/5/2024</span> at 2 kHz and above; 250–1000 Hz unchanged. No air-bone gap in either ear.</dd></div>
+                            <div class="full">Speech reception thresholds were 30 and 30 dB HL in the right and left ears (20 and 20 on <span data-old>10/5/2024</span>). Word recognition was 76% and 72% in the right and left ears (92% and 88%).</div>
+                            <div class="full">Type A tympanograms bilaterally; acoustic reflexes present.</div>
+                            <div class="full">Distortion Product OtoAcoustic Emissions (DPOAE):
+                              <table class="sh-tbl pv-tbl"><thead><tr><th>Hz</th><th>Right</th><th>Left</th></tr></thead><tbody>
+                                <tr><td>1000</td><td>☑ present</td><td>☑ present</td></tr>
+                                <tr><td>1500</td><td>☑ present</td><td>☑ present</td></tr>
+                                <tr><td>2000</td><td>☐ absent</td><td>☐ absent</td></tr>
+                                <tr><td>3000</td><td>☐ absent</td><td>☐ absent</td></tr>
+                                <tr><td>4000</td><td>☐ absent</td><td>☐ absent</td></tr>
+                                <tr><td>6000</td><td>☐ absent</td><td>☐ absent</td></tr>
+                              </tbody></table>
+                              Consistent with the audiogram.</div>
+                          </dl>
+                          <p class="sh-int"><b>Interpretation:</b> Progression of the bilateral sensorineural hearing loss since <span data-old>10/5/2024</span>, 20–30 dB poorer at 2 kHz and above, with reduced word recognition and bilateral tinnitus. Findings are cochlear in origin; nothing today suggests a medical or surgical condition.</p>
+                          <h4>Recommendations</h4>
+                          <ol>
+                            <li>1. Hearing aid evaluation and new amplification, both ears.</li>
+                            <li>2. Tinnitus counseling.</li>
+                            <li>3. No medical or surgical referral indicated; re-evaluation sooner for any sudden or asymmetric change.</li>
+                          </ol>
+                          <div class="sh-sig">
+                            <div>
+                              <svg id="pv-sig" hidden viewBox="0 0 130 32" fill="none" stroke="#2B3950" stroke-width="1.300" stroke-linecap="round" aria-hidden="true"><path d="M4 22c4-14 9-18 10-9 1 9-6 14-8 9s10-16 15-11-3 14 1 13 6-12 10-11 0 9 4 8 5-8 9-7 1 7 5 6 8-10 14-9-4 10 2 9 12-6 20-8 16-3 30-2"/></svg>
+                              <b>Jordan Avery, Au.D.</b>
+                              Doctor of Audiology · Electronically signed <span data-d="0">10/28/2026</span>
+                            </div>
+                            <div class="sh-foot">912-555-0100 · Page 1 of 4</div>
+                          </div>
                         </div>
                       </div>
-                      <span class="a-rail" aria-hidden="true"><i id="res-thumb"></i></span>
-                    </div>
-                    <div class="a-box" data-pane="interp" hidden>
-                    <p>Results revealed a symmetrical sensorineural hearing loss, mild to moderate in the right ear and mild to moderate in the left ear. Tinnitus is likely related to the hearing loss. Test reliability was good.</p>
-                    </div>
-                    <div class="a-box" data-pane="recs" hidden>
-                    <p>1. Trial with amplification to improve speech understanding, reduce listening effort and cognitive load, reduce tinnitus perception, and possibly reduce the risk of cognitive decline.</p>
-                    <p>2. Tinnitus maskers and coping strategies discussed.</p>
-                    <p>3. Re-evaluation in 12 months.</p>
-                    </div>
-                    <div class="a-box" data-pane="summary" hidden>
-                    <p><b>The patient presents with a 2-year history of hearing difficulty, particularly in noise, and tinnitus.</b></p>
-                    <p><b>Results revealed a mild to moderate sensorineural hearing loss bilaterally; tinnitus is likely related to the hearing loss.</b></p>
-                    </div>
-                  </div>
-                  <div class="r-side">
-                    <div class="r-chair"><b>Chairside</b><span>Sent to report 10:42 AM</span></div>
-                    <p class="a-tip" id="tip" role="status"></p>
-                  </div>
-                </div>
-                <div class="r-dock">
-                  <p><span>Procedures</span><i class="a-code">92557</i><i class="a-code">92567</i><i class="a-code">92588</i><i class="a-code">92625</i><b>Draft</b></p>
-                  <button type="button" class="a-sign" data-go="report-preview">Preview report</button>
-                </div>
-
-                <!-- Report: the composed pages, before signing -->
-                <div class="a-modal r-prev" data-overlay="r-preview" hidden>
-                  <div class="a-modal-in">
-                    <div class="a-pdf" id="pdf-scroll" tabindex="0" aria-label="The finished report, every page"><div class="a-pages" id="pdf-slot"></div></div>
-                    <div class="a-bar">
-                      <span class="note">add note</span>
-                      <button type="button" class="back" data-go="report">← Back to edit</button>
-                      <button type="button" class="commit" data-go="report-sent" id="commit">Sign &amp; send</button>
+                      <div class="pv-rail">
+                        <div class="pv-card pv-src"><b>Sources</b><ul><li><span>Audiogram</span> · the chart · <span data-d="0">10/28/2026</span></li><li><span>Tympanometry</span> · the chart · <span data-d="0">10/28/2026</span></li><li><span>OAE</span> · the chart · <span data-d="0">10/28/2026</span></li></ul></div>
+                        <div class="pv-card pv-verbs" id="pv-verbs">
+                          <button type="button" class="a-sign pv-sign" id="fc-sign" data-go="report-sent">Sign &amp; send</button>
+                          <span class="pv-note">add note</span>
+                          <div class="pv-row"><button type="button" class="pv-btn pv-edit">Edit</button><button type="button" class="pv-btn" id="fc-close" data-go="report-done">Close</button></div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-
-              <!-- Report: signed and sent -->
-              <div class="scr d" data-screen="r-done" hidden>
-                <div class="d-top">
-                  <span class="a-logo"><svg viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 12c2.5-4 5.5-4 8 0"/><path d="M2 8.5c4-6 10-6 14 0"/><circle cx="8" cy="15" r="1" fill="#fff"/></svg></span>
-                  <b>Coastal Hearing</b>
-                  <span class="d-nav" aria-hidden="true"><span>Today</span><span>Calendar</span><span>Patients</span><span>Billing</span></span>
-                  <span class="a-pill">Book now</span>
-                  <span class="a-burger"><i>1</i></span>
-                  <span class="a-me">JA</span>
-                </div>
-                <div class="r-list">
-                  <p class="a-h1">Reports</p>
-                  <div class="a-seg"><span>Owed <small>2</small></span><span class="on">Done <small>2</small></span></div>
-                  <div class="a-list">
-                    <div class="a-row">
-                      <div><b>Roy Calloway</b><span data-d="0">10/7/2026</span> · Audiological Assessment<small>→ Dr. Whitfield · signed <span data-md="0">10/7</span> · <span id="deliv">sending</span></small></div>
-                      <i class="a-chip">Send to…</i>
-                    </div>
-                    <div class="a-row">
-                      <div><b>Marcus Webb</b><span data-d="-21">9/16/2026</span> · Audiological Assessment<small>in-house · signed <span data-md="-21">9/16</span> · delivered</small></div>
-                      <i class="a-chip">Send to…</i>
-                    </div>
-                  </div>
-                  <p class="a-tip flow" id="tip-done" role="status" hidden><b>2 clicks.</b> Faxed to Dr. Whitfield, the referring physician. Fax confirmed, 4 pages.</p>
-                </div>
-              </div>
 
               <!-- Check-in: the lobby tablet -->
               <div class="scr k" data-screen="k-grid" hidden>
@@ -343,6 +303,9 @@
                 <p class="f-total" id="f-total" hidden><b>Fax to booked visit: 1 hour 12 minutes.</b> No one at the desk touched it.</p>
               </div>
 
+                <!-- HERO-2's hand: the page's script aims it at the next thing to click in the report scene -->
+                <svg class="fc-hand" id="fc-hand" viewBox="0 0 24 28" aria-hidden="true" hidden><path d="M8.5 2.2a1.9 1.9 0 0 1 3.8 0V12.2h1.2V10.4a1.8 1.8 0 0 1 3.6 0V12.6h1.2V11.6a1.8 1.8 0 0 1 3.6 0V19.5a7 7 0 0 1-7 7H12.5a6.8 6.8 0 0 1-5.6-2.9L2.2 17.1a2 2 0 0 1 3-2.3L8.5 17.8Z" fill="#fff" stroke="#111827" stroke-width="1.4" stroke-linejoin="round"/></svg>
+
             </div>
           </div>
         </div>
@@ -351,25 +314,24 @@
         </div>
 
         <div class="demo-side">
+        <!-- The fly-in rail (PROF-PAGES-1): the fold's five cards for the report scene land here, right under
+             the device, one per step, the earlier ones folded to their bold line; the other scenes show their hint
+             here instead. -->
+        <aside class="fold-rail" id="fold-rail" aria-live="polite">
+          <div class="fly-stack" id="fly-stack">
+            <div class="fly now" id="fly-hint" hidden><p class="fly-b" id="demo-hint"></p></div>
+          </div>
+          <div class="fly-foot">
+            <p class="fly-count" id="fly-count">Clicks in the app <b id="fly-clicks">0</b> of 2</p>
+            <button type="button" class="go" id="demo-next" hidden></button>
+            <button type="button" class="again" id="demo-again">Start over</button>
+          </div>
+        </aside>
         <div class="scene-chips" role="group" aria-label="Pick something to try">
-          <button type="button" data-scene="noah" aria-pressed="true">Noah connection</button>
-          <button type="button" data-scene="report" aria-pressed="false">Reports in 2 Clicks</button>
+          <button type="button" data-scene="report" aria-pressed="true">Reports in 2 Clicks</button>
           <button type="button" data-scene="counsel" aria-pressed="false">Counseling tools</button>
           <button type="button" data-scene="checkin" aria-pressed="false">Lobby kiosk check-in</button>
           <button type="button" data-scene="referral" aria-pressed="false">Automate referrals</button>
-        </div>
-        <div class="demo-guide" id="demo-guide">
-          <p class="demo-claim" id="demo-claim">Out of Noah, a finished audiology report is <b>two clicks</b> away.</p>
-          <ol class="demo-steps" id="demo-steps" aria-hidden="true">
-            <li class="pre" data-step="noah">From Noah</li>
-            <li data-step="due"><b>1</b>Report due</li>
-            <li data-step="send"><b>2</b>Sign &amp; send</li>
-          </ol>
-          <div class="demo-hints" id="demo-hints"><p class="demo-hint" id="demo-hint" aria-live="polite"><b>Try it yourself.</b> This is a patient's chart on your computer. Click <b>Open in Noah</b>.</p></div>
-          <div class="demo-actions">
-            <button type="button" class="go" id="demo-next" hidden></button>
-            <button type="button" class="again" id="demo-again" hidden>Start over</button>
-          </div>
         </div>
         </div>
 
@@ -738,89 +700,82 @@
 </footer>
 
 <script>
-  // This page's own scenes for the preview in the device: the states of the click-through,
-  // the words under the device, the report's page names and where the preview starts.
-  // site.js, shared by every page, runs them.
+  // This page's own scenes for the click-through in the device. The report scene is the fold's
+  // (PROF-PAGES-1): the two-click report of SITE-CLICK-2, its fly-in rail under the device and the
+  // hand that comes to the next thing to click; the other scenes as they played before. site.js,
+  // shared by every page, runs them: it shows the screens, places the marks and calls back here.
   window.PREVIEW_PAGE = function (c) {
-    var $ = c.$, all = c.all, phone = c.phone, later = c.later, still = c.still, timers = c.timers, pdf = c.pdf, dDue = c.dDue, tipDone = c.tipDone;
-    var resetDesk = c.resetDesk, landOnChart = c.landOnChart, drawInNoah = c.drawInNoah, selectTab = c.selectTab, allStepsDone = c.allStepsDone, clearSig = c.clearSig, playReferral = c.playReferral, hotTo = c.hotTo;
+    var $ = c.$, all = c.all, app = c.app, later = c.later, still = c.still;
+    var drawInNoah = c.drawInNoah, resetDesk = c.resetDesk, clearSig = c.clearSig, playReferral = c.playReferral, hotTo = c.hotTo;
 
-    function showMore(on) { var m = $("d-more"); if (m) m.hidden = !on; var card = phone.querySelector(".d-card"); if (card) card.classList.toggle("tight", !!on); all(phone, ".n-sn").forEach(function (x) { x.hidden = !on; }); }
+    // ── The chart: the last test on it, then today's over it, then the report ──
+    var plotB = $("fc-plot-before"), plotA = $("fc-plot-after"), capB = $("fc-cap-before"), capA = $("fc-cap-after");
+    var diagB = $("fc-diag-before"), diagA = $("fc-diag-after"), diagDue = $("fc-diag-due"), diagSent = $("fc-diag-sent");
+    var due = $("fc-due"), chip = $("fc-chip"), res = $("fc-res");
+    var signedLine = $("fc-signed"), signBtn = $("fc-sign"), verbs = $("pv-verbs"), scroll = $("pv-scroll"), sig = $("pv-sig");
+    function pop(el, cls) { el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); }
+    // an SVG has no hidden property: the attribute does the hiding
+    function hide(el, on) { if (on) el.setAttribute("hidden", ""); else el.removeAttribute("hidden"); }
+    function chartBefore() {
+      resetDesk();
+      hide(plotB, false); hide(plotA, true); capB.hidden = false; capA.hidden = true;
+      diagB.hidden = false; diagA.hidden = true; diagDue.hidden = false; diagSent.hidden = true;
+      due.hidden = true;
+      chip.textContent = "Audiological assessment today"; chip.className = "fc-chip";
+    }
+    // Out of Noah: today's audiogram draws over the last one, the Diagnostics read today, and the amber Report due band appears.
+    function chartAfter() {
+      var was = plotA.hasAttribute("hidden");
+      hide(plotB, true); hide(plotA, false); capB.hidden = true; capA.hidden = false;
+      diagB.hidden = true; diagA.hidden = false;
+      due.hidden = false;
+      if (was && !still) { pop(res, "in"); pop(due, "in"); }
+    }
+    function previewOpen() {
+      signedLine.hidden = true; verbs.classList.remove("signed"); hide(sig, true);
+      signBtn.textContent = "Sign & send";
+      if (scroll) scroll.scrollTop = 0;
+    }
+    function previewSigned() {
+      signedLine.hidden = false; verbs.classList.add("signed"); hide(sig, false);
+      chip.textContent = "Report sent · faxed to Dr. Whitfield"; chip.className = "fc-chip sent";
+      due.hidden = true; diagDue.hidden = true; diagSent.hidden = false;
+    }
+
     var STATES = {
       "report-desk": {
-        scene: "report", device: "desk", screen: "d-chart", step: "due", n: 1,
-        hint: "<b>Try it yourself.</b> The chart, with today's audiogram, tymps, OAEs, real-ear measures and the fitting already in from Noah. Click <b>Report due</b>.",
-        target: "#d-due", flag: ["Click here", "bottom", "start"],
-        enter: function () { resetDesk(); c.noahDrawn(true); landOnChart(); showMore(true); }
-      },
-      "noah": {
-        scene: "noah", device: "desk", screen: "d-chart",
-        hint: "<b>Try it yourself.</b> This is a patient's chart on your computer. Click <b>Open in Noah</b>.",
-        target: "[data-go='noah-in']", flag: ["Click here", "top", "end", "right", "center"],
-        enter: function () { resetDesk(); var b = phone.querySelector(".d-noah"); if (b) b.setAttribute("data-go", "noah-in"); }
-      },
-      "noah-in": {
-        scene: "noah", device: "desk", screen: "d-chart", overlay: "d-noah",
-        hint: "Noah opens on that patient. You test, fit and run real-ear measures in Noah, the way you always have. Then close Noah with the <b>✕</b>.",
-        target: "[data-go='noah-save']", flag: ["Click here next", "left", "center"], wait: 2500,
-        enter: function () { var x = phone.querySelector(".n-x"); if (x) x.setAttribute("data-go", "noah-save"); drawInNoah(); }
-      },
-      "noah-save": {
-        scene: "noah", device: "desk", screen: "d-chart", overlay: "d-noah", ask: true,
-        hint: "Noah asks to save the new patient data. Click <b>Yes</b>.",
-        target: "[data-go='noah-landed']", flag: ["Click here next", "left", "center"],
-        enter: function () { var y = phone.querySelector("#n-ask button"); if (y) y.setAttribute("data-go", "noah-landed"); c.noahDrawn(true); drawInNoah(); }
-      },
-      "noah-landed": {
-        scene: "noah", device: "desk", screen: "d-chart",
-        hint: "<b>You are out of Noah.</b> The audiogram, tympanometry, OAEs, the real-ear measurement and the hearing aid fitting are all on the chart, each with its history. Nothing was typed.",
-        next: ["Next: reports in 2 clicks", "report-desk"],
-        enter: function () { landOnChart(); showMore(true); if (dDue) dDue.hidden = true; }
+        scene: "report", device: "desk", screen: "d-chart", fly: 1,
+        target: "[data-go='report-noah']", flag: ["Click here", "right", "center", "bottom", "end"],
+        enter: chartBefore
       },
       "report-noah": {
-        scene: "report", device: "desk", screen: "d-chart", overlay: "d-noah", step: "noah",
-        hint: "Noah opens on that patient. You test and save in Noah, the way you always have. Then close Noah with the <b>✕</b>.",
+        scene: "report", device: "desk", screen: "d-chart", overlay: "d-noah", fly: 2,
         target: "[data-go='report-noah-save']", flag: ["Click here next", "left", "center"], wait: 2500,
         enter: function () { drawInNoah(); }
       },
       "report-noah-save": {
-        scene: "report", device: "desk", screen: "d-chart", overlay: "d-noah", ask: true, step: "noah",
-        hint: "Noah asks to save the new patient data. Click <b>Yes</b>.",
+        scene: "report", device: "desk", screen: "d-chart", overlay: "d-noah", ask: true, fly: 3,
         target: "[data-go='report-landed']", flag: ["Click here next", "left", "center"],
         enter: function () { c.noahDrawn(true); drawInNoah(); }
       },
       "report-landed": {
-        scene: "report", device: "desk", screen: "d-chart", step: "due", n: 1,
-        hint: "<b>You are out of Noah.</b> The results are already on the chart, and an amber <b>Report due</b> button appeared by itself. Click it.",
-        target: "#d-due", flag: ["Click here", "bottom", "start"],
-        enter: function () { landOnChart(); }
-      },
-      "report": {
-        scene: "report", device: "desk", screen: "r-room", step: "send", clicks: 1,
-        hint: "<b>Edit, if you like.</b> Every section can be opened, and none has to be. Click <b>Preview report</b> to go back to the report.",
-        target: "[data-go='report-preview']", flag: ["Click here next", "inside", "end"],
-        enter: function () { selectTab("hx"); $("commit").textContent = "Sign & send"; }
+        scene: "report", device: "desk", screen: "d-chart",
+        target: "#fc-preview", flag: ["Click here — click 1", "bottom", "start"],
+        enter: chartAfter
       },
       "report-preview": {
-        scene: "report", device: "desk", screen: "r-room", overlay: "r-preview", step: "send", n: 2, clicks: 1,
-        hint: "<b>That was click 1.</b> This is the report the physician receives. Click <b>Sign &amp; send</b>.",
-        target: "#commit", flag: ["Click here next", "top", "end"],
-        enter: function () { $("commit").textContent = "Sign & send"; if (pdf) pdf.scrollTop = 0; }
+        scene: "report", device: "desk", screen: "d-chart", overlay: "r-preview", clicks: 1, fly: 4,
+        target: "#fc-sign", flag: ["Click here — click 2", "left", "center", "bottom", "end"],
+        enter: previewOpen
       },
       "report-sent": {
-        scene: "report", device: "desk", screen: "r-done", clicks: 2,
-        hint: "<b>Two clicks.</b> Signed, and faxed to the referring physician. Done!",
-        next: ["Next: the lobby kiosk", "checkin"],
-        enter: function () {
-          var d = $("deliv");
-          d.textContent = "sending"; d.className = "";
-          tipDone.hidden = true;
-          allStepsDone();
-          later(function () {
-            d.textContent = "fax confirmed 4 pg"; d.className = "ok";
-            tipDone.hidden = false;
-          }, still ? 0 : 1300);
-        }
+        scene: "report", device: "desk", screen: "d-chart", overlay: "r-preview", clicks: 2, fly: 5,
+        target: "#fc-close", next: ["Next: the lobby kiosk", "checkin"],
+        enter: previewSigned
+      },
+      "report-done": {
+        scene: "report", device: "desk", screen: "d-chart", clicks: 2,
+        next: ["Next: the lobby kiosk", "checkin"]
       },
       "counsel": {
         scene: "counsel", device: "desk", screen: "ha-counsel", tool: "theirs",
@@ -876,20 +831,75 @@
 
     var FOOT = {
       report: "A click-through preview with sample patients. Noah's screen is drawn here in simple form.",
-      noah: "A click-through preview with sample patients. Noah's screen is drawn here in simple form.",
       counsel: "The counseling tools, with a sample patient. On the live app the sounds play through the patient's own audiogram.",
       checkin: "The kiosk is a tablet in your lobby. Patients check themselves in and sign their consent forms on it.",
       referral: "A preview with sample patients. Your own demo is the whole app."
     };
+
+    // ── The fly-in rail: five cards for the report scene, one per step; the earlier ones fold to
+    // their bold line. The other scenes show their hint in the rail's one card instead. ──
+    var FLY = [
+      { big: true, t: "2-Click Reports", b: "Medical reports, written in your voice, in 2 clicks after testing is saved. Start by opening Noah — click here first →" },
+      { t: "Today's audiogram, entered in Noah the way you always do.", b: "Example: about 25 dB poorer than two years ago from 2 kHz up; 250–1000 Hz unchanged." },
+      { t: "Save the results in Noah.", b: "Noah closes, you are in the app, and your new results are in the app immediately!" },
+      { t: "This is the report the physician receives.", b: "Written in your own words from today's results and the history on file. Click 2: Sign & send." },
+      { big: true, t: "Two Clicks, That's All Folks!", b: "Signed, and faxed to the referring physician. Automatic!" }
+    ];
+    var stack = $("fly-stack"), hintCard = $("fly-hint"), count = $("fly-count"), clicksEl = $("fly-clicks");
+    var flown = 0;
+    function clearFlies() {
+      all(stack, ".fly").forEach(function (n) { if (n !== hintCard) stack.removeChild(n); });
+      flown = 0;
+    }
+    function fly(i) {
+      var f = FLY[i - 1], card = document.createElement("div");
+      card.className = "fly" + (f.big ? " big" : "");
+      card.innerHTML = "<b class=\"fly-t\">" + f.t + "</b><span class=\"fly-b\">" + f.b + "</span>";
+      all(stack, ".fly.now").forEach(function (n) { if (n !== hintCard) { n.classList.remove("now"); n.classList.add("in"); } });
+      stack.insertBefore(card, hintCard);
+      void card.offsetWidth;   // so the card slides in from its first state
+      card.classList.add("in", "now");
+      flown = i;
+    }
+    function onShow(key, s) {
+      var report = s.scene === "report";
+      hintCard.hidden = report;
+      count.hidden = !report;
+      if (!report) { if (flown) clearFlies(); hintCard.className = "fly now"; return; }
+      clicksEl.textContent = String(s.clicks || 0);
+      if (key === "report-desk") { clearFlies(); fly(1); }
+      else if (s.fly && s.fly > flown) fly(s.fly);
+    }
+    // A click on something that is only part of the picture: the current card answers.
+    function onNudge() {
+      var n = stack.querySelector(".fly.now:not([hidden])");
+      if (n) pop(n, "nudge");
+    }
+
+    // ── HERO-2's hand: it comes from about the screen's middle to the next thing to click in
+    // the report scene every 4 s and presses it; with reduced motion it rests on it. ──
+    var hand = $("fc-hand"), handAt = "";
+    function onMark(t, s) {
+      if (!t || !s || s.scene !== "report") { hide(hand, true); handAt = ""; return; }
+      var a = app.getBoundingClientRect(), r = t.getBoundingClientRect();
+      if (!a.width || !r.width) return;
+      var x = r.left - a.left + r.width * 0.5, y = r.top - a.top + r.height * 0.55;
+      var at = Math.round(x) + "," + Math.round(y);
+      if (at === handAt && !hand.hasAttribute("hidden")) return;
+      handAt = at;
+      hand.style.left = x.toFixed(1) + "px";
+      hand.style.top = y.toFixed(1) + "px";
+      hand.style.setProperty("--hand-dx", (a.width * 0.5 - x).toFixed(1) + "px");
+      hand.style.setProperty("--hand-dy", (a.height * 0.55 - y).toFixed(1) + "px");
+      hide(hand, true); void hand.offsetWidth; hide(hand, false);   // the 4 s loop starts over
+    }
+
     return {
       STATES: STATES, FOOT: FOOT,
       NAMES: ["The report", "Audiogram", "Tympanometry", "Otoacoustic emissions"],
-      start: "noah",
-      againHidden: ["report-desk", "checkin", "referral", "counsel", "noah"],
-      // Noah shows five saved sessions and the devices' serial numbers on this page; the chart's extra results come and go with them.
-      noahLines: 5,
-      afterNoah: function () { all(phone, ".n-sn").forEach(function (x) { x.hidden = false; }); },
-      onResetDesk: function () { showMore(false); }
+      start: "report-desk",
+      againHidden: ["checkin", "referral", "counsel"],
+      onShow: onShow, onMark: onMark, onNudge: onNudge
     };
   };
 </script>
