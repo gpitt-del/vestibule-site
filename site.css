@@ -250,7 +250,12 @@
   .fc-txt p { margin: 0 0 0.45em; font-size: 0.95em; line-height: 1.5; color: #374151; }
   .fc-txt p:last-child { margin-bottom: 0; }
   .fc-txt .res-h { font-size: 1em; }
-  .fc-txt .d-due { vertical-align: 0.05em; }
+    .fc-txt .d-due { vertical-align: 0.05em; }
+  /* SITE-SYNC-1: the chart's note box in its phone form (one collapsed line under the verb row), and the two
+     Speech understanding chips under the small audiogram */
+  .fc-note { margin: 0; padding: 0.45em 0.8em; border: 1px solid #D1D5DB; border-radius: 0.4em; background: #fff; color: #6B7280; font-size: 0.8em; line-height: 1.3; }
+  .fc-si { margin: 0.4em 0 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.35em; }
+  .fc-si span { padding: 0.2em 0.65em; border-radius: 99em; background: #F3F4F6; color: #374151; font-size: 0.64em; font-weight: 500; line-height: 1.4; white-space: nowrap; }
   /* Noah's window in the fold: the two sessions and the module drawn large */
   :is(.fold, .as-fold) .n-plot { width: min(100%, 24em); }
   :is(.fold, .as-fold) .n-sess > i.old { animation: none; }
@@ -285,7 +290,23 @@
   .ap-fig { margin-top: 0.9em; }
   .ap-fig small { display: block; margin-bottom: 0.2em; font-size: 0.86em; color: #374151; }
   .ap-fig .fc-plot { width: min(100%, 19em); margin: 0; }
-  .ap-cap { margin: 0.2em 0 0; font-size: 0.68em; color: #6B7280; }
+    .ap-cap { margin: 0.2em 0 0; font-size: 0.68em; color: #6B7280; }
+  /* SITE-SYNC-1: the results row as the app's preview draws it — the audiogram, and beside it the tymp minis with
+     the values under them, then the DP-gram minis */
+  .ap-res { margin-top: 0.9em; display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 0.6em 1.1em; align-items: start; }
+  .ap-res .ap-fig { margin-top: 0; }
+  .ap-res .ap-fig .fc-plot { width: 100%; max-width: none; }
+  .ap-minis { min-width: 0; display: grid; gap: 0.45em; }
+  .ap-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8em; }
+  .ap-pair figure { margin: 0; min-width: 0; }
+  .ap-pair figure b { display: block; margin-bottom: 0.1em; font-size: 0.86em; font-weight: 700; }
+  .ap-pair figure b.r { color: #b91c1c; }
+  .ap-pair figure b.l { color: #1d4ed8; }
+  .ap-pair svg { display: block; width: 100%; height: auto; }
+  .ap-pair small { display: block; margin-top: 0.1em; font-size: 0.68em; color: #6B7280; }
+  .ap-tbl { border-collapse: collapse; font-size: 0.74em; line-height: 1.35; color: #1F2937; }
+  .ap-tbl th { padding: 0.05em 1em 0.05em 0; font-weight: 400; color: #6B7280; text-align: left; vertical-align: bottom; }
+  .ap-tbl td { padding: 0.05em 1em 0.05em 0; }
   .ap-rows { margin: 0; display: grid; gap: 0.4em; }
   .ap-rows > div { display: grid; grid-template-columns: 9.5em minmax(0, 1fr); gap: 0.6em; align-items: start; }
   .ap-rows dt { padding-top: 0.3em; color: #374151; }
@@ -345,6 +366,10 @@
      sources step aside, the page's letterhead and figures narrow, and its mark takes its narrow place.
      Under 27rem (a phone) Noah's patient list steps aside and its panels stack, so the audiogram module
      stays legible; the chart's chip may wrap. */
+  /* Under 52rem of stage the preview's results row stacks: the audiogram over the minis (SITE-SYNC-1) */
+  @container stage (max-width: 52rem) {
+    .fold .ap-res { grid-template-columns: minmax(0, 1fr); }
+  }
   @container stage (max-width: 40rem) {
     :is(.fold, .as-fold) .stage.desk .app:has(.fc-prev:not([hidden])) { --narrow: 1; }   /* the preview's mark takes its narrow place; the chart's keeps its side */
     :is(.fold, .as-fold) .pv-body { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); padding: 0.6em 0.7em 0.7em; }
@@ -362,7 +387,8 @@
     .fold .ap-pt { grid-template-columns: 1fr 1fr; }
     .fold .ap-rows > div { grid-template-columns: minmax(0, 1fr); gap: 0.1em; }
     .fold .ap-rows dt { padding-top: 0; font-size: 0.86em; }
-    .fold .ap-sig { flex-wrap: wrap; }
+        .fold .ap-sig { flex-wrap: wrap; }
+    .fold .ap-res { grid-template-columns: minmax(0, 1fr); }
     /* The counseling screen on a narrow stage (COUNSEL-SITE-1): the screen grows with its content and
        everything stacks — the chart over its choices, the ear over its thumbnails, one figure under
        the other, one style card under the other; site.js stops sizing the figures (--prv-narrow). */

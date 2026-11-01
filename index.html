@@ -29,7 +29,7 @@
       <a href="#visit">How a visit runs</a>
       <a href="#story">Our story</a>
     </nav>
-    <a class="btn" href="#demo">Get your own demo</a>
+    <a class="btn" href="#demo">Book a demo</a>
   </div>
 </header>
 
@@ -88,7 +88,7 @@
                       <h2>Patient Review</h2>
                       <p class="prv-who">Roy Calloway · visit <span data-d="0">10/28/2026</span> · audiogram <span data-d="0">10/28/2026</span></p>
                     </div>
-                    <div class="prv-sii"><p class="t">Speech Intelligibility Index</p><div class="v"><div>45%<small>Right ear</small></div><div>45%<small>Left ear</small></div></div></div>
+                    <div class="prv-sii"><p class="t">Speech understanding</p><div class="v"><div>45%<small>Right ear</small></div><div>45%<small>Left ear</small></div></div></div>
                   </div>
                   <div class="prv-tabs" role="tablist" aria-label="Patient Review">
                     <button type="button" class="prv-tab" role="tab" data-pr-tab="aud" aria-selected="true">Audiogram</button>
@@ -105,7 +105,7 @@
                       <div class="prv-ctl">
                         <div class="prv-seg" role="group" aria-label="Whose hearing to show"><button type="button" data-pr-who="normal" aria-pressed="false">Normal hearing</button><button type="button" data-pr-who="theirs" aria-pressed="true">Roy’s hearing</button><button type="button" data-pr-who="example" aria-pressed="false">Example loss</button></div>
                         <div class="prv-seg" role="group" aria-label="Which ear"><button type="button" data-pr-ear="R" aria-pressed="false">Right ear</button><button type="button" data-pr-ear="L" aria-pressed="false">Left ear</button><button type="button" data-pr-ear="B" aria-pressed="true">Both ears</button></div>
-                        <p class="prv-note">The shaded shape is the speech sounds; what sits above Roy’s lines is what he misses. His Speech Intelligibility Index is in the header. Switch to Normal hearing or an Example loss to compare.</p>
+                        <p class="prv-note">The shaded shape is the speech sounds; what sits above Roy’s lines is what he misses. His Speech understanding — the share of speech he can hear — is in the header. Switch to Normal hearing or an Example loss to compare.</p>
                       </div>
                     </div>
                   </div>
@@ -176,7 +176,12 @@
                       <button type="button" class="d-btn d-noah" data-go="report-noah"><img data-seal alt="" width="28" height="28">Open in Noah</button>
                       <!-- Report due, as the app draws it: an amber band in the verb row, Preview now (click 1) and Edit -->
                       <span class="fc-due" id="fc-due" hidden><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 1.5h6l3 3v10h-9z"/><path d="M9.5 1.5v3h3M5.5 8h5M5.5 11h5"/></svg><b>Report due:</b><button type="button" class="fc-due-btn pri" id="fc-preview" data-go="report-preview">Preview now</button><button type="button" class="fc-due-btn" id="fc-edit">Edit</button></span>
+                      <!-- Chairside at the end of the verb row (the app's CHAIRSIDE-DOOR-1: a chart with a visit today) -->
+                      <span class="d-btn fc-chair">Chairside</span>
                     </div>
+                    <!-- The chart's note box (the app's NOTE-ACT-1: Internal note · Action, the text, the category, Save) in its
+                         phone form, one collapsed line under the verb row: the desktop's open box does not fit the fold's screen. -->
+                    <p class="fc-note" aria-hidden="true">Note or action…</p>
                     <div class="d-card fc-card">
                       <div class="fc-res" id="fc-res">
                         <div class="fc-fig">
@@ -184,6 +189,10 @@
                           <svg class="fc-plot" id="fc-plot-after" hidden viewBox="0 0 300 250" role="img" aria-label="Today's audiogram of the sample patient over the last test, dashed: thresholds at 2 kHz and above are 20 to 30 dB poorer than two years ago, 250 to 1000 Hz unchanged. Right ear in red circles, left ear in blue crosses."><rect x="40" y="24" width="250" height="208" fill="#fff"/><path d="M40 24H290M40 40H290M40 56H290M40 72H290M40 88H290M40 104H290M40 120H290M40 136H290M40 152H290M40 168H290M40 184H290M40 200H290M40 216H290M40 232H290M60 24V232M105 24V232M150 24V232M195 24V232M240 24V232M285 24V232" fill="none" stroke="#E5E7EB" stroke-width="0.8"/><path d="M217.5 24V232M262.5 24V232" fill="none" stroke="#D1D5DB" stroke-width="0.8" stroke-dasharray="3 3"/><path d="M40 40H290" stroke="#9CA3AF" stroke-width="1"/><rect x="40" y="24" width="250" height="208" fill="none" stroke="#9CA3AF" stroke-width="0.9"/><path d="M40 80H290" fill="none" stroke="#4B5563" stroke-width="1.1" stroke-dasharray="5 4"/><text x="287" y="77" font-family="Helvetica, Arial, sans-serif" font-size="8" fill="#4B5563" text-anchor="end">normal</text><g font-family="Helvetica, Arial, sans-serif" font-size="8.5" fill="#737373" text-anchor="middle"><text x="60" y="17">250</text><text x="105" y="17">500</text><text x="150" y="17">1k</text><text x="195" y="17">2k</text><text x="240" y="17">4k</text><text x="285" y="17">8k</text></g><g font-family="Helvetica, Arial, sans-serif" font-size="8.5" fill="#737373" text-anchor="end"><text x="35" y="43">0</text><text x="35" y="75">20</text><text x="35" y="107">40</text><text x="35" y="139">60</text><text x="35" y="171">80</text><text x="35" y="203">100</text><text x="35" y="235">120</text></g><polyline points="60,64 105,64 150,72 195,88 240,104 285,112" fill="none" stroke="#C81E1E" stroke-width="1.3" stroke-dasharray="4 3" opacity="0.6"/><polyline points="60,64 105,72 150,72 195,88 240,112 285,120" fill="none" stroke="#1D4ED8" stroke-width="1.3" stroke-dasharray="4 3" opacity="0.6"/><text x="287" y="132" font-family="Helvetica, Arial, sans-serif" font-size="7.5" fill="#6B7280" text-anchor="end" data-old>10/5/2024</text><polyline points="60,64 105,64 150,72 195,128 240,144 285,160" fill="none" stroke="#C81E1E" stroke-width="1.5"/><polyline points="60,64 105,72 150,72 195,128 240,152 285,168" fill="none" stroke="#1D4ED8" stroke-width="1.5"/><g fill="#fff" stroke="#C81E1E" stroke-width="1.8"><circle cx="60" cy="64" r="4.5"/><circle cx="105" cy="64" r="4.5"/><circle cx="150" cy="72" r="4.5"/><circle cx="195" cy="128" r="4.5"/><circle cx="240" cy="144" r="4.5"/><circle cx="285" cy="160" r="4.5"/></g><g fill="none" stroke="#1D4ED8" stroke-width="1.9" stroke-linecap="round"><path d="M56 60l8 8M64 60l-8 8"/><path d="M101 68l8 8M109 68l-8 8"/><path d="M146 68l8 8M154 68l-8 8"/><path d="M191 124l8 8M199 124l-8 8"/><path d="M236 148l8 8M244 148l-8 8"/><path d="M281 164l8 8M289 164l-8 8"/></g><g font-family="Helvetica, Arial, sans-serif" font-size="8.5" fill="#4B5563"><text x="40" y="246"><tspan fill="#C81E1E" font-weight="700">O</tspan> right</text><text x="82" y="246"><tspan fill="#1D4ED8" font-weight="700">X</tspan> left</text><text x="120" y="246">– – normal</text><text x="170" y="246">– – <tspan data-old>10/5/2024</tspan></text><text x="290" y="246" text-anchor="end">dB HL by Hz</text></g></svg>
                           <p class="fc-cap" id="fc-cap-before">Audiogram <span data-old>10/5/2024</span> — last test</p>
                           <p class="fc-cap" id="fc-cap-after" hidden>Audiogram <span data-d="0">10/28/2026</span> (previous test dashed)</p>
+                          <!-- The two chips under the small audiogram (the app's AUDIBILITY-1; the word per REPORT-FIX-4): the app's own
+                               arithmetic over each audiogram's thresholds — the last test's, then today's -->
+                          <p class="fc-si" id="fc-si-before"><span>Speech understanding</span><span>Right ear 69&#8239;%</span><span>Left ear 67&#8239;%</span></p>
+                          <p class="fc-si" id="fc-si-after" hidden><span>Speech understanding</span><span>Right ear 45&#8239;%</span><span>Left ear 45&#8239;%</span></p>
                         </div>
                         <div class="fc-txt">
                           <p class="res-h">Diagnostics</p>
@@ -249,7 +258,7 @@
                     <div class="pv-body">
                       <div class="pv-scroll" id="pv-scroll" tabindex="0" aria-label="The report, four pages">
                         <!-- Page one as the app's preview shows it (SITE-REPORT-1): the letterhead line, the title, the
-                             patient block, the Summary, the audiogram with its caption, History, one sentence per test,
+                             patient block, the Summary, the audiogram with the tymp and DP-gram minis beside it (SITE-SYNC-1), History, one paragraph per test,
                              the Interpretation, the recommendations, the signature. Pages 2 to 4 follow in the sample
                              report's own forms (the #get sample's pages), with today's results. Every name is invented. -->
                         <div class="pv-paper ap">
@@ -264,19 +273,34 @@
                             <div><small>Provider</small>Jordan Avery, Au.D.</div>
                           </div>
                           <div class="ap-sum"><small>Summary</small><p class="ap-field"><b>Results revealed a progression of the bilateral high-frequency sensorineural hearing loss since <span data-old>10/5/2024</span>, now moderate to severe above 2 kHz.</b></p></div>
+                          <div class="ap-res">
                           <div class="ap-fig">
                             <small>Audiogram</small>
                             <svg class="fc-plot" viewBox="0 0 300 250" role="img" aria-label="The audiogram on the report: today's thresholds over the last test, dashed."><rect x="40" y="24" width="250" height="208" fill="#fff"/><path d="M40 24H290M40 40H290M40 56H290M40 72H290M40 88H290M40 104H290M40 120H290M40 136H290M40 152H290M40 168H290M40 184H290M40 200H290M40 216H290M40 232H290M60 24V232M105 24V232M150 24V232M195 24V232M240 24V232M285 24V232" fill="none" stroke="#E5E7EB" stroke-width="0.8"/><path d="M217.5 24V232M262.5 24V232" fill="none" stroke="#D1D5DB" stroke-width="0.8" stroke-dasharray="3 3"/><path d="M40 40H290" stroke="#9CA3AF" stroke-width="1"/><rect x="40" y="24" width="250" height="208" fill="none" stroke="#9CA3AF" stroke-width="0.9"/><path d="M40 80H290" fill="none" stroke="#4B5563" stroke-width="1.1" stroke-dasharray="5 4"/><text x="287" y="77" font-family="Helvetica, Arial, sans-serif" font-size="8" fill="#4B5563" text-anchor="end">normal</text><g font-family="Helvetica, Arial, sans-serif" font-size="8.5" fill="#737373" text-anchor="middle"><text x="60" y="17">250</text><text x="105" y="17">500</text><text x="150" y="17">1k</text><text x="195" y="17">2k</text><text x="240" y="17">4k</text><text x="285" y="17">8k</text></g><g font-family="Helvetica, Arial, sans-serif" font-size="8.5" fill="#737373" text-anchor="end"><text x="35" y="43">0</text><text x="35" y="75">20</text><text x="35" y="107">40</text><text x="35" y="139">60</text><text x="35" y="171">80</text><text x="35" y="203">100</text><text x="35" y="235">120</text></g><polyline points="60,64 105,64 150,72 195,88 240,104 285,112" fill="none" stroke="#C81E1E" stroke-width="1.3" stroke-dasharray="4 3" opacity="0.6"/><polyline points="60,64 105,72 150,72 195,88 240,112 285,120" fill="none" stroke="#1D4ED8" stroke-width="1.3" stroke-dasharray="4 3" opacity="0.6"/><text x="287" y="132" font-family="Helvetica, Arial, sans-serif" font-size="7.5" fill="#6B7280" text-anchor="end" data-old>10/5/2024</text><polyline points="60,64 105,64 150,72 195,128 240,144 285,160" fill="none" stroke="#C81E1E" stroke-width="1.5"/><polyline points="60,64 105,72 150,72 195,128 240,152 285,168" fill="none" stroke="#1D4ED8" stroke-width="1.5"/><g fill="#fff" stroke="#C81E1E" stroke-width="1.8"><circle cx="60" cy="64" r="4.5"/><circle cx="105" cy="64" r="4.5"/><circle cx="150" cy="72" r="4.5"/><circle cx="195" cy="128" r="4.5"/><circle cx="240" cy="144" r="4.5"/><circle cx="285" cy="160" r="4.5"/></g><g fill="none" stroke="#1D4ED8" stroke-width="1.9" stroke-linecap="round"><path d="M56 60l8 8M64 60l-8 8"/><path d="M101 68l8 8M109 68l-8 8"/><path d="M146 68l8 8M154 68l-8 8"/><path d="M191 124l8 8M199 124l-8 8"/><path d="M236 148l8 8M244 148l-8 8"/><path d="M281 164l8 8M289 164l-8 8"/></g><g font-family="Helvetica, Arial, sans-serif" font-size="8.5" fill="#4B5563"><text x="40" y="246"><tspan fill="#C81E1E" font-weight="700">O</tspan> right</text><text x="82" y="246"><tspan fill="#1D4ED8" font-weight="700">X</tspan> left</text><text x="120" y="246">– – normal</text><text x="170" y="246">– – <tspan data-old>10/5/2024</tspan></text><text x="290" y="246" text-anchor="end">dB HL by Hz</text></g></svg>
                             <p class="ap-cap">Air conduction transducer: insert earphones · Reliability: good</p>
                           </div>
+                          <!-- Beside the audiogram (SITE-SYNC-1, the app's preview after REPORT-FIX-4): the tymp minis side by side
+                               with the values under them, the DP-gram minis under those — the counseling scene's drawings, drawn by
+                               site.js at page size from the same numbers (the report's own pages 3 and 4). -->
+                          <div class="ap-minis">
+                            <div class="ap-pair ap-tymps">
+                              <figure><b class="r">Tymp Right</b><svg viewBox="0 0 300 250" role="img" aria-label="Tymp Right — modeled from values" data-ap-tymp="right"></svg><small>modeled from values</small></figure>
+                              <figure><b class="l">Tymp Left</b><svg viewBox="0 0 300 250" role="img" aria-label="Tymp Left — modeled from values" data-ap-tymp="left"></svg><small>modeled from values</small></figure>
+                            </div>
+                            <table class="ap-tbl"><thead><tr><th>Ear</th><th>Type</th><th>Peak pressure (daPa)</th><th>Compliance (mL)</th><th>ECV (mL)</th></tr></thead><tbody><tr><td>Right</td><td>A</td><td>-15</td><td>0.74</td><td>1.10</td></tr><tr><td>Left</td><td>A</td><td>-5</td><td>0.68</td><td>1.20</td></tr></tbody></table>
+                            <div class="ap-pair ap-dps">
+                              <figure><svg viewBox="0 0 380 260" role="img" aria-label="Right ear DP-gram" data-ap-dp="right"></svg></figure>
+                              <figure><svg viewBox="0 0 380 260" role="img" aria-label="Left ear DP-gram" data-ap-dp="left"></svg></figure>
+                            </div>
+                          </div>
+                          </div>
                           <h4 class="ap-h">History</h4>
                           <p class="ap-field">The patient has a known bilateral sensorineural hearing loss, last tested here on <span data-old>10/5/2024</span>, and reports hearing worse since, most in noise, with constant tinnitus in both ears.</p>
                           <h4 class="ap-h">Tests performed and results</h4>
                           <dl class="ap-rows">
-                            <div><dt>Audiometry</dt><dd class="ap-field">thresholds 20–30 dB poorer at 2 kHz and above than on <span data-old>10/5/2024</span>, 250–1000 Hz unchanged, with no air-bone gap in either ear.</dd></div>
-                            <div><dt>Speech audiometry</dt><dd class="ap-field">speech reception thresholds of 30 and 30 dB HL in the right and left ears, with word recognition of 76% and 72%.</dd></div>
+                            <div><dt>Audiometry</dt><dd class="ap-field">thresholds 20–30 dB poorer at 2 kHz and above than on <span data-old>10/5/2024</span>, 250–1000 Hz unchanged, with no air-bone gap in either ear. Speech reception thresholds of 30 and 30 dB HL in the right and left ears, with word recognition of 76% and 72%.</dd></div>
                             <div><dt>Tympanometry</dt><dd class="ap-field">type A tympanograms bilaterally, with acoustic reflexes present.</dd></div>
-                            <div><dt>Otoacoustic emissions</dt><dd class="ap-field">distortion-product emissions present through 1.5 kHz and absent above in both ears, consistent with the audiogram.</dd></div>
+                            <div><dt>Distortion product otoacoustic emissions</dt><dd class="ap-field">distortion-product emissions present through 1.5 kHz and absent above in both ears, consistent with the audiogram.</dd></div>
                           </dl>
                           <div class="ap-int"><b>Interpretation:</b><p class="ap-field">Results revealed a progression of the bilateral high-frequency sensorineural hearing loss since <span data-old>10/5/2024</span>, with reduced word recognition and constant bilateral tinnitus. The loss is cochlear in origin; nothing today suggests a medical or surgical condition.</p></div>
                           <h4 class="ap-h">Recommendations</h4>
@@ -438,15 +462,15 @@
         </ul>
         <p class="easy">Hit the easy button.</p>
         <div class="cta-row">
-          <a class="btn" href="#demo">Get your own demo</a>
-          <span class="cta-note">Two ways to try it: with sample patients, or your own patients' records.</span>
+          <a class="btn" href="#demo">Book a demo</a>
+          <span class="cta-note">A 30-minute screen share with the audiologist who built it.</span>
         </div>
       </div>
 
       <div class="ask-after">
         <p class="easy">Hit the easy button.</p>
-        <a class="btn" href="#demo">Get your own demo</a>
-        <span class="cta-note">Two ways to try it: with sample patients, or your own patients' records.</span>
+        <a class="btn" href="#demo">Book a demo</a>
+        <span class="cta-note">A 30-minute screen share with the audiologist who built it.</span>
       </div>
     </div>
   </section>
@@ -706,42 +730,20 @@
 
   <section class="demo" id="demo">
     <div class="wrap">
-      <h2>Get your own demo.</h2>
-      <p class="intro">Two ways to try Vestibule. Pick one.</p>
-      <div class="choices" role="radiogroup" aria-label="Which demo would you like?">
-        <button type="button" class="choice" role="radio" aria-checked="true" data-choice="sample">
-          <span class="choice-n" aria-hidden="true">1</span>
-          <b>A working copy with sample patients</b>
-          <span>Log in and click through the whole app. It takes less than two minutes.</span>
-        </button>
-        <button type="button" class="choice" role="radio" aria-checked="false" data-choice="own">
-          <span class="choice-n" aria-hidden="true">2</span>
-          <b>A demo with your own patients' records</b>
-          <span>See your own results and your own patients in Vestibule.</span>
-        </button>
-      </div>
+      <!-- DEMO-ASK-1 (Gabe, 2026-11-01): no self-serve demo; a personal screen share with Dr. Pitt. The request
+           goes to the Vestibule inbox through the form service site.js posts to; nothing else is collected. -->
+      <h2>See it with Dr. Pitt.</h2>
+      <p class="intro">A 30-minute screen share with the audiologist who built it. Your kind of visit, start to finish — a referral, the kiosk, Noah, the two-click report, the claim. Bring questions.</p>
       <div class="demo-grid">
         <div class="demo-copy">
-          <div data-for="sample">
-            <h3>With sample patients</h3>
-            <ul class="points">
-              <li>A working copy of the app, with sample patients</li>
-              <li>Nothing to install</li>
-              <li>We email your login</li>
-            </ul>
-          </div>
-          <div data-for="own" hidden>
-            <h3>With your own patients' records</h3>
-            <ol class="own-steps">
-              <li><b>Sign the business associate agreement.</b><span>We text it to your phone and you sign it right there. If you would rather, we email it. It covers your patients' information.</span></li>
-              <li><b>Send us results for a few patients.</b><span>Once the agreement is signed, print the results to PDF and upload or email the copies to us.</span></li>
-              <li><b>Click through your own patients.</b><span>We load them into your demo and send you the login.</span></li>
-            </ol>
-          </div>
-          <p class="or-here">Not ready to share an email? <a href="#try">Try the preview first.</a></p>
+          <ul class="points">
+            <li>Thirty minutes, on your schedule</li>
+            <li>Your profession's visit, not a canned tour</li>
+            <li>Nothing to install, nothing to upload</li>
+          </ul>
+          <p class="or-here">Not ready to share an email? <a href="#top">Try the preview first.</a></p>
         </div>
         <form class="ask" id="ask" novalidate>
-          <input type="hidden" id="ask-choice" name="choice" value="sample">
           <label for="ask-name">Your name
             <input type="text" id="ask-name" name="name" autocomplete="name" required>
           </label>
@@ -749,17 +751,16 @@
             <input type="text" id="ask-practice" name="practice" autocomplete="organization" required>
           </label>
           <label for="ask-email">Email
-            <input type="email" id="ask-email" name="email" autocomplete="email" inputmode="email">
+            <input type="email" id="ask-email" name="email" autocomplete="email" inputmode="email" required>
           </label>
-          <label for="ask-phone" data-for="own" hidden>Mobile phone
-            <small>We text the agreement to this number, and you sign it on your phone.</small>
-            <input type="tel" id="ask-phone" name="phone" autocomplete="tel" inputmode="tel">
+          <label for="ask-when">Best days and times
+            <small>Optional.</small>
+            <input type="text" id="ask-when" name="when" autocomplete="off">
           </label>
-          <p class="ask-or" data-for="own" hidden>A mobile number, an email, or both. One is enough.</p>
           <label class="trap" aria-hidden="true">Leave this empty
             <input type="checkbox" id="ask-bot" name="botcheck" tabindex="-1" autocomplete="off">
           </label>
-          <button class="btn" type="submit" id="ask-send">Get my demo</button>
+          <button class="btn" type="submit" id="ask-send">Ask for a time</button>
           <p class="note" id="ask-note" role="status" aria-live="polite"></p>
         </form>
       </div>
@@ -786,7 +787,7 @@
     var drawInNoah = c.drawInNoah, resetDesk = c.resetDesk, clearSig = c.clearSig, playReferral = c.playReferral, hotTo = c.hotTo, counsel = c.counsel;
 
     // ── The chart: the last test on it, then today's over it, then the report ──
-    var plotB = $("fc-plot-before"), plotA = $("fc-plot-after"), capB = $("fc-cap-before"), capA = $("fc-cap-after");
+    var plotB = $("fc-plot-before"), plotA = $("fc-plot-after"), capB = $("fc-cap-before"), capA = $("fc-cap-after"), siB = $("fc-si-before"), siA = $("fc-si-after");
     var diagB = $("fc-diag-before"), diagA = $("fc-diag-after"), diagDue = $("fc-diag-due"), diagSent = $("fc-diag-sent");
     var due = $("fc-due"), chip = $("fc-chip"), res = $("fc-res");
     var signedLine = $("fc-signed"), signBtn = $("fc-sign"), verbs = $("pv-verbs"), scroll = $("pv-scroll"), sig = $("pv-sig");
@@ -795,7 +796,7 @@
     function hide(el, on) { if (on) el.setAttribute("hidden", ""); else el.removeAttribute("hidden"); }
     function chartBefore() {
       resetDesk();
-      hide(plotB, false); hide(plotA, true); capB.hidden = false; capA.hidden = true;
+      hide(plotB, false); hide(plotA, true); capB.hidden = false; capA.hidden = true; siB.hidden = false; siA.hidden = true;
       diagB.hidden = false; diagA.hidden = true; diagDue.hidden = false; diagSent.hidden = true;
       due.hidden = true;
       chip.textContent = "Audiological assessment today"; chip.className = "fc-chip";
@@ -803,7 +804,7 @@
     // Out of Noah: today's audiogram draws over the last one, the Diagnostics read today, and the amber Report due band appears.
     function chartAfter() {
       var was = plotA.hasAttribute("hidden");
-      hide(plotB, true); hide(plotA, false); capB.hidden = true; capA.hidden = false;
+      hide(plotB, true); hide(plotA, false); capB.hidden = true; capA.hidden = false; siB.hidden = true; siA.hidden = false;
       diagB.hidden = true; diagA.hidden = false;
       due.hidden = false;
       if (was && !still) { pop(res, "in"); pop(due, "in"); }
@@ -822,7 +823,7 @@
     var STATES = {
       "report-desk": {
         scene: "report", device: "desk", screen: "d-chart", fly: 1,
-        target: "[data-go='report-noah']", flag: ["Click here", "right", "center", "bottom", "end"],
+        target: "[data-go='report-noah']", flag: ["Click here", "bottom", "center", "bottom", "end"],
         enter: chartBefore
       },
       "report-noah": {
@@ -940,11 +941,11 @@
       { big: true, t: "Two Clicks, That's All Folks!", b: "Signed, and faxed to the referring physician. Automatic!" }
     ];
     var FLY_COUNSEL = [
-      { big: true, t: "Counseling, on the screen the patient is looking at.", b: "Patient Review opens from the visit card. Roy’s audiogram from Noah over the speech sounds; his Speech Intelligibility Index in the header. Normal hearing and an example loss one tap away. Click Anatomy." },
+      { big: true, t: "Counseling, on the screen the patient is looking at.", b: "Patient Review opens from the visit card. Roy’s audiogram from Noah over the speech sounds; his Speech understanding — the share of speech he can hear — in the header. Normal hearing and an example loss one tap away. Click Anatomy." },
       { t: "The ear, whole.", b: "One picture, four views. The zoomed parts and their conditions are for subscribers. Click Tymp." },
       { t: "Tymps from Noah, OAEs from the printer.", b: "Nothing retyped: the tympanograms arrive with the audiogram, the OAE printout uploads itself from the Titan. Click OAE, then Hearing aids." },
       { t: "Three styles, in pictures.", b: "Behind the ear, receiver in the canal, completely in the canal — the patient sees each one on an ear. Choose RIC." },
-      { big: true, t: "The rest is for subscribers.", b: "The level on Roy’s own audiogram, the device, and the order filled in — with the simulator and the cochlea. Get your own demo." }
+      { big: true, t: "The rest is for subscribers.", b: "The level on Roy’s own audiogram, the device, and the order filled in — with the simulator and the cochlea. Book a demo." }
     ];
     var stack = $("fly-stack"), hintCard = $("fly-hint"), count = $("fly-count"), clicksEl = $("fly-clicks");
     var flown = 0, flyScene = "";

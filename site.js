@@ -562,6 +562,10 @@
       prvTab("aud");
     }
     var counsel = { reset: prvReset, tab: prvTab, lockAids: function () { prvAids(true); } };
+    // The preview's page one (SITE-SYNC-1): the tymp and DP-gram minis beside the report's audiogram are the
+    // same drawings at page size, from the same numbers.
+    all(phone, "[data-ap-tymp]").forEach(function (s) { var e = s.getAttribute("data-ap-tymp"); drawTymp(s, e, PRV.TYMP[e]); });
+    all(phone, "[data-ap-dp]").forEach(function (s) { var e = s.getAttribute("data-ap-dp"); drawDpGram(s, e, PRV.DP[e]); });
     if (prv) {
       var tr = prvQ('[data-pr-tymp="right"]'), tl = prvQ('[data-pr-tymp="left"]'), or = prvQ('[data-pr-dp="right"]'), ol = prvQ('[data-pr-dp="left"]');
       if (tr) drawTymp(tr, "right", PRV.TYMP.right);
@@ -654,7 +658,7 @@
       function finish() {
         total.hidden = false;
         hint.innerHTML = REFERRAL_DONE;
-        nextBtn.textContent = "Get your own demo";
+        nextBtn.textContent = "Book a demo";
         nextBtn.setAttribute("data-next", "#demo");
         nextBtn.hidden = false;
         againBtn.hidden = false;
@@ -747,76 +751,49 @@
     show(PAGE.start || "report-desk");
   })();
 
-  // The demo request. Two choices, one form. Each request is delivered to the
-  // Vestibule inbox by Web3Forms. ACCESS_KEY is that service's public form key
-  // (it is not a password and is meant to sit in the page). Empty = preview,
-  // nothing sent. No patient file is ever taken on this page. For a demo with
-  // a practice's own records, a mobile number or an email is enough: with a
-  // number, the agreement goes by text and is signed on the phone.
+  // The demo request (DEMO-ASK-1): one form, a 30-minute screen share with Dr. Pitt.
+  // Each request is delivered to the Vestibule inbox by Web3Forms. ACCESS_KEY is that
+  // service's public form key (it is not a password and is meant to sit in the page).
+  // Empty = preview, nothing sent: the viewer's own mail program opens with the request
+  // instead. No patient file is ever taken on this page.
   (function () {
     var ACCESS_KEY = "63ba2e59-3dbc-4b1d-9b22-82c68cb8ae86";
     var form = document.getElementById("ask");
     var note = document.getElementById("ask-note");
     if (!form) return;
     var button = document.getElementById("ask-send");
-    var choiceField = document.getElementById("ask-choice");
-    var choices = Array.prototype.slice.call(document.querySelectorAll(".choice"));
-    var blocks = Array.prototype.slice.call(document.querySelectorAll("[data-for]"));
+    var THANKS = "Thanks — Dr. Pitt will write back with a time.";
     function say(cls, text) { note.className = cls; note.textContent = text; }
-    function pick(c) {
-      choiceField.value = c;
-      choices.forEach(function (b) { b.setAttribute("aria-checked", b.getAttribute("data-choice") === c ? "true" : "false"); });
-      blocks.forEach(function (b) { b.hidden = b.getAttribute("data-for") !== c; });
-      button.textContent = c === "own" ? "Send me the agreement" : "Get my demo";
-      say("note", "");
-    }
-    choices.forEach(function (b) {
-      b.addEventListener("click", function () { pick(b.getAttribute("data-choice")); });
-    });
     function failed() { say("note", "That did not go through. Please write to help@vestibulehq.com."); }
     form.addEventListener("submit", function (e) {
       e.preventDefault();
-      var own = choiceField.value === "own";
       var name = form.elements.name.value.trim();
       var practice = form.elements.practice.value.trim();
       var email = form.elements.email.value.trim();
-      var phone = own ? form.elements.phone.value.trim() : "";
+      var when = form.elements.when ? form.elements.when.value.trim() : "";
       var okEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-      var digits = phone.replace(/\D/g, "");
-      var okPhone = digits.length >= 10 && digits.length <= 15;
-      if (own) {
-        if (!name || !practice || (!email && !phone)) {
-          say("note", "Please fill in your name, your practice, and a mobile number or an email.");
-          return;
-        }
-        if (phone && !okPhone) { say("note", "That mobile number looks short. Please check it."); return; }
-        if (email && !okEmail) { say("note", "That email does not look right. Please check it."); return; }
-      } else if (!name || !practice || !okEmail) {
+      if (!name || !practice || !okEmail) {
         say("note", "Please fill in your name, your practice and a working email.");
         return;
       }
-      var byText = own && okPhone;
-      if (form.elements.botcheck.checked) { thanksKeep(); return; }
+      if (form.elements.botcheck.checked) { thanks(); return; }
+      var subject = "Demo request (screen share): " + practice;
       if (!ACCESS_KEY) {
-        var subj = (own ? "Demo request, my own patients' records: " : "Demo request, sample patients: ") + practice;
-        var lines = ["Name: " + name, "Practice: " + practice];
-        if (email) lines.push("Email: " + email);
-        if (phone) lines.push("Mobile: " + phone);
-        lines.push("Demo: " + (own ? "my own patients' records (please send the agreement" + (byText ? " by text" : "") + ")" : "sample patients"));
-        try { window.location.href = "mailto:help@vestibulehq.com?subject=" + encodeURIComponent(subj) + "&body=" + encodeURIComponent(lines.join("\n")); } catch (err) {}
+        var lines = ["Name: " + name, "Practice: " + practice, "Email: " + email];
+        if (when) lines.push("Best days and times: " + when);
+        try { window.location.href = "mailto:help@vestibulehq.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(lines.join("\n")); } catch (err) {}
         say("done", "Your email should open with the request ready to send. If it does not, write to help@vestibulehq.com.");
         return;
       }
       var body = {
         access_key: ACCESS_KEY,
-        subject: (own ? "Demo request, own patients (send the agreement" + (byText ? " by text" : " by email") + "): " : "Demo request, sample patients: ") + practice,
+        subject: subject,
         from_name: "Vestibule website",
-        demo: own ? "Own patients: send the business associate agreement " + (byText ? "by text to " + phone : "by email") : "Sample patients",
         name: name,
-        practice: practice
+        practice: practice,
+        email: email,
+        best_days_and_times: when || "(none given)"
       };
-      if (email) body.email = email;
-      if (phone) body.phone = phone;
       button.disabled = true;
       say("note", "Sending.");
       fetch("https://api.web3forms.com/submit", {
@@ -824,17 +801,13 @@
         headers: { "Content-Type": "application/json", "Accept": "application/json" },
         body: JSON.stringify(body)
       }).then(function (r) { return r.json().catch(function () { return { success: r.ok }; }); })
-        .then(function (j) { if (j && j.success) { thanksKeep(); } else { failed(); } })
+        .then(function (j) { if (j && j.success) { thanks(); } else { failed(); } })
         .catch(failed)
         .then(function () { button.disabled = false; });
 
-      function thanksKeep() {
-        var text = !own ? "Thank you. We'll send your demo link to " + email + "."
-          : byText ? "Thank you. We'll text the agreement to " + phone + ". Sign it on your phone, and then we'll ask for the results."
-          : "Thank you. We'll email the agreement to " + email + ". Once it is signed, we'll ask for the results.";
+      function thanks() {
         form.reset();
-        pick(own ? "own" : "sample");
-        say("done", text);
+        say("done", THANKS);
       }
     });
   })();
