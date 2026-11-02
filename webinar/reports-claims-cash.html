@@ -113,30 +113,31 @@
   /* Print: Ctrl+P gives the course page as one clean Letter page: the light lockup, the text in black,
      the Academy logo and statement kept together, the page address in the foot, no links underlined. */
   @media print {
-    @page { size: Letter; margin: 0.6in 0.7in 0.55in; }
+    @page { size: Letter; margin: 0.5in 0.6in 0.45in; }
     :root, :root[data-theme="dark"], :root:not([data-theme="light"]) {
       --bg: #FFFFFF; --band: #FFFFFF; --card: #FFFFFF; --ink: #111111; --ink-soft: #222222;
       --accent-text: #333333; --rule: #999999; --tan: #999999; padding: 0;
     }
-    body { background: #fff; color: #111; font-size: 10.5pt; line-height: 1.42; }
+    body { background: #fff; color: #111; font-size: 9.5pt; line-height: 1.34; }
     .wrap { max-width: none; padding-left: 0; padding-right: 0; }
-    .top { padding: 0 0 0.12in; border-bottom: 1px solid #999; }
+    .top { padding: 0 0 0.1in; border-bottom: 1px solid #999; }
     .brand .brand-lockup, .brand .brand-mark, .toplink { display: none !important; }
-    .brand .print-lockup { display: block; height: 0.42in; width: auto; }
-    .page { max-width: none; padding: 0.18in 0 0; }
-    h1 { font-size: 20pt; line-height: 1.1; margin: 0 0 0.08in; letter-spacing: -0.02em; }
-    .when { font-size: 11pt; margin: 0 0 0.14in; }
-    p { margin: 0 0 0.08in; orphans: 3; widows: 3; }
+    .brand .print-lockup { display: block; height: 0.38in; width: auto; }
+    .page { max-width: none; padding: 0.14in 0 0; }
+    h1 { font-size: 16.5pt; line-height: 1.1; margin: 0 0 0.07in; letter-spacing: -0.02em; }
+    .when { font-size: 9.75pt; margin: 0 0 0.12in; }
+    p { margin: 0 0 0.07in; orphans: 3; widows: 3; }
     .page p, .page li { color: #111; }
-    .lead { margin-top: 0.1in; }
-    .outcomes { margin: 0 0 0.1in; }
-    .instructor, .register { margin-top: 0.1in; }
+    .lead { margin: 0.09in 0 0.03in; }
+    .outcomes { margin: 0 0 0.07in; padding-left: 0.24in; }
+    .outcomes li { margin: 0.03in 0; padding-left: 0.04in; }
+    .instructor, .register { margin-top: 0.07in; }
     a { color: inherit; text-decoration: none; }
-    .ce { flex-wrap: nowrap; gap: 0.16in; margin: 0.14in 0 0.1in; padding: 0.12in 0.14in; border: 1px solid #999; border-radius: 6px; break-inside: avoid; page-break-inside: avoid; }
-    .ce-logo { width: 1.7in; padding: 0; border-radius: 0; }
-    .ce p { font-size: 9pt; line-height: 1.4; }
-    .disclosure { font-size: 9pt; line-height: 1.4; }
-    footer { margin-top: 0.1in; padding: 0.08in 0 0; border-top: 1px solid #999; font-size: 8.5pt; color: #333; gap: 0.3rem 0.25in; }
+    .ce { flex-wrap: nowrap; gap: 0.15in; margin: 0.12in 0 0.09in; padding: 0.11in 0.13in; border: 1px solid #999; border-radius: 6px; break-inside: avoid; page-break-inside: avoid; }
+    .ce-logo { width: 1.6in; padding: 0; border-radius: 0; }
+    .ce p { font-size: 8.5pt; line-height: 1.34; }
+    .disclosure { font-size: 8.5pt; line-height: 1.34; }
+    footer { margin-top: 0.09in; padding: 0.07in 0 0; border-top: 1px solid #999; font-size: 8.25pt; color: #333; gap: 0.3rem 0.25in; }
     footer a { display: none; }
     .print-only { display: inline; }
   }
@@ -154,13 +155,19 @@
     <h1>Reports, Claims and Cash: what running one office and forty taught us</h1>
     <p class="when">Live webinar · Thursday, December 10, 2026 · 12:00–1:00 pm Eastern · Google Meet · no fee · 0.1 AAA CEUs (pending Academy approval); IHS CE pending</p>
 
-    <!-- SITE-WEBINAR-1 (2026-11-02): the course description, the three learning outcomes and the
-         instructor bio are the CE-PACKAGE-1 dispatch's words (05-Portal-Paste.txt), which were not on
-         this box when the page was built. The paragraph below holds the place of the description and
-         the outcomes; the bio is the site's own words from the story section until the dispatch's lands. -->
-    <p class="desc">The course description and the three learning outcomes will be posted here.</p>
+    <!-- SITE-WEBINAR-1 (2026-11-02): the description, the outcomes and the instructor paragraph are the
+         CE-PACKAGE-1 dispatch's words, pasted by Gabe in chat the same day — identical to
+         C:\Users\gabep\Vestibule-CE\2026-12-10\05-Portal-Paste.txt once CE-PACKAGE-1 has run. Verbatim. -->
+    <p class="desc">Whether a practice has one chair or forty, three systems decide whether it runs smoothly and makes money: the report that goes back to the referring physician, the claim that goes out to the payer, and the numbers the owner reads. The instructor grew up in a three-generation hearing practice, helped build and run a multi-state group that reached more than 40 offices, and now owns a three-office practice. The course covers what those offices learned the hard way about each system: how late or missing reports cost referrals, and how a clinician can sign a complete report from a phone minutes after the visit instead of staying late or letting reports slide; how claims get lost between the chairside visit and the remittance, and the handful of measures that keep them visible; and the four numbers — cash position, weeks of runway, gross margin and net margin — read by office and by employee. It closes with a candid comparison of how a practice can run these systems today: by hand, with the practice-management systems in common use, or with a system built around them. The comparison names specific products, including one the instructor owns; see the content disclosure.</p>
 
-    <p class="instructor"><b>Instructor:</b> Dr. Gabe Pitt, the audiologist who built Vestibule. In practice for 20 years. The third generation of a family that has been in audiology and hearing care since the 1950s.</p>
+    <p class="lead">Upon completion, participants will be able to:</p>
+    <ol class="outcomes">
+      <li>Describe a report workflow that delivers a signed report to the referring provider within one business day of the visit, and name the three points where reports stall: test results typed from the printout, the clinician's writing time, and the delivery step.</li>
+      <li>Define clean-claim rate, days in accounts receivable and the electronic remittance advice (ERA), and set up a weekly routine that surfaces any claim unpaid after 30 days and any deposit with no remittance behind it.</li>
+      <li>Define cash position, weeks of runway, gross margin and net margin; read a profit-and-loss by office and a contribution view by employee; and name the staffing, location and marketing decisions each supports.</li>
+    </ol>
+
+    <p class="instructor"><b>Instructor:</b> Gabriel J. Pitt, Au.D., CCC-A, is a third-generation hearing-care provider and the owner of Hearing-Doctors (American Hearing Associates, LLC), an audiology practice with offices in Thomson, Swainsboro and Hazlehurst, Georgia. He earned his Doctor of Audiology at the University of South Florida, with an externship at UCSF and a private audiology practice in San Francisco. Before founding his current practice he helped build and run the family's multi-state group of hearing clinics, which grew to more than 40 offices across Georgia, Alabama, South Carolina and Florida before its sale in 2022. He is the founder and President of Vestibule, Inc., which makes practice-management software for hearing and speech practices, and a member of the American Speech-Language-Hearing Association.</p>
 
     <p class="register"><b>Register:</b> email <a href="mailto:help@vestibulehq.com?subject=Webinar%20Dec%2010%20registration">help@vestibulehq.com</a> with the subject "Webinar Dec 10 registration", or call <a href="tel:+19124614145">(912) 461-4145</a>.</p>
 
