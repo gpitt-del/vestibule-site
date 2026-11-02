@@ -4,7 +4,7 @@ Rewritten at every close-out. The newest change is the commit that carries this 
 
 ## Live
 
-`main`, classic GitHub Pages, CNAME vestibulehq.com. Live commit: the one headed "STATUS.md rider" (2026-11-02, D-SW-8 closed); the one before it is 490f8dd (SITE-WEBINAR-1 rider, 2026-11-02), and before that 1b6ce76 (SITE-WORDS-1 + SITE-WEBINAR-1, 2026-11-02).
+`main`, classic GitHub Pages, CNAME vestibulehq.com. Live commit: the one headed "SITE-CANARY-1" (2026-11-02); the one before it is 64a07fc (STATUS.md rider, D-SW-8 closed, 2026-11-02), and before that 490f8dd (SITE-WEBINAR-1 rider, 2026-11-02).
 
 ## Changes, newest first
 
@@ -78,5 +78,9 @@ One row per app screen the site draws, the picture in the app's screen ledger it
 - This file stays readable at vestibulehq.com/docs/STATUS.md, like CREDITS.md: never a secret, a credential, a customer's or prospect's name, or anything about Hearing-Doctors' patients. Nothing links to it.
 - Briefs are small and auditable: do only what the brief names, record it in the commit body headed by the brief's ID, rewrite this file, report before/after and the live check (cache-busted URL, then the bare URL).
 - Mock branches (mock-1123, mock/site-click-2, mock/counsel-site-1) stay as they are; nothing merges them.
+
+## Canary pages
+
+canary pages — do not link, do not mention (SITE-CANARY-1, 2026-11-02; chat keeps the record, this file never does).
 
 App screens: C:/Users/gabep/projects/hearing-doctors-provider-app/screens/ (the app checkout on the dev box — the ledger pictures the table above names; its docs/SCREENS.md lists them). The app repo is read, never changed, by a site session.
