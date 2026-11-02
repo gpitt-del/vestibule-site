@@ -56,6 +56,13 @@
       all(document, "[data-old]").forEach(function (el) {
         el.textContent = (old.getMonth() + 1) + "/" + old.getDate() + "/" + old.getFullYear();
       });
+      // The sample patient's age on the chart's facts line (the app's DOB · age · office), from the date of birth.
+      all(document, "[data-age]").forEach(function (el) {
+        var p = el.getAttribute("data-age").split("-"), now = new Date();
+        var y = now.getFullYear() - parseInt(p[0], 10), m = now.getMonth() + 1;
+        if (m < parseInt(p[1], 10) || (m === parseInt(p[1], 10) && now.getDate() < parseInt(p[2], 10))) y--;
+        el.textContent = y + " yrs";
+      });
     })();
 
     // The month over the number cards is always the current one.

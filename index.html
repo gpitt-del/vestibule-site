@@ -166,8 +166,32 @@
                   <div class="d-page">
                     <div class="d-head">
                       <span class="d-av" aria-hidden="true">RC</span>
-                      <div><b class="d-name">Roy Calloway</b><span class="d-sub">3/14/1952 · Seabrook · referred by Dr. Whitfield</span></div>
+                      <div><b class="d-name">Roy Calloway</b><span class="d-sub">3/14/1952 · <span data-age="1952-03-14">74 yrs</span> · Seabrook</span></div>
                       <span class="fc-chip" id="fc-chip">Audiological assessment today</span>
+                    </div>
+                    <!-- The six fixed slots under the name (the app's CHART-HEADER-2, screens/patients-id.webp): the audiogram and
+                         its date, the Speech understanding tile, the hearing aids, the compact note box with its mic, Last visit and
+                         Next visit. The thumbnail and the tile's numbers follow the scene: the last test's, then today's. On a narrow
+                         stage the slots pair up and the note box collapses to its phone line (the app's D-CH2-14). -->
+                    <div class="fc-slots" id="fc-slots">
+                      <div class="fc-slot fc-th">
+                        <span id="fc-th-before"><svg class="fc-thumb" viewBox="36 20 258 216" aria-hidden="true"><rect x="40" y="24" width="250" height="208" fill="#fff" stroke="#E5E7EB" stroke-width="2"/><path d="M40 80H290" fill="none" stroke="#9CA3AF" stroke-width="2" stroke-dasharray="7 6"/><polyline points="60,64 105,64 150,72 195,88 240,104 285,112" fill="none" stroke="#C81E1E" stroke-width="5"/><polyline points="60,64 105,72 150,72 195,88 240,112 285,120" fill="none" stroke="#1D4ED8" stroke-width="5"/><g fill="#fff" stroke="#C81E1E" stroke-width="5"><circle cx="60" cy="64" r="8"/><circle cx="105" cy="64" r="8"/><circle cx="150" cy="72" r="8"/><circle cx="195" cy="88" r="8"/><circle cx="240" cy="104" r="8"/><circle cx="285" cy="112" r="8"/></g><g fill="none" stroke="#1D4ED8" stroke-width="5" stroke-linecap="round"><path d="M53 65l14 14M67 65l-14 14"/><path d="M98 73l14 14M112 73l-14 14"/><path d="M143 73l14 14M157 73l-14 14"/><path d="M188 89l14 14M202 89l-14 14"/><path d="M233 113l14 14M247 113l-14 14"/><path d="M278 121l14 14M292 121l-14 14"/></g></svg><small><span data-old>10/10/2024</span></small></span>
+                        <span id="fc-th-after" hidden><svg class="fc-thumb" viewBox="36 20 258 216" aria-hidden="true"><rect x="40" y="24" width="250" height="208" fill="#fff" stroke="#E5E7EB" stroke-width="2"/><path d="M40 80H290" fill="none" stroke="#9CA3AF" stroke-width="2" stroke-dasharray="7 6"/><polyline points="60,64 105,64 150,72 195,128 240,144 285,160" fill="none" stroke="#C81E1E" stroke-width="5"/><polyline points="60,64 105,72 150,72 195,128 240,152 285,168" fill="none" stroke="#1D4ED8" stroke-width="5"/><g fill="#fff" stroke="#C81E1E" stroke-width="5"><circle cx="60" cy="64" r="8"/><circle cx="105" cy="64" r="8"/><circle cx="150" cy="72" r="8"/><circle cx="195" cy="128" r="8"/><circle cx="240" cy="144" r="8"/><circle cx="285" cy="160" r="8"/></g><g fill="none" stroke="#1D4ED8" stroke-width="5" stroke-linecap="round"><path d="M53 65l14 14M67 65l-14 14"/><path d="M98 73l14 14M112 73l-14 14"/><path d="M143 73l14 14M157 73l-14 14"/><path d="M188 129l14 14M202 129l-14 14"/><path d="M233 153l14 14M247 153l-14 14"/><path d="M278 169l14 14M292 169l-14 14"/></g></svg><small><span data-d="0">11/2/2026</span></small></span>
+                      </div>
+                      <div class="fc-slot fc-tile">
+                        <small>Speech understanding</small>
+                        <p class="fc-si" id="fc-si-before"><b>69&#8239;%</b><b>67&#8239;%</b></p>
+                        <p class="fc-si" id="fc-si-after" hidden><b>45&#8239;%</b><b>45&#8239;%</b></p>
+                        <small class="fc-lr"><span>Right</span><span>Left</span></small>
+                      </div>
+                      <div class="fc-slot fc-aids">No hearing aids</div>
+                      <div class="fc-slot fc-nb" aria-hidden="true">
+                        <span class="fc-nb-r"><i class="on"></i>Internal note<i></i>Action</span>
+                        <span class="fc-nb-in">Note or action…<svg class="fc-mic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5.6" y="1.5" width="4.8" height="8" rx="2.4"/><path d="M3.5 7.5a4.5 4.5 0 0 0 9 0M8 12v2.5M5.8 14.5h4.4"/></svg></span>
+                        <span class="fc-nb-b"><span class="fc-nb-sel">No category</span><span class="fc-nb-save">Save</span></span>
+                      </div>
+                      <div class="fc-slot fc-visit"><small>Last visit</small><b><span data-d="0">11/2/2026</span> · 9:00 AM</b><span>Audiological Assessment · Seabrook</span></div>
+                      <div class="fc-slot fc-visit"><small>Next visit</small><span>None scheduled</span></div>
                     </div>
                     <div class="d-row fc-row">
                       <span class="d-btn pri">Contact</span>
@@ -179,9 +203,6 @@
                       <!-- Chairside at the end of the verb row (the app's CHAIRSIDE-DOOR-1: a chart with a visit today) -->
                       <span class="d-btn fc-chair">Chairside</span>
                     </div>
-                    <!-- The chart's note box (the app's NOTE-ACT-1: Internal note · Action, the text, the category, Save) in its
-                         phone form, one collapsed line under the verb row: the desktop's open box does not fit the fold's screen. -->
-                    <p class="fc-note" aria-hidden="true">Note or action…</p>
                     <div class="d-card fc-card">
                       <div class="fc-res" id="fc-res">
                         <div class="fc-fig">
@@ -189,10 +210,6 @@
                           <svg class="fc-plot" id="fc-plot-after" hidden viewBox="0 0 300 250" role="img" aria-label="Today's audiogram of the sample patient over the last test, dashed: thresholds at 2 kHz and above are 20 to 30 dB poorer than two years ago, 250 to 1000 Hz unchanged. Right ear in red circles, left ear in blue crosses."><rect x="40" y="24" width="250" height="208" fill="#fff"/><path d="M40 24H290M40 40H290M40 56H290M40 72H290M40 88H290M40 104H290M40 120H290M40 136H290M40 152H290M40 168H290M40 184H290M40 200H290M40 216H290M40 232H290M60 24V232M105 24V232M150 24V232M195 24V232M240 24V232M285 24V232" fill="none" stroke="#E5E7EB" stroke-width="0.8"/><path d="M217.5 24V232M262.5 24V232" fill="none" stroke="#D1D5DB" stroke-width="0.8" stroke-dasharray="3 3"/><path d="M40 40H290" stroke="#9CA3AF" stroke-width="1"/><rect x="40" y="24" width="250" height="208" fill="none" stroke="#9CA3AF" stroke-width="0.9"/><path d="M40 80H290" fill="none" stroke="#4B5563" stroke-width="1.1" stroke-dasharray="5 4"/><text x="287" y="77" font-family="Helvetica, Arial, sans-serif" font-size="8" fill="#4B5563" text-anchor="end">normal</text><g font-family="Helvetica, Arial, sans-serif" font-size="8.5" fill="#737373" text-anchor="middle"><text x="60" y="17">250</text><text x="105" y="17">500</text><text x="150" y="17">1k</text><text x="195" y="17">2k</text><text x="240" y="17">4k</text><text x="285" y="17">8k</text></g><g font-family="Helvetica, Arial, sans-serif" font-size="8.5" fill="#737373" text-anchor="end"><text x="35" y="43">0</text><text x="35" y="75">20</text><text x="35" y="107">40</text><text x="35" y="139">60</text><text x="35" y="171">80</text><text x="35" y="203">100</text><text x="35" y="235">120</text></g><polyline points="60,64 105,64 150,72 195,88 240,104 285,112" fill="none" stroke="#C81E1E" stroke-width="1.3" stroke-dasharray="4 3" opacity="0.6"/><polyline points="60,64 105,72 150,72 195,88 240,112 285,120" fill="none" stroke="#1D4ED8" stroke-width="1.3" stroke-dasharray="4 3" opacity="0.6"/><text x="287" y="132" font-family="Helvetica, Arial, sans-serif" font-size="7.5" fill="#6B7280" text-anchor="end" data-old>10/5/2024</text><polyline points="60,64 105,64 150,72 195,128 240,144 285,160" fill="none" stroke="#C81E1E" stroke-width="1.5"/><polyline points="60,64 105,72 150,72 195,128 240,152 285,168" fill="none" stroke="#1D4ED8" stroke-width="1.5"/><g fill="#fff" stroke="#C81E1E" stroke-width="1.8"><circle cx="60" cy="64" r="4.5"/><circle cx="105" cy="64" r="4.5"/><circle cx="150" cy="72" r="4.5"/><circle cx="195" cy="128" r="4.5"/><circle cx="240" cy="144" r="4.5"/><circle cx="285" cy="160" r="4.5"/></g><g fill="none" stroke="#1D4ED8" stroke-width="1.9" stroke-linecap="round"><path d="M56 60l8 8M64 60l-8 8"/><path d="M101 68l8 8M109 68l-8 8"/><path d="M146 68l8 8M154 68l-8 8"/><path d="M191 124l8 8M199 124l-8 8"/><path d="M236 148l8 8M244 148l-8 8"/><path d="M281 164l8 8M289 164l-8 8"/></g><g font-family="Helvetica, Arial, sans-serif" font-size="8.5" fill="#4B5563"><text x="40" y="246"><tspan fill="#C81E1E" font-weight="700">O</tspan> right</text><text x="82" y="246"><tspan fill="#1D4ED8" font-weight="700">X</tspan> left</text><text x="120" y="246">– – normal</text><text x="170" y="246">– – <tspan data-old>10/5/2024</tspan></text><text x="290" y="246" text-anchor="end">dB HL by Hz</text></g></svg>
                           <p class="fc-cap" id="fc-cap-before">Audiogram <span data-old>10/5/2024</span> — last test</p>
                           <p class="fc-cap" id="fc-cap-after" hidden>Audiogram <span data-d="0">10/28/2026</span> (previous test dashed)</p>
-                          <!-- The two chips under the small audiogram (the app's AUDIBILITY-1; the word per REPORT-FIX-4): the app's own
-                               arithmetic over each audiogram's thresholds — the last test's, then today's -->
-                          <p class="fc-si" id="fc-si-before"><span>Speech understanding</span><span>Right ear 69&#8239;%</span><span>Left ear 67&#8239;%</span></p>
-                          <p class="fc-si" id="fc-si-after" hidden><span>Speech understanding</span><span>Right ear 45&#8239;%</span><span>Left ear 45&#8239;%</span></p>
                         </div>
                         <div class="fc-txt">
                           <p class="res-h">Diagnostics</p>
@@ -347,17 +364,34 @@
                   <div class="k-tile"><b>TV</b><span>3:30 PM</span></div>
                 </div>
               </div>
-              <div class="scr k" data-screen="k-dob" hidden>
+              <div class="scr k k-info" data-screen="k-dob" hidden>
+                <!-- The check-in's Your info screen as the app draws it (screens/checkin-token-your-info.webp, SEX-REQUIRED-1): the
+                     PATIENT VIEW banner, the stepper, the welcome, the names, the date of birth with its digit pad, the Sex row —
+                     three radio pills, required while it shows — the phone, the email, the address, and the two buttons in the app's words. -->
+                <div class="k-pv" aria-hidden="true"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><circle cx="8" cy="4.5" r="3"/><path d="M2 14.5c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5z"/></svg><b>Patient view</b><span>This screen is for the patient. Staff: exit before typing clinic notes.</span></div>
                 <div class="k-top"><span class="a-logo"><svg viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 12c2.5-4 5.5-4 8 0"/><path d="M2 8.5c4-6 10-6 14 0"/><circle cx="8" cy="15" r="1" fill="#fff"/></svg></span>Coastal Hearing</div>
-                <div class="k-mid">
-                  <p class="big">Your 11:30 AM appointment</p>
-                  <p>Please enter your date of birth.</p>
-                  <div class="k-dob"><span><b>04</b>Month</span><span><b>12</b>Day</span><span><b>1958</b>Year</span></div>
+                <ol class="k-steps" aria-hidden="true"><li class="on"><i>1</i>Your info</li><li><i>2</i>Consents</li><li><i>3</i>Sign</li></ol>
+                <div class="k-form">
+                  <p class="k-hi">Welcome, Dana</p>
+                  <p class="k-sub">Please confirm your information and correct anything that has changed.</p>
+                  <div class="k-two">
+                    <div class="k-field"><span>First name <i>*</i></span><b class="focus">Dana</b></div>
+                    <div class="k-field"><span>Last name <i>*</i></span><b>Fenn</b></div>
+                  </div>
+                  <p class="k-lab">Date of birth</p>
+                  <div class="k-dob"><b class="focus">04</b><b>12</b><b>1958</b></div>
+                  <div class="k-pad" aria-hidden="true"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span class="zero">0</span><span>⌫</span></div>
+                  <p class="k-lab">Sex</p>
+                  <div class="k-sex"><span>Male</span><span class="on">Female</span><span>Prefer not to say</span></div>
+                  <div class="k-two">
+                    <div class="k-field"><span>Phone</span><b>+18435550147</b></div>
+                    <div class="k-field"><span>Email</span><b>&nbsp;</b></div>
+                  </div>
+                  <div class="k-field"><span>Address</span><b>&nbsp;</b></div>
                 </div>
-                <div class="k-pad" aria-hidden="true"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span class="zero">0</span><span>⌫</span></div>
-                <div class="k-btns">
-                  <button type="button" class="sec" data-go="checkin">Back</button>
-                  <button type="button" class="pri" data-go="checkin-consent">Check in</button>
+                <div class="k-btns k-stack">
+                  <button type="button" class="pri" data-go="checkin-consent">This is correct — continue</button>
+                  <button type="button" class="lnk" data-go="checkin">I’d rather do this with the doctor</button>
                 </div>
               </div>
               <div class="scr k" data-screen="k-consent" hidden>
@@ -787,7 +821,7 @@
     var drawInNoah = c.drawInNoah, resetDesk = c.resetDesk, clearSig = c.clearSig, playReferral = c.playReferral, hotTo = c.hotTo, counsel = c.counsel;
 
     // ── The chart: the last test on it, then today's over it, then the report ──
-    var plotB = $("fc-plot-before"), plotA = $("fc-plot-after"), capB = $("fc-cap-before"), capA = $("fc-cap-after"), siB = $("fc-si-before"), siA = $("fc-si-after");
+    var plotB = $("fc-plot-before"), plotA = $("fc-plot-after"), capB = $("fc-cap-before"), capA = $("fc-cap-after"), siB = $("fc-si-before"), siA = $("fc-si-after"), thB = $("fc-th-before"), thA = $("fc-th-after");
     var diagB = $("fc-diag-before"), diagA = $("fc-diag-after"), diagDue = $("fc-diag-due"), diagSent = $("fc-diag-sent");
     var due = $("fc-due"), chip = $("fc-chip"), res = $("fc-res");
     var signedLine = $("fc-signed"), signBtn = $("fc-sign"), verbs = $("pv-verbs"), scroll = $("pv-scroll"), sig = $("pv-sig");
@@ -796,7 +830,7 @@
     function hide(el, on) { if (on) el.setAttribute("hidden", ""); else el.removeAttribute("hidden"); }
     function chartBefore() {
       resetDesk();
-      hide(plotB, false); hide(plotA, true); capB.hidden = false; capA.hidden = true; siB.hidden = false; siA.hidden = true;
+      hide(plotB, false); hide(plotA, true); capB.hidden = false; capA.hidden = true; siB.hidden = false; siA.hidden = true; hide(thB, false); hide(thA, true);
       diagB.hidden = false; diagA.hidden = true; diagDue.hidden = false; diagSent.hidden = true;
       due.hidden = true;
       chip.textContent = "Audiological assessment today"; chip.className = "fc-chip";
@@ -804,7 +838,7 @@
     // Out of Noah: today's audiogram draws over the last one, the Diagnostics read today, and the amber Report due band appears.
     function chartAfter() {
       var was = plotA.hasAttribute("hidden");
-      hide(plotB, true); hide(plotA, false); capB.hidden = true; capA.hidden = false; siB.hidden = true; siA.hidden = false;
+      hide(plotB, true); hide(plotA, false); capB.hidden = true; capA.hidden = false; siB.hidden = true; siA.hidden = false; hide(thB, true); hide(thA, false);
       diagB.hidden = true; diagA.hidden = false;
       due.hidden = false;
       if (was && !still) { pop(res, "in"); pop(due, "in"); }
@@ -897,7 +931,7 @@
       },
       "checkin-dob": {
         scene: "checkin", screen: "k-dob",
-        hint: "The patient keys in a birth date. We did that part for you. Tap <b>Check in</b>.",
+        hint: "The patient confirms their details — the name, the birth date, the sex the app now asks for, the phone. We did that part for you. Tap <b>This is correct — continue</b>.",
         target: "[data-go='checkin-consent']", flag: ["Tap here next", "top", "end"]
       },
       "checkin-consent": {
