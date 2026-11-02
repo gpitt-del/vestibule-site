@@ -4,7 +4,7 @@ Rewritten at every close-out. The newest change is the commit that carries this 
 
 ## Live
 
-`main`, classic GitHub Pages, CNAME vestibulehq.com. Live commit: the one headed "SITE-WEBINAR-1 rider" (2026-11-02, the dispatch's words on the course page); the one before it is 1b6ce76 (SITE-WORDS-1 + SITE-WEBINAR-1, 2026-11-02), and before that 0529311 (SITE-RIDERS-3, 2026-11-02).
+`main`, classic GitHub Pages, CNAME vestibulehq.com. Live commit: the one headed "STATUS.md rider" (2026-11-02, D-SW-8 closed); the one before it is 490f8dd (SITE-WEBINAR-1 rider, 2026-11-02), and before that 1b6ce76 (SITE-WORDS-1 + SITE-WEBINAR-1, 2026-11-02).
 
 ## Changes, newest first
 
@@ -39,7 +39,7 @@ One row per app screen the site draws, the picture in the app's screen ledger it
   - D-SW-2 (the brief's) "0.1 AAA CEUs (pending Academy approval)" until the approval email, then the word "pending" comes off — alt: no CE line until approved. Built with "pending".
   - D-SW-3 (closed the same day) The course description, the three outcomes and the instructor's bio are the CE-PACKAGE-1 dispatch's words, pasted by Gabe in chat on 2026-11-02 after neither C:\Users\gabep\Vestibule-CE\2026-12-10\05-Portal-Paste.txt nor the dispatch was found on the box (no Vestibule-CE folder; no file, cache or session transcript carried the course title); the page was live for about an hour with one line in their place. Once CE-PACKAGE-1 has run, a session can diff the page's text against 05-Portal-Paste.txt.
   - D-SW-4 (closed) The instructor paragraph is the dispatch's, "Instructor: Gabriel J. Pitt, Au.D., CCC-A, is a third-generation hearing-care provider …"; the site's own words ("Dr. Gabe Pitt, the audiologist who built Vestibule") came off.
-  - D-SW-8 (call) The bio says Vestibule "makes practice-management software for hearing and speech practices" and that the instructor is a member of the American Speech-Language-Hearing Association — kept verbatim as the dispatch's words, although the site names no speech-language pathology as a profession (SITE-AUD-1). Whether that standing rule reaches the instructor's bio is Gabe's call; default: the bio stands as dispatched.
+  - D-SW-8 (closed: Gabe, 2026-11-02, in chat — "It stands") The bio says Vestibule "makes practice-management software for hearing and speech practices" and that the instructor is a member of the American Speech-Language-Hearing Association — the dispatch's words, verbatim; the SITE-AUD-1 rule (no speech-language pathology as a profession on the site) does not reach the instructor's bio.
   - D-SW-5 (call) The footer link reads "Dec 10 webinar: Reports, Claims and Cash" on the five live pages (speech-pathology.html's footer untouched: parked, unlinked) and points at the .html file as the site's other links do; the page's canonical is the bare /webinar/reports-claims-cash, which GitHub Pages serves as well.
   - D-SW-6 (call) The band keeps its capital and the ® — "Noah® ES Certified", not "Noah ES certified" letter for letter; the seal's alt lost HIMSA too (the seal itself prints "Tested and Certified · noah ES", no HIMSA on it).
   - D-SW-7 (call) The logo is the Academy package's four-color version, re-encoded as WebP at its own 868 × 437; the black version and the three EPS files were not used.
@@ -70,7 +70,7 @@ One row per app screen the site draws, the picture in the app's screen ledger it
 - The webinar page (/webinar/reports-claims-cash, SITE-WEBINAR-1): its description, outcomes and bio are the CE-PACKAGE-1 dispatch's words verbatim, nothing else; the Academy's approval paragraph and the content disclosure verbatim; no product screenshot, no price, no sign-up CTA on it; Ctrl+P stays one Letter page. The "Get your own demo" CTA stays until ONBOARDING_OPEN.
 - No price in any fold. The one offer on a page is the band after "Here's how a visit runs."; the price appears there and nowhere above it.
 - SITE-OG-1: on every page the h1, the <title> and og:title are the same words.
-- No speech-language pathology as a profession anywhere on the site until Gabe says so. Clinical words stay: Speech Intelligibility Audiogram, speech audiometry, SRT, speech canoe.
+- No speech-language pathology as a profession anywhere on the site until Gabe says so. Clinical words stay: Speech Intelligibility Audiogram, speech audiometry, SRT, speech canoe. The instructor's bio on the webinar page keeps the dispatch's "hearing and speech practices" and the American Speech-Language-Hearing Association (D-SW-8, Gabe, 2026-11-02).
 - The drawings say "Book now" where the app does (BOOK-NOW-1, 2026-10-19); only the Calendar menu's row keeps "Quick-Book", and no drawing shows that row. The drawings say "Speech understanding" where the app does (REPORT-FIX-4 D-RF4-10, 2026-11-01); the tool keeps its name, Speech Intelligibility Audiogram.
 - The demo on the site is a screen share with Dr. Pitt (DEMO-ASK-1, 2026-11-01): no self-serve login, no own-records path, no BAA step. The request form asks for a name, a practice, an email and the best days and times, nothing more, and posts through Web3Forms with its public key in site.js.
 - The preview's practice and patients are invented; never a real name. The dates in the screens are computed each day: today, and the last test about two years ago.
