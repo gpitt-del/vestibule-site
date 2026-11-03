@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Pricing: Vestibule</title>
-<meta name="description" content="What Vestibule costs: an introductory offer of $89 a month for everything, and the regular price by step.">
+<meta name="description" content="What Vestibule costs: an introductory offer of $89 a month for everything, and the regular price part by part.">
 <link rel="canonical" href="https://vestibulehq.com/pricing">
 <link rel="icon" href="favicon.ico" sizes="48x48">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -118,14 +118,16 @@
   .steps { list-style: none; margin: 1.2rem 0 0; padding: 0; display: grid; gap: 1rem; }
   .step { background: var(--card); border: 1px solid var(--rule); border-radius: 14px; padding: 1.2rem 1.3rem 1rem; }
   .step-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.3rem 1rem; margin-bottom: 0.5rem; }
-  .step-n { display: block; color: var(--accent-text); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.04em; text-transform: uppercase; }
   .step h3 { margin: 0; font-weight: 800; font-size: 1.3rem; letter-spacing: -0.02em; line-height: 1.2; }
   .price { font-weight: 800; font-size: 1.15rem; white-space: nowrap; color: var(--ink); }
   .price small { font-weight: 500; font-size: 0.9rem; color: var(--ink-soft); }
-  .step ul { margin: 0; padding-left: 1.1rem; color: var(--ink-soft); }
-  .step li { margin: 0.2rem 0; }
+  .step .adds { margin: 0; }
   .step .addon { margin: 0.7rem 0 0; padding-top: 0.7rem; border-top: 1px dashed var(--rule); color: var(--ink-soft); }
   .step .addon b { color: var(--ink); }
+  .step .addon p { margin: 0 0 0.5rem; }
+  .step .addon p:last-child { margin: 0; }
+  .terms { margin: 0 0 0.9rem; padding-left: 1.1rem; color: var(--ink-soft); }
+  .terms li { margin: 0.2rem 0; }
   .total { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.3rem 1rem; margin: 1rem 0 0; padding: 1rem 1.3rem; background: var(--band); border-radius: 14px; }
   .total b { font-size: 1.2rem; color: var(--ink); }
   .page .total span { color: var(--ink); font-weight: 800; font-size: 1.2rem; white-space: nowrap; }
@@ -155,69 +157,84 @@
     <p class="who">Start with the whole package. Keep only the features you use.</p>
 
     <div class="offer-card">
-      <p class="tag">Introductory offer: 80% off through December 31, 2026</p>
+      <p class="tag">Introductory offer: 80% off list through December 31, 2026</p>
       <p class="pl">
         <span class="pl-grp"><b class="pl-amt">$89<span aria-hidden="true">/<small>mo</small></span><span class="pl-sr"> a month</span></b><span class="pl-say">first six months,</span></span>
         <span class="pl-say pl-then">then</span>
         <span class="pl-grp"><span class="pl-stack"><span>as</span> <span>little</span> <span>as</span></span><b class="pl-amt pl-after">$99<span aria-hidden="true">/<small>mo</small></span><span class="pl-sr"> a month</span></b></span>
       </p>
-      <p>Your entire business: every feature, every office. No per-office fees and no added subscription fees during the introductory period.</p>
+      <p>Everything below, every office, every clinician. Turn on only the parts you want; the rest wait, switched off, until you want them.</p>
       <p><a href="./#demo">Click here to get your demo.</a></p>
-      <p class="was">After that, as little as $99 a month for one office, with each additional office half off. Details below.</p>
+      <p class="was">After six months, Reports alone is $99 a month and everything is $413. Details below.</p>
     </div>
 
-    <h2>The regular price, in three steps</h2>
-    <p>After your full package for six months, you choose what works for you.</p>
+    <h2>The regular price, in six parts</h2>
+    <p>After six months, keep what you use at the prices shown.</p>
 
-    <ol class="steps">
+    <ul class="steps">
       <li class="step">
         <div class="step-head">
-          <div><span class="step-n">Step 1</span><h3>Reports</h3></div>
+          <h3>Reports</h3>
           <p class="price">$99 <small>a month</small></p>
         </div>
-        <ul>
-          <li>A finished report in two clicks, written from your test results.</li>
-          <li>No change to how you test. Save your results as you do today, and Vestibule finds them and writes the report.</li>
-          <li>Signed with your signature and faxed or emailed to the referring office.</li>
-          <li>Start and sign reports from your phone.</li>
-        </ul>
-        <p class="addon"><b>Add the Noah ES connection for a more robust setup, only $50 more a month.</b> Tests saved in Noah ES show up on the patient's chart within seconds.</p>
+        <p class="adds">Two-click reports from your results, in your own words — Noah ES or your printouts; signed, faxed or emailed to the referring office.</p>
+        <div class="addon">
+          <p><b>Add the Noah ES connection, $49 a month more:</b> your tests reach the chart within seconds of saving in Noah. Or start without Noah ES: print your results to the folder; Vestibule reads them. Add Noah ES any time.</p>
+          <p>The Noah ES connection reads your results in public formats straight from Noah ES. Other formats, and results not coming through Noah ES, are read from printouts and require provider verification of result accuracy.</p>
+        </div>
       </li>
       <li class="step">
         <div class="step-head">
-          <div><span class="step-n">Step 2</span><h3>Scheduling, referrals and communications</h3></div>
-          <p class="price">add $150 <small>a month</small></p>
+          <h3>Scheduling, online booking &amp; check-in kiosk</h3>
+          <p class="price">$29 <small>a month</small></p>
         </div>
-        <ul>
-          <li>One calendar for every office, online booking, text reminders and confirmations.</li>
-          <li>Referral faxes read as they arrive, the chart made, and the patient texted to book.</li>
-          <li>Calls, texts, email and fax on your clinic number, from your phone.</li>
-          <li>Lobby kiosk check-in and a patient portal.</li>
-          <li>Hearing aids tracked by serial number: orders, repairs, warranties and the bill of sale.</li>
-          <li>Invoices and card payments.</li>
-          <li>Marketing tracking: what each campaign cost and the new patients it brought in, by office.</li>
-        </ul>
+        <p class="adds">One calendar for every office; patients book online; confirmations and reminders go by themselves; patients check in on the lobby kiosk, insurance card and all.</p>
       </li>
       <li class="step">
         <div class="step-head">
-          <div><span class="step-n">Step 3</span><h3>Billing with QuickBooks</h3></div>
-          <p class="price">add $150 <small>a month</small></p>
+          <h3>Calls, texts &amp; faxes</h3>
+          <p class="price">$29 <small>a month</small></p>
         </div>
-        <ul>
-          <li>Coding at sign-off and claims filed electronically.</li>
-          <li>Insurance payments posted from the remittance.</li>
-          <li>Deposits land in QuickBooks.</li>
-          <li>Bank reconciliation: every deposit matched to your bank account.</li>
-        </ul>
+        <p class="adds">Your phones keep working as they are. Vestibule's phone system is ready today on a temporary number; referrals by email and the fax folder work today.</p>
       </li>
-    </ol>
-    <p class="total"><b>Everything</b><span>$449 a month</span></p>
+      <li class="step">
+        <div class="step-head">
+          <h3>Claims &amp; payments</h3>
+          <p class="price">$49 <small>a month</small></p>
+        </div>
+        <p class="adds">CPT and ICD-10 proposed at sign-off; claims filed electronically; insurance payments posted from the remittance by themselves; card payments and invoices.</p>
+      </li>
+      <li class="step">
+        <div class="step-head">
+          <h3>Hearing aids</h3>
+          <p class="price">$9 <small>a month</small></p>
+        </div>
+        <p class="adds">Every aid by serial number: stock, orders, repairs, loss and damage, warranties — the warranty letters sent by themselves.</p>
+      </li>
+      <li class="step">
+        <div class="step-head">
+          <h3>Patient portal &amp; the books</h3>
+          <p class="price">$149 <small>a month</small></p>
+        </div>
+        <p class="adds">Patients see their results and their warranty, and request repairs themselves from the portal. The books: every deposit matched to your bank, QuickBooks kept right by itself — fewer bookkeeping errors.</p>
+      </li>
+    </ul>
+    <p class="total"><b>Everything</b><span>$413 a month</span></p>
 
-    <h2>Additional offices half off</h2>
-    <p>Each added office gets the same package as your first, at half the price.</p>
+    <h2>Your renewal</h2>
+    <p>After the six months your subscription renews on the term you pick, billed monthly; a longer term costs less each month. A term left early owes the discount taken.</p>
+    <ul class="terms">
+      <li>Month to month</li>
+      <li>1 year · 5% off</li>
+      <li>2 years · 10% off</li>
+      <li>3 years · 15% off (the default)</li>
+    </ul>
+
+    <h2>Clinicians and offices</h2>
+    <p>Two clinicians and one office are included. Each clinician beyond two and each added office: half off your monthly subscription.</p>
 
     <h2>Setup</h2>
-    <p>Setup fees may apply. They depend on how much of the setup you do yourself and how much we do for you.</p>
+    <p>Setup help comes with every part. Help well beyond the usual may be billed — we say so before it starts.</p>
 
     <p class="cta"><a class="btn" href="./#demo">Get your own demo</a></p>
   </article>
