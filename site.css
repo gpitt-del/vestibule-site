@@ -230,8 +230,8 @@
   :is(.fold, .as-fold) .stage.desk .scr { position: relative; inset: auto; }
   :is(.fold, .as-fold) .stage.desk .scr.prv { aspect-ratio: 16 / 10; }   /* the counseling screen keeps the app's shape on a wide stage (COUNSEL-SITE-1) */
   /* The chart, drawn large: the plot beside the Diagnostics panel */
-  :is(.fold, .as-fold) [data-screen="d-chart"] .d-page { flex: none; padding: 0.8em 1.1em 0.9em; gap: 0.7em; }
-  .fc-chip { margin-left: auto; align-self: flex-start; padding: 0.3em 0.75em; border-radius: 99em; background: #EEF2FF; color: #3730A3; font-size: 0.7em; font-weight: 600; white-space: nowrap; }
+  :is(.fold, .as-fold) [data-screen="d-chart"] .d-page { flex: none; padding: 0.8em 1.1em 0.8em; gap: 0.45em; }   /* SITE-SYNC-2: the app's own 8-px spacing between the band, the row, the tabs and the first row */
+  .fc-chip { padding: 0.3em 0.75em; border-radius: 99em; background: #EEF2FF; color: #3730A3; font-size: 0.7em; font-weight: 600; white-space: nowrap; }
   .fc-chip.sent { background: #DCFCE7; color: #14532D; }
   .fc-row { gap: 0.5em; }
   .fc-due { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.45em; padding: 0.28em 0.45em 0.28em 0.65em; border: 1px solid #FCD34D; border-radius: 0.45em; background: #FEF3C7; color: #78350F; font-size: 0.8em; font-weight: 600; line-height: 1.3; }
@@ -245,44 +245,62 @@
   .fc-res.in { animation: d-land 1.3s ease-out; }
   .fc-fig { min-width: 0; }
   .fc-plot { display: block; width: 100%; max-width: 21rem; height: auto; margin: 0 auto; }
+  .fc-fig .fc-plot { max-width: 18.5rem; }   /* SITE-SYNC-2: the fold's plot 2.5rem narrower — the height went to the header's band, tabs and first row (the preview's paper keeps its own) */
   .fc-cap { margin: 0.2em 0 0; font-size: 0.72em; color: #6B7280; text-align: center; }
   .fc-txt { min-width: 0; }
   .fc-txt p { margin: 0 0 0.45em; font-size: 0.95em; line-height: 1.5; color: #374151; }
   .fc-txt p:last-child { margin-bottom: 0; }
   .fc-txt .res-h { font-size: 1em; }
     .fc-txt .d-due { vertical-align: 0.05em; }
-  /* SITE-RIDERS-3: the chart header's six fixed slots (the app's CHART-HEADER-2) in one band under the facts line — the
-     audiogram and its date, the Speech understanding tile, the hearing aids, the compact note box with its mic, Last visit,
-     Next visit. The band replaced SITE-SYNC-1's collapsed note line and the two chips under the small audiogram. */
-  .fc-slots { display: grid; grid-template-columns: 1fr 1fr 1fr 2.1fr 1fr 1fr; gap: 0.35em; }
+  /* SITE-SYNC-2: the chart header's band of four (the app's CHART-HEADER-3) — the identity (the avatar, the name, the chart id ·
+     Edit patient, DOB · age · office, Contact and Book now beneath), the hearing aids, the audiogram thumbnail with SRT · WRS beside
+     it, the Speech understanding box — about 20 · 23 · 26 · 27 of the width; then the verb row, the tabs, and the first scrolling
+     row under them (the note box, Last visit, Next visit). The band replaced SITE-RIDERS-3's six slots and the name line over them. */
+  .fc-slots { display: grid; grid-template-columns: 20fr 23fr 26fr 27fr; gap: 0.35em; align-items: stretch; }
   .fc-slot { min-width: 0; display: flex; flex-direction: column; justify-content: center; gap: 0.15em; padding: 0.35em 0.45em; border: 1px solid #E5E7EB; border-radius: 0.4em; background: #fff; color: #374151; font-size: 0.64em; line-height: 1.3; }
-  .fc-th { align-items: center; text-align: center; color: #6B7280; }
-  .fc-th > span { display: grid; justify-items: center; gap: 0.1em; }
-  .fc-thumb { width: 6.2em; height: auto; display: block; }
-  .fc-tile { align-items: center; text-align: center; background: #F6EFE9; border-color: #DCC6B8; color: #3F3A36; }
-  .fc-tile > small, .fc-visit > small { font-size: 0.78em; letter-spacing: 0.06em; text-transform: uppercase; line-height: 1.15; }
-  .fc-tile > small { color: #6B5546; }
-  .fc-si { margin: 0; display: flex; justify-content: center; gap: 0.9em; font-size: 1.75em; font-weight: 700; line-height: 1.1; color: #1F2937; font-variant-numeric: tabular-nums; white-space: nowrap; }
-  .fc-lr { display: flex; justify-content: center; gap: 2.4em; font-size: 0.7em; letter-spacing: 0.08em; text-transform: uppercase; color: #6B5546; }
-  .fc-aids { align-items: center; text-align: center; color: #6B7280; }
-  .fc-nb { gap: 0.3em; }
-  .fc-nb-r { display: flex; align-items: center; gap: 0.3em; white-space: nowrap; overflow: hidden; }
-  .fc-nb-r i { flex: none; width: 0.85em; height: 0.85em; margin-left: 0.5em; border: 1px solid #6B7280; border-radius: 50%; }
-  .fc-nb-r i:first-child { margin-left: 0; }
-  .fc-nb-r i.on { border-color: #2563EB; background: #2563EB; box-shadow: inset 0 0 0 0.18em #fff; }
+  .fc-slot > small, .fc-visit > small { font-size: 0.78em; letter-spacing: 0.06em; text-transform: uppercase; line-height: 1.15; color: #6B7280; }
+  .fc-id { gap: 0.1em; padding: 0.15em 0.2em 0.15em 0; border: 0; background: none; }   /* the identity has no box in the app */
+  .fc-id-name { display: flex; align-items: center; gap: 0.5em; min-width: 0; }
+  .fc-id .d-av { width: 3.1em; height: 3.1em; font-size: 1em; }
+  .fc-id .d-name { font-size: 1.75em; line-height: 1.1; font-weight: 600; white-space: nowrap; }
+  .fc-id-line { color: #4B5563; white-space: nowrap; }
+  .fc-id-line code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.95em; color: #6B7280; }
+  .fc-link { color: #1D4ED8; font-weight: 500; }
+  .fc-id-facts { font-size: 1.1em; color: #4B5563; white-space: nowrap; }
+  .fc-id-verbs { display: flex; flex-wrap: wrap; gap: 0.35em; margin-top: 0.2em; }
+  .fc-id-verbs .d-btn { font-size: 1em; padding: 0.3em 0.6em; }
+  .fc-aids { color: #6B7280; }
+  .fc-th { color: #374151; }
+  .fc-th > span { display: grid; gap: 0.15em; }
+  .fc-th-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.2em 0.5em; }
+  .fc-thumb { flex: none; width: 10.4em; max-width: 100%; height: auto; display: block; border: 1px solid #E5E7EB; border-radius: 0.25em; background: #fff; }
+  .fc-sw { flex: 1; min-width: 4.5em; display: grid; gap: 0.1em; font-size: 0.92em; line-height: 1.25; }
+  .fc-sw > span { display: block; }
+  .fc-sw .nw { white-space: nowrap; }   /* each line breaks at its "·", as the app's does beside the thumbnail */
+  .fc-tile { align-items: center; text-align: center; gap: 0.1em; background: #F6EFE9; border-color: #DCC6B8; color: #3F3A36; }
+  .fc-tile > small { font-size: 1.1em; font-weight: 700; letter-spacing: 0.05em; color: #3F3A36; }
+  .fc-si { display: grid; justify-items: center; gap: 0.05em; }
+  .fc-si-n { display: flex; justify-content: center; gap: 0.9em; font-size: 3.7em; font-weight: 700; line-height: 1; color: #1F2937; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .fc-lr { display: flex; justify-content: center; gap: 3.2em; font-size: 0.75em; letter-spacing: 0.08em; text-transform: uppercase; color: #6B5546; }
+  .fc-ai { margin-top: 0.2em; font-size: 0.85em; color: #5B4F48; }
+  .fc-tabs { display: flex; flex-wrap: wrap; gap: 0.3em; font-size: 0.64em; }
+  .fc-tabs > span { padding: 0.25em 0.9em; border-radius: 99em; background: #fff; color: #4B5563; box-shadow: inset 0 0 0 1px #E5E7EB; white-space: nowrap; }
+  .fc-tabs > .on { background: #1D4ED8; color: #fff; font-weight: 500; box-shadow: none; }
+  /* the first scrolling row: the note box in the app's phone line (its desktop box — the radios, the input, the category and
+     Save, about 75 px — would push the results card under a 768-px laptop's fold, SITE-SYNC-1's rule), Last visit, Next visit */
+  .fc-first { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 0.35em; }
   .fc-nb-in { display: flex; align-items: center; justify-content: space-between; gap: 0.3em; padding: 0.25em 0.45em; border: 1px solid #D1D5DB; border-radius: 0.35em; color: #9CA3AF; white-space: nowrap; overflow: hidden; }
   .fc-mic { flex: none; width: 1em; height: 1em; color: #4B5563; }
-  .fc-nb-b { display: flex; align-items: center; gap: 0.35em; }
-  .fc-nb-sel { position: relative; padding: 0.15em 1.3em 0.15em 0.4em; border: 1px solid #D1D5DB; border-radius: 0.3em; white-space: nowrap; }
-  .fc-nb-sel::after { content: ""; position: absolute; right: 0.5em; top: 50%; width: 0.35em; height: 0.35em; border-right: 1.5px solid #4B5563; border-bottom: 1.5px solid #4B5563; transform: translateY(-70%) rotate(45deg); }
-  .fc-nb-save { padding: 0.15em 0.55em; border-radius: 0.3em; background: #2563EB; color: #fff; font-weight: 600; }
-  .fc-visit > small { color: #6B7280; }
   .fc-visit b { font-weight: 600; color: #111827; white-space: nowrap; }
   .fc-visit > span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  /* the phone form (the app's D-CH2-14): the slots pair up, the aids slot only with a device on file, the note box one line */
+  /* the phone form (the app's D-CH3-9): the identity, then the number box full width, then the aids and the audiogram side by
+     side; the visit tiles pair up under the note line */
   @container stage (max-width: 50rem) {
     .fc-slots { grid-template-columns: 1fr 1fr; }
-    .fc-aids, .fc-nb-r, .fc-nb-b { display: none; }
+    .fc-id { grid-column: 1 / -1; order: -2; }
+    .fc-id .d-name { white-space: normal; }
+    .fc-tile { grid-column: 1 / -1; order: -1; }
+    .fc-first { grid-template-columns: 1fr 1fr; }
     .fc-nb { grid-column: 1 / -1; }
   }
   /* Noah's window in the fold: the two sessions and the module drawn large */
@@ -438,7 +456,7 @@
     :is(.fold, .as-fold) .n-list { display: none; }
     :is(.fold, .as-fold) .n-panels { flex-direction: column; }
     :is(.fold, .as-fold) .n-plot { width: min(100%, 20em); }
-    :is(.fold, .as-fold) .fc-chip { white-space: normal; max-width: 9em; text-align: right; font-size: 0.64em; }
+    :is(.fold, .as-fold) .fc-chip { white-space: normal; font-size: 0.64em; }
   }
   @media (min-width: 40rem) {
     .fold-line { white-space: nowrap; text-wrap: nowrap; font-size: calc((100vw - 2.5rem) / 46.5); }

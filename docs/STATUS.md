@@ -4,7 +4,7 @@ Rewritten at every close-out. The newest change is the commit that carries this 
 
 ## Live
 
-`main`, classic GitHub Pages, CNAME vestibulehq.com. Live commit: the one headed "STATUS.md rider — CE-PACKAGE-2" (2026-11-03); the one before it is 579a908 (SITE-PRICE-1 + CE-PACKAGE-2, 2026-11-03), and before that 9d0c178 (SITE-CANARY-1, 2026-11-02).
+`main`, classic GitHub Pages, CNAME vestibulehq.com. Live commit: the one headed "SITE-SYNC-2" (2026-11-03); the one before it is 79ddc80 (STATUS.md rider — CE-PACKAGE-2, 2026-11-03, which also carried this file's SITE-SYNC-2 lines, written in the site session that was running beside it), and before that 579a908 (SITE-PRICE-1 + CE-PACKAGE-2, 2026-11-03).
 
 ## Changes, newest first
 
