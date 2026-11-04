@@ -59,23 +59,3 @@ company's own work, not a third-party asset.
 - **The serif:** the scene's title, index and card names are set in Cormorant Garamond
   (weight 600), the app's own serif, linked from Google Fonts like the site's Oswald and
   Schibsted Grotesk — SIL Open Font License 1.1 (https://fonts.google.com/specimen/Cormorant+Garamond).
-
-## The Academy's CE provider logo on the webinar page (SITE-WEBINAR-1, 2026-11-02)
-
-**File:** `pictures/aaa-ce-logo.webp`
-
-- **What it is:** the American Academy of Audiology's "Continuing Education in
-  Audiology" provider logo, the horizontal four-color version ("CE Logo
-  (4Color).jpg" in the Academy's CE_logos.zip; the package also carries a black
-  version and three EPS files, none of them used).
-- **Where it is used:** `webinar/reports-claims-cash.html`, beside the approval
-  statement the Academy prescribes.
-- **Source:** the Academy's CE provider logo package,
-  https://www.audiology.org/wp-content/uploads/2021/06/CE_logos.zip (the server
-  refuses non-browser downloads; the copy came from Gabe's Downloads folder).
-- **License:** the American Academy of Audiology's mark, shown as an approved CE
-  provider shows it, with the Academy's approval statement beside it; it belongs to
-  the Academy.
-- **What was changed:** the 868 × 437 JPEG re-encoded as a WebP at the same size;
-  nothing else.
-- **Attribution shown:** the approval paragraph beside it on the page.
