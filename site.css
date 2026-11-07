@@ -223,14 +223,14 @@
   .fold .stage.desk { width: 100%; }
   .fold .stage.kiosk { width: min(24rem, 100%); }
   .fold .stage.desk .phone { border-radius: 0.9rem; padding: 0.45rem; }
-  /* The profession pages' device plays the fold's scene too (PROF-PAGES-1, .as-fold): its desk screens take
-     their own height, the chart and Noah drawn as in the fold; the kiosk and the phone keep their device shapes. */
-  :is(.fold, .as-fold) .stage.desk .screen { aspect-ratio: auto; border-radius: 0.4rem; }
-  :is(.fold, .as-fold) .stage.desk .app { position: relative; inset: auto; font-size: clamp(14px, 3cqw, 18px); }
-  :is(.fold, .as-fold) .stage.desk .scr { position: relative; inset: auto; }
-  :is(.fold, .as-fold) .stage.desk .scr.prv { aspect-ratio: 16 / 10; }   /* the counseling screen keeps the app's shape on a wide stage (COUNSEL-SITE-1) */
+  /* The fold's desk screens take their own height, the chart and Noah drawn as in the fold; the kiosk and the phone
+     keep their device shapes (PROF-PAGES-1; SITE-PRICE-4 took out the profession pages' alternative that PROF-PAGES-2 had retired). */
+  .fold .stage.desk .screen { aspect-ratio: auto; border-radius: 0.4rem; }
+  .fold .stage.desk .app { position: relative; inset: auto; font-size: clamp(14px, 3cqw, 18px); }
+  .fold .stage.desk .scr { position: relative; inset: auto; }
+  .fold .stage.desk .scr.prv { aspect-ratio: 16 / 10; }   /* the counseling screen keeps the app's shape on a wide stage (COUNSEL-SITE-1) */
   /* The chart, drawn large: the plot beside the Diagnostics panel */
-  :is(.fold, .as-fold) [data-screen="d-chart"] .d-page { flex: none; padding: 0.8em 1.1em 0.8em; gap: 0.45em; }   /* SITE-SYNC-2: the app's own 8-px spacing between the band, the row, the tabs and the first row */
+  .fold [data-screen="d-chart"] .d-page { flex: none; padding: 0.8em 1.1em 0.8em; gap: 0.45em; }   /* SITE-SYNC-2: the app's own 8-px spacing between the band, the row, the tabs and the first row */
   .fc-chip { padding: 0.3em 0.75em; border-radius: 99em; background: #EEF2FF; color: #3730A3; font-size: 0.7em; font-weight: 600; white-space: nowrap; }
   .fc-chip.sent { background: #DCFCE7; color: #14532D; }
   .fc-row { gap: 0.5em; }
@@ -304,10 +304,10 @@
     .fc-nb { grid-column: 1 / -1; }
   }
   /* Noah's window in the fold: the two sessions and the module drawn large */
-  :is(.fold, .as-fold) .n-plot { width: min(100%, 24em); }
-  :is(.fold, .as-fold) .n-sess > i.old { animation: none; }
-  :is(.fold, .as-fold) .n-sess > i.on { background: #C7DAF0; border-radius: 0.2em; }
-  :is(.fold, .as-fold) .n-sess em { font-style: normal; font-weight: 700; color: #1B6FB5; }
+  .fold .n-plot { width: min(100%, 24em); }
+  .fold .n-sess > i.old { animation: none; }
+  .fold .n-sess > i.on { background: #C7DAF0; border-radius: 0.2em; }
+  .fold .n-sess em { font-style: normal; font-weight: 700; color: #1B6FB5; }
   /* The preview screen (click 1): the report's four pages in a scroll, page one as the app shows it, the sources rail and the verbs */
   .fc-prev { position: absolute; inset: 0; z-index: 5; display: flex; flex-direction: column; background: #F3F4F6; color: #111827; }
   .fc-signed { flex: none; margin: 0; padding: 0.45em 1.2em 0.5em; background: #DCFCE7; color: #14532D; border-bottom: 1px solid #86EFAC; font-size: 0.78em; line-height: 1.35; }
@@ -418,12 +418,12 @@
     .fold .ap-res { grid-template-columns: minmax(0, 1fr); }
   }
   @container stage (max-width: 40rem) {
-    :is(.fold, .as-fold) .stage.desk .app:has(.fc-prev:not([hidden])) { --narrow: 1; }   /* the preview's mark takes its narrow place; the chart's keeps its side */
-    :is(.fold, .as-fold) .pv-body { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); padding: 0.6em 0.7em 0.7em; }
-    :is(.fold, .as-fold) .pv-rail { order: -1; }
-    :is(.fold, .as-fold) .pv-src { display: none; }
-    :is(.fold, .as-fold) .pv-verbs { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5em; }
-    :is(.fold, .as-fold) .pv-sign { width: auto; }
+    .fold .stage.desk .app:has(.fc-prev:not([hidden])) { --narrow: 1; }   /* the preview's mark takes its narrow place; the chart's keeps its side */
+    .fold .pv-body { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); padding: 0.6em 0.7em 0.7em; }
+    .fold .pv-rail { order: -1; }
+    .fold .pv-src { display: none; }
+    .fold .pv-verbs { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5em; }
+    .fold .pv-sign { width: auto; }
     .fold .pv-paper .sh-brand { font-size: 1.25em; letter-spacing: 0.12em; }
     .fold .pv-paper .sh-head { flex-wrap: wrap; gap: 0.2em 1em; }
     .fold .pv-paper .sh-who { margin-left: 0; white-space: normal; }
@@ -439,7 +439,7 @@
     /* The counseling screen on a narrow stage (COUNSEL-SITE-1): the screen grows with its content and
        everything stacks — the chart over its choices, the ear over its thumbnails, one figure under
        the other, one style card under the other; site.js stops sizing the figures (--prv-narrow). */
-    :is(.fold, .as-fold) .stage.desk .scr.prv { aspect-ratio: auto; --prv-narrow: 1; }
+    .fold .stage.desk .scr.prv { aspect-ratio: auto; --prv-narrow: 1; }
     .fold .prv .prv-page { font-size: 0.8em; }
     .fold .prv .prv-head { flex-wrap: wrap; }
     .fold .prv .prv-aud { grid-template-columns: minmax(0, 1fr); }
@@ -453,10 +453,10 @@
     .fold .prv .prv-cards { grid-template-columns: minmax(0, 1fr); }
   }
   @container stage (max-width: 27rem) {
-    :is(.fold, .as-fold) .n-list { display: none; }
-    :is(.fold, .as-fold) .n-panels { flex-direction: column; }
-    :is(.fold, .as-fold) .n-plot { width: min(100%, 20em); }
-    :is(.fold, .as-fold) .fc-chip { white-space: normal; font-size: 0.64em; }
+    .fold .n-list { display: none; }
+    .fold .n-panels { flex-direction: column; }
+    .fold .n-plot { width: min(100%, 20em); }
+    .fold .fc-chip { white-space: normal; font-size: 0.64em; }
   }
   @media (min-width: 40rem) {
     .fold-line { white-space: nowrap; text-wrap: nowrap; font-size: calc((100vw - 2.5rem) / 46.5); }
