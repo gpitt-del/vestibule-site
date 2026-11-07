@@ -231,7 +231,7 @@
     var FOOT = {
       report: "A click-through preview with sample patients. Noah's screen is drawn here in simple form.",
       checkin: "The kiosk is a tablet in your lobby. Patients check themselves in and sign their consent forms on it.",
-      referral: "A preview with sample patients. Your own demo is the whole app."
+      referral: "A preview with sample patients. A 30-minute screen share with the audiologist who built it."
     };
 
     function markStep(key) {
